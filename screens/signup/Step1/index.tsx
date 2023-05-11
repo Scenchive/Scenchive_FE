@@ -117,9 +117,9 @@ const Step1: React.FC = ({ }) => {
       </InputRow >
 
 
-      <InputRow>
+      <InputRow >
         <InputTitle>비밀번호</InputTitle>
-        <InputArea  />
+        <InputArea style={{marginBottom:182}} />
       </InputRow>
 
 
