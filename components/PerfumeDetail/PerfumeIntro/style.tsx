@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 const HeaderArea = styled.View`
-    width:100%;
     display:flex;
     flex-direction:row;
     justify-content:center;
