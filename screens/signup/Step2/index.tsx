@@ -10,34 +10,46 @@ import {
   Alert
 } from 'react-native';
 
-import { HeaderArea, BackButton, HeaderTitle, KeywordButton } from './style';
+import { HeaderArea, BackButton, HeaderTitle, SectionArea, SectionTitle, KeywordButton,KeywordText, SignupButton, ButtonText } from './style';
 import { useNavigation } from '@react-navigation/native';
 
 
 const Step2: React.FC = ({ }) => {
   const navigation = useNavigation();
+
+  const goToLogin = () => {
+    //@ts-ignore
+    navigation.navigate("Login")
+  }
+
   return (
     <View>
       <HeaderArea>
-            <BackButton onPress={() => navigation.goBack()}>
-              <Image style={{position:"absolute"}} source={require('../../../assets/images/icon/icon-btn-back.png')} />
-            </BackButton>
+        <BackButton onPress={() => navigation.goBack()}>
+          <Image style={{ position: "absolute" }} source={require('../../../assets/images/icon/icon-btn-back.png')} />
+        </BackButton>
 
-            <HeaderTitle>가입하기</HeaderTitle >
+        <HeaderTitle>가입하기</HeaderTitle >
 
 
       </HeaderArea>
 
+      <SectionArea>
+        <SectionTitle>계열</SectionTitle>
+        <KeywordButton><KeywordText>플로럴</KeywordText></KeywordButton>
+      </SectionArea>
 
-      <Text>계열</Text>
-        <KeywordButton><Text>플로럴</Text></KeywordButton>
-      
 
-      <Text>분위기</Text>
+      <SectionArea>      
+        <SectionTitle>분위기</SectionTitle>
+        <KeywordButton><KeywordText>상쾌한</KeywordText></KeywordButton>
 
-      <View style={{ width: "43.5%", backgroundColor: "#B592FF", borderRadius: 10 }}>
-        <Button title="가입하기" color={"#B592FF"} />
-      </View>
+        </SectionArea>
+
+
+      <SignupButton onPress={goToLogin}>
+        <ButtonText>가입하기</ButtonText>
+      </SignupButton>
 
     </View>
   );

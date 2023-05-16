@@ -123,7 +123,7 @@ const Step1: React.FC = ({ }) => {
       </InputRow>
 
 
-      <NextButton><ButtonText>다음</ButtonText></NextButton>
+      <NextButton  onPress={goToStep2}><ButtonText>다음</ButtonText></NextButton>
       {/* <View style={{ width: "43.5%", backgroundColor: "#B592FF", borderRadius: 10 }}>
         <Button title="다음" onPress={goToStep2} color={"#B592FF"} />
       </View> */}
