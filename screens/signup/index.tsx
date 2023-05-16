@@ -39,7 +39,7 @@ const Signup: React.FC = ({ }) => {
         paddingLeft:20,
         paddingRight:20
       }}>
-      <LogoImage source={require('../../assets/images/logo/logo-scentchive.png')} />
+      <LogoImage source={require('../../assets/images/logo/logo-scenchive-white.png')} />
 
       <ButtonsArea>
         <WhiteButtons onPress={goToSignupStep1} >

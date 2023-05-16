@@ -38,7 +38,7 @@ const InputTitle = styled.Text`
 
 
 const InputArea = styled.TextInput.attrs({placeholderTextColor:"red"})`
-    border-bottom-color: #616161;
+    border-bottom-color: #DFDFDF;
     border-bottom-width: 1px;
     height:34px;
     font-size:14px;
