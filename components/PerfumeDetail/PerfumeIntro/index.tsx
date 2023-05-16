@@ -25,6 +25,7 @@ const PerfumeIntro: React.FC = ({ }) => {
     <View>
       <Text>바카라 루쥬 540 오 드 퍼퓸</Text>
       {/* <Image/> */}
+      <Text>dfad</Text>
     </View>
   );
 };
