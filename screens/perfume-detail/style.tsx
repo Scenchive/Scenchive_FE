@@ -9,7 +9,7 @@ const HeaderArea = styled.View`
     padding-left:20px;
     padding-right:20px;
     padding-top:32px;
-    padding-bottom:19px;
+
 `;
 
 const LogoNameArea=styled.View`
@@ -35,7 +35,6 @@ const HeaderTitle = styled.Text`
 
 const AlertIcon=styled.Image`
     margin-left:auto;
-    margin-bottom : 118px;
 `
 
 

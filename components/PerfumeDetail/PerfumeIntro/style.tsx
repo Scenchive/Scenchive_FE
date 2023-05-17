@@ -1,44 +1,69 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-const HeaderArea = styled.View`
-    display:flex;
-    flex-direction:row;
-    justify-content:center;
-    padding-left:20px;
+const PerfumeIntroArea = styled.View`
+    width:100%;
+    padding-top:24px;
     padding-right:20px;
-    padding-top:32px;
-    padding-bottom:19px;
-`;
+    padding-left:20px;
+    justify-content:center;
+    align-items:center;
+`
 
-const LogoNameArea=styled.View`
+
+const PerfumeNameBookmarkRow = styled.View`
     display:flex;
     flex-direction:row;
-    height:45px;
+    
 `
 
+const PerfumeName = styled.Text`
+    font-size:20px;
+    color:#242424;
 
-const HeaderLogoImage=styled.Image`
-    width:20.69%;
-    height:45px;
+`
+
+const BookmarkIcon = styled.Image`
+    width:20px;
+    margin-left:15px;
+
+`
+
+const PerfumeIntroductionArea = styled.View`
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    margin-top:12px;
+    border:1px solid red;
+`
+
+const PerfumeImage = styled.Image`
+    width:32%;
+    height:167px;
+    margin-right:10px;
     resize-mode:contain;
+
 `
 
-const HeaderTitle = styled.Text`
-    font-size:30px;
-    height:45px;
-    color:#BF8DFF;
-    font-weight:600;
-    margin-left:8px;
-`;
+const PerfumeIntroductionTexts=styled.View`
+    display:flex;
+    flex:1;
+    flex-direction:column;
+    border:1px solid red;
 
-const AlertIcon=styled.Image`
-    margin-left:auto;
-    margin-bottom : 118px;
+`
+
+const PerfumeNameKorean = styled.Text`
+    font-size:15px;
+    color:#616161;
+    margin-bottom : 3px;
+
+`
+
+const PerfumeNameEnglish = styled.Text`
+    font-size:15px;
+    color:#616161;
 `
 
 
-
-
-
-export { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle,AlertIcon, };
+export { PerfumeIntroArea, PerfumeNameBookmarkRow, PerfumeName, BookmarkIcon, PerfumeIntroductionArea, PerfumeImage , PerfumeIntroductionTexts, PerfumeNameKorean, PerfumeNameEnglish};
