@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   TextInput,
@@ -7,10 +7,12 @@ import {
   Image,
 } from 'react-native';
 
-import { HeaderArea,LogoNameArea,  HeaderLogoImage, HeaderTitle, AlertIcon, } from './style';
+import { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle, AlertIcon, } from './style';
 import { useNavigation } from '@react-navigation/native';
-import PerfumeIntro from "../../components/PerfumeDetail/PerfumeIntro/index"
-
+import PerfumeIntro from "../../components/perfume-detail/PerfumeIntro/index"
+import DetailTab from '../../components/perfume-detail/DetailTab/index'
+import BasicInformation from "../../components/perfume-detail/BasicInformation/index";
+import ShoppingInformation from "../../components/perfume-detail/ShoppingInformation/index";
 
 const PerfumeDetail: React.FC = ({ }) => {
 
@@ -19,6 +21,7 @@ const PerfumeDetail: React.FC = ({ }) => {
     //@ts-ignore
     navigation.navigate("Home")
   }
+  const [clickedTab, setClickedTab] = useState<string>('기본정보');
 
 
   return (
@@ -28,13 +31,12 @@ const PerfumeDetail: React.FC = ({ }) => {
           <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} />
           <HeaderTitle>센카이브</HeaderTitle >
         </LogoNameArea>
-
-
         <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
       </HeaderArea>
-        <PerfumeIntro/>
-
-
+      <PerfumeIntro />
+      <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab}/>
+        {clickedTab==="기본정보"?<BasicInformation/>:<ShoppingInformation/>}
+      
     </View>
   );
 };

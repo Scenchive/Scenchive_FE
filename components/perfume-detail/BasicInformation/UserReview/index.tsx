@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   TextInput,
@@ -7,12 +7,12 @@ import {
   Image,
 } from 'react-native';
 
-import { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle, AlertIcon, } from './style';
+import { UserInformationArea, UserName,  } from './style';
 import { useNavigation } from '@react-navigation/native';
 
 
 
-const PerfumeIntro: React.FC = ({ }) => {
+const UserReview: React.FC = ({ }) => {
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -22,12 +22,14 @@ const PerfumeIntro: React.FC = ({ }) => {
 
 
   return (
+
     <View>
-      <Text>바카라 루쥬 540 오 드 퍼퓸</Text>
-      {/* <Image/> */}
-      <Text>dfad</Text>
+      <UserInformationArea>
+        <UserName>바카라루쥬</UserName>
+      </UserInformationArea>
+
     </View>
   );
 };
 
-export default PerfumeIntro;
+export default UserReview;
