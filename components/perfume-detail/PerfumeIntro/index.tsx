@@ -14,7 +14,6 @@ import StarRating from 'react-native-star-rating';
 import { PerfumeIntroArea, PerfumeNameBookmarkRow, PerfumeName, BookmarkIcon, PerfumeIntroductionArea, PerfumeImage, PerfumeIntroductionTexts, PerfumeNameKorean, PerfumeNameEnglish } from './style';
 import { useNavigation } from '@react-navigation/native';
 
-
 const styles = StyleSheet.create({
   myStarStyle: {
     color: 'yellow',
