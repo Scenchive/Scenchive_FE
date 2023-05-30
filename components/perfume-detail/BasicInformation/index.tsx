@@ -23,7 +23,7 @@ const BasicInformation: React.FC = ({ }) => {
 
   return (
 
-    <View>
+    <View style={{ flexGrow: 1 }}>
       <NotesInformation/>
       <Reviews/>
     </View>
