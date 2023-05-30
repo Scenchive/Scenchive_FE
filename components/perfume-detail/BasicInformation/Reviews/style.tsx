@@ -3,10 +3,12 @@ import styled from 'styled-components/native';
 
 const ReviewTitleArea = styled.View`
     width:100%;
-    margin-top:41px;
+    margin-top:11px;
     display : flex;
     flex-direction:row;
     justify-content:space-between
+    padding-left:20px;
+    padding-right:20px;
 `
 
 const ReviewTitle = styled.Text`
@@ -18,6 +20,14 @@ const WriteReview=styled.TouchableOpacity`
     font-color:#FFFFFF;
     font-size:13px;
     background-color:#B592FF;
+    width:18%;
+    align-items:center;
+    border-radius:4;
 `
 
-export { ReviewTitleArea, ReviewTitle, WriteReview };
+const WriteReviewButton=styled.Text`
+    color:#FFFFFF;
+    font-size:13px;
+`
+
+export { ReviewTitleArea, ReviewTitle, WriteReview , WriteReviewButton};

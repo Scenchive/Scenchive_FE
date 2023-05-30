@@ -15,7 +15,7 @@ import ApiService from '../../ApiService';
 
 
 
-const Login=() => {
+const Login = () => {
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -26,9 +26,9 @@ const Login=() => {
   const [password, setPassword] = useState<String>("")
 
   const login = () => {
-    const data={
-      email:id,
-      password:password,
+    const data = {
+      email: id,
+      password: password,
     }
 
     if (id.trim() === "") {
@@ -38,77 +38,79 @@ const Login=() => {
     } else {
 
       ApiService.LOGIN(data)
-      // .then(function(resp){
-      //   console.log('response',resp)
-      // })
+        // .then(function(resp){
+        //   console.log('response',resp)
+        // })
 
 
 
-        
-      // axios.post("/login",
-      //   null,
-      //   { params: { id: id, pwd: password } }
-      // ).then(function (resp) {
-      //   console.log(resp.data);
-      //   if (resp.data !== null && resp.data != "") {
-      //     console.log("로그인 성공");
-      //     goToHome();
-      //   } else {
-      //     Alert.alert("로그인 실패", "아이디나 비밀번호를 확인하세요.");
-      //     setId("");
-      //     setPassword("");
-      //   }
-      // })
 
-      .then((data)=>{
-        if (data.data>0){
+        // axios.post("/login",
+        //   null,
+        //   { params: { id: id, pwd: password } }
+        // ).then(function (resp) {
+        //   console.log(resp.data);
+        //   if (resp.data !== null && resp.data != "") {
+        //     console.log("로그인 성공");
+        //     goToHome();
+        //   } else {
+        //     Alert.alert("로그인 실패", "아이디나 비밀번호를 확인하세요.");
+        //     setId("");
+        //     setPassword("");
+        //   }
+        // })
+
+        .then((data) => {
+          if (data.data > 0) {
             console.log('로그인 성공');
             goToHome();
-        }else{
-          console.log('data',data)
+          } else {
+            console.log('data', data)
+          }
         }
-     }
-      ).catch (function (err) {
-  console.log(`Error Message: ${err}`);
-}
-)
+        ).catch(function (err) {
+          console.log(`Error Message: ${err}`);
+        }
+        )
     }
   }
 
 
-console.log('id', id)
-console.log('password', password)
+  console.log('id', id)
+  console.log('password', password)
 
 
-return (
-  <View>
-    <HeaderArea>
-      <BackButton onPress={() => navigation.goBack()}>
-        <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
-      </BackButton>
+  return (
+    <View>
+      <HeaderArea>
+        <BackButton onPress={() => navigation.goBack()}>
+          <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
+        </BackButton>
 
-      <HeaderTitle>로그인</HeaderTitle >
-
-
-    </HeaderArea>
-
-    <InputRow>
-      <InputTitle>이메일</InputTitle>
-      <InputArea style={{ marginBottom: 39 }} onChangeText={(text) => setId(text)} />
-    </InputRow>
+        <HeaderTitle>로그인</HeaderTitle >
 
 
-    <InputRow >
-      <InputTitle>비밀번호</InputTitle>
-      <InputArea style={{ marginBottom: 182 }} onChangeText={(text) => setPassword(text)} />
-    </InputRow>
+      </HeaderArea>
+
+      <InputRow>
+        <InputTitle>이메일</InputTitle>
+        <InputArea style={{ marginBottom: 39 }} onChangeText={(text) => setId(text)} />
+      </InputRow>
 
 
-    <LoginButton onPress={login}>
-      <ButtonText>로그인</ButtonText>
-    </LoginButton>
-  </View>
-);
+      <InputRow >
+        <InputTitle>비밀번호</InputTitle>
+        <InputArea style={{ marginBottom: 182 }} onChangeText={(text) => setPassword(text)} />
+      </InputRow>
+
+
+      {/* <LoginButton onPress={login}> */}
+            <LoginButton onPress={goToHome}>
+
+        <ButtonText>로그인</ButtonText>
+      </LoginButton>
+    </View>
+  );
 };
 
 export default Login;

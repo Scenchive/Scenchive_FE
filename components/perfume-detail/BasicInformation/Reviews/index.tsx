@@ -5,11 +5,12 @@ import {
   TouchableOpacity,
   View,
   Image,
+  SafeAreaView,
 } from 'react-native';
 
-import { ReviewTitleArea, ReviewTitle, WriteReview } from './style';
+import { ReviewTitleArea, ReviewTitle, WriteReview, WriteReviewButton, } from './style';
 import { useNavigation } from '@react-navigation/native';
-import UserReview from "../UserReview/index";
+
 
 
 const Reviews: React.FC = ({ }) => {
@@ -21,16 +22,16 @@ const Reviews: React.FC = ({ }) => {
   }
 
 
-  return (
-
-    <View>
+return (
+    <View style={{ flexGrow: 1 }}>
       <ReviewTitleArea>
         <ReviewTitle>다른 사용자들의 시향 후기</ReviewTitle>
-        <WriteReview><Text>
-          작성하기
-        </Text></WriteReview>
+        <WriteReview>
+          <WriteReviewButton>
+            작성하기
+          </WriteReviewButton>
+        </WriteReview>
       </ReviewTitleArea>
-      <UserReview />
 
     </View>
   );
