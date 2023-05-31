@@ -16,9 +16,9 @@ import { useNavigation } from '@react-navigation/native';
 const Reviews: React.FC = ({ }) => {
 
   const navigation = useNavigation();
-  const goToHome = () => {
+  const goToWriteReview = () => {
     //@ts-ignore
-    navigation.navigate("Home")
+    navigation.navigate("WriteReview")
   }
 
 
@@ -27,7 +27,7 @@ return (
       <ReviewTitleArea>
         <ReviewTitle>다른 사용자들의 시향 후기</ReviewTitle>
         <WriteReview>
-          <WriteReviewButton>
+          <WriteReviewButton onPress={goToWriteReview}>
             작성하기
           </WriteReviewButton>
         </WriteReview>
