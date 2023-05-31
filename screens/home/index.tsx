@@ -9,6 +9,7 @@ import { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle
 import { useNavigation } from '@react-navigation/native';
 import SeasonDropDown from '../../components/home/SeasonDropDown';
 import CarouselSlider from '../../components/home/CarouselSlider';
+import Tabs from '../../navigation/Tabs';
 
 
 
@@ -54,7 +55,6 @@ const Home: React.FC = ({ }) => {
         </SeasonRecommendTitleArea>
         <CarouselSlider />
       </SeasonRecommendArea>
-
     </View>
   );
 };

@@ -17,6 +17,7 @@ import { FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import Reviews from '../../components/perfume-detail/BasicInformation/Reviews';
 import UserReview from '../../components/perfume-detail/BasicInformation/UserReview';
+import ShoppingRow from '../../components/perfume-detail/ShoppingInformation/ShoppingRow';
 
 const PerfumeDetail: React.FC = ({ }) => {
 
@@ -80,7 +81,7 @@ const PerfumeDetail: React.FC = ({ }) => {
                 </View>
             )}
             renderItem={({ item }) => <View>
-              <Text>여기에는 구매 어쩌고가 들어갈거야</Text>
+                  <ShoppingRow/>
             </View>}
             style={{ flexGrow: 1, }}
           />

@@ -6,7 +6,8 @@ import SignupStep2 from "../screens/signup/Step2/index";
 import Login from "../screens/login/index";
 
 import Home from "../screens/home/index";
-import PerfumeDetail from "../screens/perfume-detail/index"
+import PerfumeDetail from "../screens/perfume-detail/index";
+import  WriteReview  from "../screens/write-review/index";
 
 const Nav = createNativeStackNavigator();
 
@@ -21,7 +22,7 @@ const Root = () => (
 
     <Nav.Screen name="Home" component={Home}/>
     <Nav.Screen name="PerfumeDetail" component={PerfumeDetail}/>
-
+    <Nav.Screen name="WriteReview" component={WriteReview}/>
   </Nav.Navigator>
 );
 export default Root;
