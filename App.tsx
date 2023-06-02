@@ -8,7 +8,7 @@ import {NavigationContainer} from '@react-navigation/native';
  
 
 
-import Signup from './screens/signup/index'
+// import Signup from './screens/signup/index'
 import Tabs from './navigation/Tabs';
 import Stack from './navigation/Stack';
 
@@ -43,9 +43,14 @@ import Stack from './navigation/Stack';
 function App(): JSX.Element {
 
   return (
+    // 로그인을 했다면 아래
       <NavigationContainer>
         <Root/>
       </NavigationContainer>
+      // 로그인을 하지 않았다면
+      // <NavigationContainer>
+      //   <Root/>
+      // </NavigationContainer>
 
 
     // <View>

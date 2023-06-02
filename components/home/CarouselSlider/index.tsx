@@ -12,11 +12,13 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const CarouselSlider: React.FC = ({ }) => {
+// const CarouselSlider: React.FC<GOTOPERFUMEDETAIL> = ({ goToPefumeDetail}) => {
+  const CarouselSlider:React.FC= () => {
+
   const navigation = useNavigation();
   const goToPerfumeDetail = () => {
     //@ts-ignore
-    navigation.navigate("PerfumeDetail")
+    navigation.navigate("Stack",{screen:"PerfumeDetail"})
   }
 
   return (

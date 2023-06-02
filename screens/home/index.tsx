@@ -3,25 +3,24 @@ import {
   View,
   Text,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 
 import { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle, SearchBarArea, SearchInput, SearchIcon, SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle, SelectedSeasonButton, SelectedSeasonText } from './style';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SeasonDropDown from '../../components/home/SeasonDropDown';
 import CarouselSlider from '../../components/home/CarouselSlider';
 import Tabs from '../../navigation/Tabs';
+import TabsNavigation from '../../navigation/Tabs';
 
 
 
 
-const Home: React.FC = ({ }) => {
 
-  const navigation = useNavigation();
-  const goToPefumeDetail = () => {
-    //@ts-ignore
-    navigation.navigate("PefumeDetail")
-  }
 
+const Home = () => {
+
+ 
   const [season, useseason] = useState<string>('spring');
   const [showDropDown, useShowDropDown] = useState(false);
 
@@ -53,8 +52,10 @@ const Home: React.FC = ({ }) => {
           <RecommendTitle>향수 추천</RecommendTitle>
 
         </SeasonRecommendTitleArea>
-        <CarouselSlider />
+        <CarouselSlider/>
+        
       </SeasonRecommendArea>
+
     </View>
   );
 };

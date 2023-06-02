@@ -14,7 +14,7 @@ import { HeaderArea, BackButton, HeaderTitle, SectionArea, SectionTitle, Keyword
 import { useNavigation } from '@react-navigation/native';
 
 
-const Step2: React.FC = ({ }) => {
+const SignupStep2: React.FC = ({ }) => {
   const navigation = useNavigation();
 
   const goToLogin = () => {
@@ -55,4 +55,4 @@ const Step2: React.FC = ({ }) => {
   );
 };
 
-export default Step2;
+export default SignupStep2;
