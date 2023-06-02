@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
 
-const MyPage = ({navigation:{navigate}}) => (
+const MyPage = () => (
     <View >
         <Text>마이페이지</Text>
     </View>

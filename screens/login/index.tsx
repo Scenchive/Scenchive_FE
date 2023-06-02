@@ -20,7 +20,7 @@ const Login = () => {
   const navigation = useNavigation();
   const goToHome = () => {
     //@ts-ignore
-    navigation.navigate("Home")
+    navigation.navigate("Tabs",{screen:"홈"})
   }
   const [id, setId] = useState<String>("");
   const [password, setPassword] = useState<String>("")

@@ -1,33 +1,37 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Text, View, TouchableOpacity } from "react-native"
+import Signup from "../screens/signup/index";
+import SignupStep1 from "../screens/signup/Step1/index";
+import SignupStep2 from "../screens/signup/Step2/index";
+import Login from "../screens/login/index";
 
-const ScreenOne = ({ navigation: { navigate } }) => {
-    <TouchableOpacity onPress={() => navigate("Two")}>
-        <Text>go to Two</Text>
-    </TouchableOpacity>
-}
-const ScreenTwo = ({ navigation: { navigate } }) => {
-    <TouchableOpacity onPress={() => navigate("Three")}>
-        <Text>go to Three</Text>
-    </TouchableOpacity>
-}
-const ScreenThree = ({navigation:{goBack}}) => {
-    <TouchableOpacity onPress={()=>goBack()}>
-        <Text>Go back</Text>
-    </TouchableOpacity>
-}
+import Home from "../screens/home/index";
+import PerfumeDetail from "../screens/perfume-detail";
+import WriteReview from "../screens/write-review";
 
 const NativeStack = createNativeStackNavigator();
 
+
 const Stack = () => {
-    <NativeStack.Navigator>
-        <NativeStack.Screen name="One" components={ScreenOne} />
+    return (
+
+        <NativeStack.Navigator >
+            {/* <NativeStack.Screen name="One" components={ScreenOne} />
         <NativeStack.Screen name="Two" components={ScreenTwo} />
-        <NativeStack.Screen name="Three" components={ScreenThree} />
-    </NativeStack.Navigator>
+        <NativeStack.Screen name="Three" components={ScreenThree} /> */}
 
+            <NativeStack.Screen name="SignupORLogin" component={Signup} />
+            <NativeStack.Screen name="Login" component={Login} />
 
+            <NativeStack.Screen name="SignupStep1" component={SignupStep1} />
+            <NativeStack.Screen name="SignupStep2" component={SignupStep2} />
+
+            <NativeStack.Screen name="PerfumeDetail" component={PerfumeDetail} />
+            <NativeStack.Screen name="WriteReview" component={WriteReview} />
+        </NativeStack.Navigator>
+
+    );
 }
 
 export default Stack;

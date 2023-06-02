@@ -19,9 +19,9 @@ import Reviews from '../../components/perfume-detail/BasicInformation/Reviews';
 import UserReview from '../../components/perfume-detail/BasicInformation/UserReview';
 import ShoppingRow from '../../components/perfume-detail/ShoppingInformation/ShoppingRow';
 
-const PerfumeDetail: React.FC = ({ }) => {
+const PerfumeDetail:React.FC<{navigation:any, navigate:any}>= (navigation, navigate)  => {
 
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const goToHome = () => {
     //@ts-ignore
     navigation.navigate("Home")
@@ -32,6 +32,7 @@ const PerfumeDetail: React.FC = ({ }) => {
 
   return (
     <View style={{ height: "100%" }}>
+   
       {clickedTab === "기본정보" ?
 
         <SafeAreaView >
