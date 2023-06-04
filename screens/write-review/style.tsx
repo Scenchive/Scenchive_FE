@@ -66,7 +66,9 @@ const KeywordTitle=styled.Text`
     margin-bottom:8px;
 `
 
-const AddKeyword=styled.TouchableOpacity`
+
+
+const AddKeywordButton=styled.TouchableOpacity`
     border-color:#D1D1D1;
     border-width:1.5px;
     border-radius:20;
@@ -89,6 +91,7 @@ const QuestionRow=styled.View`
     display:flex;
     flex-direction:column;
     margin-top:27px;
+    align-items:center;
 `
 
 const QuestionTitle=styled.Text`
@@ -101,6 +104,7 @@ const AnswerArea=styled.View`
     justify-content:center;
     display:flex;
     flex-direction:row;
+    margin-top:15px;
 `
 
 const AnswerButton=styled.TouchableOpacity`
@@ -122,5 +126,33 @@ const AnswerText=styled.Text`
 
 `
 
+const InputRow=styled.View`
+    display:flex;
+    margin-top:69px;
+`
 
-export { HeaderArea, BackButton, HeaderTitle, PerfumeInformationArea,PerfumeBrand, PerfumeName,ReviewArea, KeywordArea, KeywordTitle, AddKeyword,AddKeywordTitle,QuestionRow, QuestionTitle,AnswerArea,AnswerButton, AnswerText, };
+const InputTitle=styled.Text`
+    color:#2E2E2E;
+    font-size:16px;
+`
+
+const WriteButton=styled.TouchableOpacity`
+    width:22.8%;
+    background-color: #B592FF;
+    border-radius:20;
+    padding-left:12px;
+    padding-right:12px;
+    padding-top:5px;
+    padding-bottom:6px;
+    margin-top:15px;
+    margin-bottom:40px;
+    align-self:flex-end;
+`
+const WriteButtonText=styled.Text`
+    color:#FFFFFF;
+    font-size:15px;
+    align-self:center
+    font-weight:500;
+`
+
+export { HeaderArea, BackButton, HeaderTitle, PerfumeInformationArea,PerfumeBrand, PerfumeName,ReviewArea, KeywordArea, KeywordTitle, AddKeywordButton,AddKeywordTitle,QuestionRow, QuestionTitle,AnswerArea,AnswerButton, AnswerText, InputRow, InputTitle,WriteButton, WriteButtonText, };
