@@ -7,7 +7,7 @@ import {
   Image,
 } from 'react-native';
 
-import { HeaderArea, BackButton, HeaderTitle, PerfumeInformationArea, PerfumeBrand, PerfumeName, ReviewArea, KeywordArea, KeywordTitle, AddKeyword, AddKeywordTitle,QuestionRow, QuestionTitle, AnswerArea,AnswerButton, AnswerText, } from './style';
+import { HeaderArea, BackButton, HeaderTitle, PerfumeInformationArea, PerfumeBrand, PerfumeName, ReviewArea, KeywordArea, KeywordTitle, AddKeywordButton, AddKeywordTitle, QuestionRow, QuestionTitle, AnswerArea, AnswerButton, AnswerText, InputRow, InputTitle, WriteButton, WriteButtonText, } from './style';
 import { useNavigation } from '@react-navigation/native';
 
 import { FlatList } from 'react-native';
@@ -25,10 +25,6 @@ const WriteReview: React.FC = () => {
   return (
     <View style={{ height: "100%" }}>
       <SafeAreaView >
-
-
-
-
         <FlatList
           data={""}
           numColumns={1}
@@ -51,49 +47,58 @@ const WriteReview: React.FC = () => {
                 <KeywordArea>
 
                   <KeywordTitle>향수 키워드</KeywordTitle>
-                  <AddKeyword>
+                  <AddKeywordButton>
                     <AddKeywordTitle># 키워드 추가</AddKeywordTitle>
-    
-                  </AddKeyword>
+                  </AddKeywordButton>
                 </KeywordArea>
                 <QuestionRow>
                   <QuestionTitle>마음에 드는 향수였나요?</QuestionTitle>
-                 
+
                 </QuestionRow>
 
                 <QuestionRow>
                   <QuestionTitle>지속력은 어느 정도인가요?</QuestionTitle>
                   <AnswerArea>
-                      <AnswerButton><AnswerText>1h</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>2h</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>3h</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>4h</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>5h</AnswerText></AnswerButton>
-                    </AnswerArea>
+                    <AnswerButton><AnswerText>1h</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>2h</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>3h</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>4h</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>5h</AnswerText></AnswerButton>
+                  </AnswerArea>
                 </QuestionRow>
 
                 <QuestionRow>
                   <QuestionTitle>확산력은 어느 정도인가요?</QuestionTitle>
                   <AnswerArea>
-                      <AnswerButton><AnswerText>1</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>2</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>3</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>4</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>5</AnswerText></AnswerButton>
-                    </AnswerArea>
+                    <AnswerButton><AnswerText>1</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>2</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>3</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>4</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>5</AnswerText></AnswerButton>
+                  </AnswerArea>
                 </QuestionRow>
 
 
                 <QuestionRow>
                   <QuestionTitle>어떤 계절에 어울리는 향수인가요?</QuestionTitle>
                   <AnswerArea>
-                      <AnswerButton><AnswerText>봄</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>여름</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>가을</AnswerText></AnswerButton>
-                      <AnswerButton><AnswerText>겨울</AnswerText></AnswerButton>
-                    </AnswerArea>
+                    <AnswerButton><AnswerText>봄</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>여름</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>가을</AnswerText></AnswerButton>
+                    <AnswerButton><AnswerText>겨울</AnswerText></AnswerButton>
+                  </AnswerArea>
                 </QuestionRow>
 
+                <InputRow>
+                  <InputTitle>상세한 시향 후기를 작성해주세요</InputTitle>
+                  <AnswerArea>
+                    <TextInput multiline={true} numberOfLines={8} style={{ height: 200, textAlignVertical: 'top', borderWidth: 1.5, borderColor: "#B3B3B3", borderRadius: 10, paddingLeft: 10, paddingRight: 10, paddingTop: 11, paddingBottom: 11 }} placeholder='어떤 패션과 잘 어울리는지, 어떤 이미지가 연상되는지 알려주세요' />
+                  </AnswerArea>
+
+                </InputRow>
+                <WriteButton>
+                  <WriteButtonText>등록</WriteButtonText>
+                </WriteButton>
               </ReviewArea>
             </View>
           )}
