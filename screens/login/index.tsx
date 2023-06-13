@@ -22,16 +22,16 @@ const Login = () => {
     //@ts-ignore
     navigation.navigate("Tabs",{screen:"홈"})
   }
-  const [id, setId] = useState<String>("");
+  const [email, setEmail] = useState<String>("");
   const [password, setPassword] = useState<String>("")
 
   const login = () => {
     const data = {
-      email: id,
+      email: email,
       password: password,
     }
 
-    if (id.trim() === "") {
+    if (email.trim() === "") {
       Alert.alert("아이디 입력 확인", "아이디가 입력되지 않았습니다.");
     } else if (password.trim() === "") {
       Alert.alert("비밀번호 입력 확인", "비밀번호가 입력되지 않았습니다.");
@@ -66,6 +66,7 @@ const Login = () => {
             goToHome();
           } else {
             console.log('data', data)
+            Alert.alert("이메일과 비밀번호를 확인해 주세요.")
           }
         }
         ).catch(function (err) {
@@ -76,8 +77,7 @@ const Login = () => {
   }
 
 
-  console.log('id', id)
-  console.log('password', password)
+
 
 
   return (
@@ -94,7 +94,7 @@ const Login = () => {
 
       <InputRow>
         <InputTitle>이메일</InputTitle>
-        <InputArea style={{ marginBottom: 39 }} onChangeText={(text) => setId(text)} />
+        <InputArea style={{ marginBottom: 39 }} onChangeText={(text) => setEmail(text)} />
       </InputRow>
 
 
@@ -104,8 +104,8 @@ const Login = () => {
       </InputRow>
 
 
-      {/* <LoginButton onPress={login}> */}
-            <LoginButton onPress={goToHome}>
+      <LoginButton onPress={login}>
+            {/* <LoginButton onPress={goToHome}> */}
 
         <ButtonText>로그인</ButtonText>
       </LoginButton>

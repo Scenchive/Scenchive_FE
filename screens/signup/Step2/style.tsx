@@ -32,7 +32,7 @@ const SectionArea = styled.View`
 `
 
 const SectionTitle=styled.Text`
-    font-size:24px;
+    font-size:20px;
     color:#616161;
     margin-bottom :21px;
 `
@@ -48,10 +48,12 @@ const KeywordButton=styled.TouchableOpacity`
     border-radius:30px;
     background-color:#F6F2FF;
     elevation:4;   
+    margin-right:6px;
+    margin-bottom:10px;
 `
 
 const KeywordText=styled.Text`
-    font-size : 18px;
+    font-size : 16px;
     color:#616161;
 `
 

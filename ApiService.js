@@ -14,6 +14,10 @@ class ApiService {
     //   static getExampleData() {
     //     return axios.get(API_URL + '/example');
     //   }
+    static GETSIGNUPKEYWORD(){
+        return axios.get(API_URL+'/survey');
+    }
+    
 
     // POST 요청 예시
     //   static postExampleData(data) {
@@ -24,6 +28,9 @@ class ApiService {
     }
     static LOGIN(data) {
         return axios.post(API_URL + '/login', data);
+    }
+    static KEYWORDSIGNUP(data){
+        return axios.post(API_URL + '/survey', data)
     }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   TextInput,
@@ -7,11 +7,12 @@ import {
   Button,
   BackHandler,
   Image,
-  Alert
+  Alert,
 } from 'react-native';
 
 import { HeaderArea, BackButton, HeaderTitle, InputRow, InputTitle, InputArea,NextButton, ButtonText } from './style';
 import { useNavigation } from '@react-navigation/native';
+import ApiService from '../../../ApiService';
 // import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 // import { PermissionsAndroid } from 'react-native';
 
@@ -87,10 +88,67 @@ import { useNavigation } from '@react-navigation/native';
 const Step1: React.FC = ({ }) => {
   const navigation = useNavigation();
 
-  const goToStep2 = () => {
+  const canGoToStep2 = () => {
     //@ts-ignore
-    navigation.navigate("SignupStep2")
+    
+    navigation.navigate("SignupStep2", {email:email, userName:userName, password:password})
   }
+
+
+  
+  const goToStep2=()=>{
+    if (email.trim() === "") {
+      Alert.alert("이메일 입력 확인", "이메일이 입력되지 않았습니다.");
+    } else if (userName.trim()===""){
+      Alert.alert("닉네임 입력 확인", "닉네임이 입력되지 않았습니다.");
+    } else if (password.trim() === "") {
+      Alert.alert("비밀번호 입력 확인", "비밀번호가 입력되지 않았습니다.");
+    } else {
+      canGoToStep2();
+    }
+  }
+
+
+  const [email, setEmail] = useState<String>("");
+  const [userName, setUserName]=useState<String>("");
+  const [password, setPassword] = useState<String>("")
+
+
+  // const signupStep1 = () => {
+  //   const data = {
+  //     email: email,
+  //     name: userName,
+  //     password: password,
+  //   }
+
+  //   if (email.trim() === "") {
+  //     Alert.alert("이메일 입력 확인", "이메일이 입력되지 않았습니다.");
+  //   } else if (userName.trim()===""){
+  //     Alert.alert("닉네임 입력 확인", "닉네임이 입력되지 않았습니다.");
+  //   } else if (password.trim() === "") {
+  //     Alert.alert("비밀번호 입력 확인", "비밀번호가 입력되지 않았습니다.");
+  //   } else {
+  //     ApiService.SIGNUP(data)
+  //       .then((data) => {
+  //         console.log(data)
+  //         if (data.data > 0) {
+  //           console.log('회원가입 성공');
+  //           goToStep2();
+  //         } else {
+  //           console.log('data', data)
+  //         }
+  //       }
+  //       ).catch((res)=>{
+  //         console.log(res)}
+  //       )
+  //       // ).catch(function (err) {
+  //       //   console.log(`Error Message: ${err}`);
+  //       // }
+  //       // )
+  //   }
+  // }
+
+
 
 
   return (
@@ -108,18 +166,18 @@ const Step1: React.FC = ({ }) => {
       {/* <Text onPress={showPicker}>프로필 사진 업로드</Text> */}
       <InputRow>
         <InputTitle>이메일</InputTitle>
-        <InputArea style={{ marginBottom: 39 }} />
+        <InputArea style={{ marginBottom: 39 }}  onChangeText={(text) => setEmail(text)}  />
       </InputRow>
 
       <InputRow>
         <InputTitle>닉네임</InputTitle>
-        <InputArea style={{ marginBottom: 39 }} />
+        <InputArea style={{ marginBottom: 39 }}  onChangeText={(text) => setUserName(text)} />
       </InputRow >
 
 
       <InputRow >
         <InputTitle>비밀번호</InputTitle>
-        <InputArea style={{marginBottom:182}} />
+        <InputArea style={{marginBottom:182}}   onChangeText={(text) => setPassword(text)} />
       </InputRow>
 
 

@@ -19,12 +19,12 @@ const Signup: React.FC = ({ }) => {
   const navigation = useNavigation();
   const goToSignupStep1=()=>{
     //@ts-ignore
-    navigation.navigate("SignupStep1")
+    navigation.navigate("Stack", {screen:"SignupStep1"})
   }
 
   const goToLogin=()=>{
     //@ts-ignore
-    navigation.navigate("Login")
+    navigation.navigate("Stack", {screen:"Login"})
   }
 
   return (
