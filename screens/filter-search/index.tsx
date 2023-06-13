@@ -13,9 +13,13 @@ import { useNavigation } from '@react-navigation/native';
 const FilterSearch: React.FC = () => {
 
     const navigation = useNavigation();
-    const goToHome = () => {
-        //@ts-ignore
-        navigation.navigate("Home")
+    const goSeasonPage = () => {
+        //@ts-ignores
+        navigation.navigate("Stack",{screen:"SeasonPage"})
+    }
+    const goTPOPage = () => {
+        //@ts-ignores
+        navigation.navigate("Stack",{screen:"TPOPage"})
     }
 
 
@@ -27,10 +31,10 @@ const FilterSearch: React.FC = () => {
 
             </RequirementTextArea>  
 
-            <FirstButton>
+            <FirstButton onPress={goSeasonPage}>
                 <FirstButtonText>계열/분위기/계절</FirstButtonText>
                 </FirstButton>
-            <SecondButton>
+            <SecondButton onPress={goTPOPage}>
                 <SecondButtonText>TPO</SecondButtonText>
                 </SecondButton>
         </View>

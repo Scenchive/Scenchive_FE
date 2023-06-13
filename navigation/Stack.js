@@ -10,6 +10,9 @@ import Home from "../screens/home/index";
 import PerfumeDetail from "../screens/perfume-detail";
 import WriteReview from "../screens/write-review";
 
+import SeasonPage from "../screens/filter-search/KeywordPages/SeasonPage/index";
+import TPOPage from '../screens/filter-search/KeywordPages/TPOPage/index';
+
 const NativeStack = createNativeStackNavigator();
 
 
@@ -29,6 +32,9 @@ const Stack = () => {
 
             <NativeStack.Screen name="PerfumeDetail" component={PerfumeDetail} />
             <NativeStack.Screen name="WriteReview" component={WriteReview} />
+
+            <NativeStack.Screen name="SeasonPage" component={SeasonPage}/>
+            <NativeStack.Screen name="TPOPage" component={TPOPage}/>
         </NativeStack.Navigator>
 
     );
