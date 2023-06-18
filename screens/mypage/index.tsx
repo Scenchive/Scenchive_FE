@@ -22,7 +22,7 @@ const MyPage = () => {
     //@ts-ignore
     navigation.navigate("Tabs", { screen: "홈" })
   }
-  const [userId, setUserId] = useState(33);
+  const [userId, setUserId] = useState(35);
   const [recommendedPerfumeList, setRecommendedPerfumeList] = useState<PERFUME[]>([]);
   const [bookmarkedPerfumeList, setBookmarkedPerfumeList] = useState<PERFUME[]>([]);
 
@@ -30,9 +30,6 @@ const MyPage = () => {
   type PERFUME = { brand_name: string, perfume_name: string }
 
 
-  console.log('recommendedPerfumeList3', recommendedPerfumeList3)
-
-  console.log('userId', userId)
 
   const getRecommendationByBookmark = () => {
     ApiService.GETRECOMMENDATIONBYBOOKMARK(userId)
