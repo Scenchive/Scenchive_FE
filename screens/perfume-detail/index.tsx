@@ -31,11 +31,52 @@ type PERFUMEDATA = {
   base: any;
 };
 
-const PerfumeDetail = (route: any) => {
+// {
+//   "perfumeId": 1,
+//   "ratingAvg": 5.0,
+//   "longevityAvg": 5.0,
+//   "sillageAvg": 5.0,
+//   "seasonAvg": {
+//       "spring": 0.0,
+//       "summer": 0.0,
+//       "fall": 0.0,
+//       "winter": 100.0
+//   }
+// }
 
-  // console.log('route,-----------------')
-  // console.log(route?.route?.params?.perfumeId)
-  const perfumeName = route?.route?.params?.perfumeName;
+type PERFUMERATINGS={
+  perfumeId:number;
+  ratingAvg:number;
+  longevityAvg:number;
+  sillageAvg:number;
+  seasonAvg:{
+    spring:number;
+    summer:number;
+    fall:number;
+    winter:number;
+  };
+}
+
+
+type REVIEWDATA = {
+  content: string;
+  created_at: string;
+  name: string;
+}
+
+
+type SHOPPINGDATA = {
+  cleanedTitle: string;
+  link: string;
+  image: string;
+  lprice: Number;
+  mallName: string;
+}
+
+const PerfumeDetail = (route: any,  ) => {
+  
+  
+  const perfumeName1 = route?.route?.params?.perfumeName;
   const brandName = route?.route?.params?.brandName;
   const perfumeId = route?.route?.params?.perfumeId;
 
@@ -47,8 +88,12 @@ const PerfumeDetail = (route: any) => {
   }
   const [clickedTab, setClickedTab] = useState<string>('기본정보');
   const [perfumeBasicInformation, setPerfumeBasicInformation] = useState<PERFUMEDATA>();
+  const [perfumeRatingInformation, setPerfumeRatingInformation]=useState<PERFUMERATINGS>();
   const [bookmarkYesNo, setBookmarkYesNo] = useState('');
+  const [reviewList, setReviewList]=useState<REVIEWDATA[]>([])
+  const [shoppingInformation, setShoppingInformation] = useState<SHOPPINGDATA[]>([]);
 
+  
 
   const getPerfumeBasicInformation = () => {
     ApiService.GETPERFUMEBASICINFORMATION(perfumeId)
@@ -61,15 +106,53 @@ const PerfumeDetail = (route: any) => {
       })
   }
 
+  
+  const getPerfumeRatingInformation = () => {
+    ApiService.GETPERFUMERATING(perfumeId)
+      .then((data) => {
+        setPerfumeRatingInformation(data?.data)
+      }
+      ).catch((res) => {
+        console.log('향수 평점 정보 받아오기 실패')
+        console.log(res)
+      })
+  }
+
+
+  const getReviewList = () => {
+    ApiService.GETREVIEWLIST(perfumeId)
+      .then((data) => {
+        setReviewList(data?.data)
+      }
+      ).catch((res) => {
+        console.log('향수 리뷰 받아오기 실패')
+        console.log(res)
+      })
+  }
+
+  const getShoppingInformation = () => {
+    ApiService.GETSHOPPINGINFORMATION(perfumeName1)
+      .then((data) => {
+        setShoppingInformation(data?.data)
+      }
+      ).catch((res) => {
+        console.log('향수 기본 정보 받아오기 실패')
+        console.log(res)
+      })
+  }
+
   useEffect(() => {
     getPerfumeBasicInformation();
-  }, [])
+    getPerfumeRatingInformation();
+    getReviewList();
+    getShoppingInformation();
+  }, [route?.route?.params])
 
 
   const setBookmark = () => {
 
     if (bookmarkYesNo === 'Y') {
-      ApiService.SETBOOKMARKYES(33, perfumeId)
+      ApiService.SETBOOKMARKYES(35, perfumeId)
         .then((data) => {
           if (data?.data) {
             console.log('북마크 설정 성공')
@@ -81,7 +164,7 @@ const PerfumeDetail = (route: any) => {
         })
     }
     else if (bookmarkYesNo === 'N') {
-      ApiService.SETBOOKMARKNO(33, perfumeId)
+      ApiService.SETBOOKMARKNO(35, perfumeId)
         .then((data) => {
           console.log('북마크 삭제 성공')
           console.log('data', data)
@@ -93,14 +176,11 @@ const PerfumeDetail = (route: any) => {
     }
   }
 
-  console.log('perfumeBasicInformationperfumeBasicInformationperfumeBasicInformation')
-  console.log(perfumeName)
-
-
 
   useEffect(() => {
     setBookmark();
   }, [bookmarkYesNo])
+
 
 
   return (
@@ -120,16 +200,26 @@ const PerfumeDetail = (route: any) => {
 
               <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
             </HeaderArea>
-            <PerfumeIntro perfumeName={perfumeName} brandName={brandName} bookmarkYesNo={bookmarkYesNo} setBookmarkYesNo={setBookmarkYesNo} />
+            <PerfumeIntro 
+             perfumeName={perfumeName1} 
+             brandName={brandName} 
+             bookmarkYesNo={bookmarkYesNo} 
+             setBookmarkYesNo={setBookmarkYesNo} 
+             ratingAvg={perfumeRatingInformation?.ratingAvg||0}
+             longetivityAvg={perfumeRatingInformation?.longevityAvg||0}
+             seasonAvg={perfumeRatingInformation?.seasonAvg||0}
+             sillageAvg={perfumeRatingInformation?.sillageAvg||0}
+             />
             <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
-            <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName} brandName={brandName} perfumeId={perfumeId}/>
+            <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName1} brandName={brandName} perfumeId={perfumeId} />
           </View>
           <UserReviewArea>
+            {reviewList?.map((el)=>(
+               <UserReview content={el?.content} created_at={el?.created_at} name={el?.name} />
 
-            <UserReview />
-            <UserReview />
-            <UserReview />
-            <UserReview />
+            ))}
+
+     
           </UserReviewArea>
 
         </ScrollView>
@@ -144,18 +234,21 @@ const PerfumeDetail = (route: any) => {
             </LogoNameArea>
             <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
           </HeaderArea>
-          <PerfumeIntro perfumeName={perfumeName} brandName={brandName} bookmarkYesNo={bookmarkYesNo} setBookmarkYesNo={setBookmarkYesNo} />
+          <PerfumeIntro   perfumeName={perfumeName1} 
+             brandName={brandName} 
+             bookmarkYesNo={bookmarkYesNo} 
+             setBookmarkYesNo={setBookmarkYesNo} 
+             ratingAvg={perfumeRatingInformation?.ratingAvg||0}
+             longetivityAvg={perfumeRatingInformation?.longevityAvg||0}
+             seasonAvg={perfumeRatingInformation?.seasonAvg||0}
+             sillageAvg={perfumeRatingInformation?.sillageAvg||0}/>
           <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
           <ShoppingInformation />
 
+          {shoppingInformation?.map((el) => (
+          <ShoppingRow cleanedTitle={el?.cleanedTitle} image={el?.image} link={el?.link} lprice={el?.lprice} mallName={el?.mallName}/>
+          ))}
 
-
-          <ShoppingRow />
-          <ShoppingRow />
-          <ShoppingRow />
-          <ShoppingRow />
-          <ShoppingRow />
-          <ShoppingRow />
 
         </ScrollView>
 
