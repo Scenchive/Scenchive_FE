@@ -27,24 +27,20 @@ const HeaderTitle = styled.Text`
 `;
 
 
-const InputArea=styled.View`
-    width:100%;
-    padding-left:20px;
-    padding-right:20px;
-`
-
-const KeywordInputSection=styled.View`
+const KeywordArea=styled.View`
+    width:80%;
+    margin-top:33px;
+    margin-left:45px;
+    margin-right:45px;
+    margin-bottom:25px;
     display:flex;
-    flex-direction:column;
-    margin-bottom : 47px;
-`
+    flex-direction:row;
 
-const SectionTitle=styled.Text`
-    font-size:24px;
-    margin-bottom:21px;
 
 `
-const KeywordButton=styled.TouchableOpacity`
+
+const KeywordStyle=styled.View`
+    height:46px;
     font-size:18px;
     border: 1.5px solid #A281FF;
     align-self:flex-start;
@@ -53,34 +49,25 @@ const KeywordButton=styled.TouchableOpacity`
     padding-left:23px;
     padding-right:23px;
     border-radius:30px;
-    background-color:#F6F2FF;
+    background-color:#B592FF;
     elevation:4;   
     margin-right:6px;
     margin-bottom:10px;
+    border-color:#A281FF;
+
 `
 
 const KeywordText=styled.Text`
     font-size : 16px;
-    color:#616161;
-`
-const GetRecommendationsButton=styled.TouchableOpacity`
-    width:100%;
-    background-color:#B89FFF;
-    padding-top:20px;
-    padding-bottom:24px;
-    margin-bottom:0px;
-    align-items:center;
-    position:absolute;
-    bottom:0px;
-
-
-`
-
-const GetRecommendationsText=styled.Text`
     color:#FFFFFF;
-    font-size:20px;
-    font-weight:500;
-
 `
 
-export { HeaderArea, BackButton, HeaderTitle,InputArea,  KeywordInputSection, SectionTitle,KeywordButton, KeywordText,GetRecommendationsButton, GetRecommendationsText,  };
+const ResultPerfumeListArea=styled.SafeAreaView`
+    width:100%;
+    padding-left:20px;
+    padding-right:20px;
+    // justify-content:space-between
+`
+
+
+export {HeaderArea, BackButton, HeaderTitle, KeywordArea,KeywordStyle, KeywordText,ResultPerfumeListArea, };
