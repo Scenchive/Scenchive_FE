@@ -25,11 +25,20 @@ import ApiService from '../../ApiService';
 // type PERFUMEPARAMS = {
 //   perfumeId: Number;
 // };
+type PERFUMEDATA = {
+  top: any;
+  middle: any;
+  base: any;
+};
 
 const PerfumeDetail = (route: any) => {
 
   // console.log('route,-----------------')
   // console.log(route?.route?.params?.perfumeId)
+  const perfumeName = route?.route?.params?.perfumeName;
+  const brandName = route?.route?.params?.brandName;
+  const perfumeId = route?.route?.params?.perfumeId;
+
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -37,18 +46,14 @@ const PerfumeDetail = (route: any) => {
     navigation.navigate("홈")
   }
   const [clickedTab, setClickedTab] = useState<string>('기본정보');
-
-
-  // console.log('route?.route?.params?.perfumeId')
-  // console.log(route?.route?.params?.perfumeId)
+  const [perfumeBasicInformation, setPerfumeBasicInformation] = useState<PERFUMEDATA>();
+  const [bookmarkYesNo, setBookmarkYesNo] = useState('');
 
 
   const getPerfumeBasicInformation = () => {
-    ApiService.GETPERFUMEBASICINFORMATION(route?.route?.params?.perfumeId)
+    ApiService.GETPERFUMEBASICINFORMATION(perfumeId)
       .then((data) => {
-        console.log('data---------------')
-        console.log(data?.data)
-
+        setPerfumeBasicInformation(data?.data)
       }
       ).catch((res) => {
         console.log('향수 기본 정보 받아오기 실패')
@@ -61,6 +66,41 @@ const PerfumeDetail = (route: any) => {
   }, [])
 
 
+  const setBookmark = () => {
+
+    if (bookmarkYesNo === 'Y') {
+      ApiService.SETBOOKMARKYES(33, perfumeId)
+        .then((data) => {
+          if (data?.data) {
+            console.log('북마크 설정 성공')
+          }
+        }
+        ).catch((res) => {
+          console.log('북마크 설정 실패')
+          console.log(res)
+        })
+    }
+    else if (bookmarkYesNo === 'N') {
+      ApiService.SETBOOKMARKNO(33, perfumeId)
+        .then((data) => {
+          console.log('북마크 삭제 성공')
+          console.log('data', data)
+        }
+        ).catch((res) => {
+          console.log('북마크 삭제 실패')
+          console.log(res)
+        })
+    }
+  }
+
+  console.log('perfumeBasicInformationperfumeBasicInformationperfumeBasicInformation')
+  console.log(perfumeName)
+
+
+
+  useEffect(() => {
+    setBookmark();
+  }, [bookmarkYesNo])
 
 
   return (
@@ -70,19 +110,19 @@ const PerfumeDetail = (route: any) => {
 
         <ScrollView>
           <View>
-            <HeaderArea>                
+            <HeaderArea>
               <TouchableOpacity onPress={goToHome}>
-              <LogoNameArea>
-                <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} />
-                <HeaderTitle>센카이브</HeaderTitle >
-              </LogoNameArea>              
-                </TouchableOpacity>
+                <LogoNameArea>
+                  <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} />
+                  <HeaderTitle>센카이브</HeaderTitle >
+                </LogoNameArea>
+              </TouchableOpacity>
 
               <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
             </HeaderArea>
-            <PerfumeIntro />
+            <PerfumeIntro perfumeName={perfumeName} brandName={brandName} bookmarkYesNo={bookmarkYesNo} setBookmarkYesNo={setBookmarkYesNo} />
             <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
-            <BasicInformation />
+            <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName} brandName={brandName} perfumeId={perfumeId}/>
           </View>
           <UserReviewArea>
 
@@ -104,7 +144,7 @@ const PerfumeDetail = (route: any) => {
             </LogoNameArea>
             <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
           </HeaderArea>
-          <PerfumeIntro />
+          <PerfumeIntro perfumeName={perfumeName} brandName={brandName} bookmarkYesNo={bookmarkYesNo} setBookmarkYesNo={setBookmarkYesNo} />
           <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
           <ShoppingInformation />
 
@@ -119,32 +159,6 @@ const PerfumeDetail = (route: any) => {
 
         </ScrollView>
 
-
-        // <SafeAreaView >
-        //   <FlatList
-        //     data={array}
-        //     numColumns={1}
-        //     keyExtractor={item => item.toString()}
-        //     ListHeaderComponent={() => (
-        //       <View>
-        //         <HeaderArea>
-        //           <LogoNameArea>
-        //             <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} />
-        //             <HeaderTitle>센카이브</HeaderTitle >
-        //           </LogoNameArea>
-        //           <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
-        //         </HeaderArea>
-        //         <PerfumeIntro />
-        //         <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
-        //         <ShoppingInformation />
-        //         </View>
-        //     )}
-        //     renderItem={({ item }) => <View>
-        //           <ShoppingRow />
-        //     </View>}
-        //     style={{ flexGrow: 1, }}
-        //   />
-        // </SafeAreaView>
       }
 
 

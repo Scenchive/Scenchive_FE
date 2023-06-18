@@ -33,6 +33,14 @@ class ApiService {
 
         return axios.get(API_URL+'/recommend?userId='+userId+'&season='+seasonId)
     }
+    static GETBOOKMARKLIST(userId){
+        console.log('userIdddd', userId)
+        return axios.get(API_URL+'/bookmark/'+userId)
+    }
+    static GETRECOMMENDATIONBYBOOKMARK(userId){
+        console.log('userIdddd', userId)
+        return axios.get(API_URL+'/bookmark/recommend/'+userId)
+    }
 
 
     // POST 요청 예시
@@ -47,6 +55,21 @@ class ApiService {
     }
     static KEYWORDSIGNUP(data){
         return axios.post(API_URL + '/survey', data)
+    }
+    static SETBOOKMARKYES(userId,perfumeId ){
+        return axios.post(API_URL + '/bookmark?userId='+userId+'&perfumeId='+perfumeId)
+    }
+    static REGISTERREVIEW(data){
+        console.log('daata', data)
+        return axios.post(API_URL+'/review/', data);
+    }
+
+    // DELETE 요청 예시
+    //   static postExampleData(data) {
+    //     return axios.delete(API_URL + '/signup', data);
+    //   }
+    static SETBOOKMARKNO(userId,perfumeId ){
+        return axios.delete(API_URL + '/bookmark?userId='+userId+'&perfumeId='+perfumeId)
     }
     
 }

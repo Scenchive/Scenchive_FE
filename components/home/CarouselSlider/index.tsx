@@ -20,12 +20,13 @@ type PERFUMEDATA = {
 };
 
 
-const CarouselSlider: React.FC<PERFUMEDATA> = ({ perfumeName, brandName }) => {
+const CarouselSlider: React.FC<PERFUMEDATA> = ({ perfumeName, brandName, id }) => {
 
   const navigation = useNavigation();
   const goToPerfumeDetail = () => {
+    console.log('id', id)
     //@ts-ignore
-    navigation.navigate("Stack", { screen: "PerfumeDetail" })
+    navigation.navigate("Stack",{screen:"PerfumeDetail", params:{perfumeId:id, perfumeName:perfumeName, brandName:brandName}})
   }
   console.log('으으으으으으으ㅡ', perfumeName)
   console.log('아아아아', brandName)

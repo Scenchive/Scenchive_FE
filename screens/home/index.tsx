@@ -17,16 +17,16 @@ import ApiService from '../../ApiService';
 
 
 
-
-
-
-const Home = () => {
   type PERFUMEDATA = {
     brandName: string;
     perfumeName: string;
     id: Number;
     keywordIds: any;
   };
+
+
+
+const Home: React.FC = ({ }) => {
 
   // const [season, useseason] = useState<string>('spring');
   const [showDropDown, useShowDropDown] = useState(false);
@@ -61,12 +61,7 @@ const Home = () => {
   console.log('resultListresultList')
   console.log(resultList[0]?.brandName)
 
-  const goToPerfumeDetail = () => {
-    //@ts-ignore
-    navigation.navigate("Stack",{screen:"PerfumeDetail", perfumeId:id})
-    // navigation.navigate("PerfumeDetail", { perfumeId: perfumeId })
 
-  }
 
   return (
     <View>

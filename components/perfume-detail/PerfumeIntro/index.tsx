@@ -28,9 +28,16 @@ const styles = StyleSheet.create({
 });
 
 
+type PERFUMEDATA = {
+  brandName: string;
+  perfumeName: string;
+  bookmarkYesNo:string;
+  setBookmarkYesNo:Function;
+
+};
 
 
-const PerfumeIntro: React.FC = ({ }) => {
+const PerfumeIntro: React.FC<PERFUMEDATA> = ({brandName, perfumeName, bookmarkYesNo, setBookmarkYesNo }) => {
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -39,23 +46,27 @@ const PerfumeIntro: React.FC = ({ }) => {
   }
 
 
-
   return (
     <PerfumeIntroArea>
       <PerfumeNameBookmarkRow>
-        <PerfumeName>바카라 루쥬 540 오 드 퍼퓸</PerfumeName>
-        <BookmarkIcon source={require('../../../assets/images/icon/icon-bookmark-no.png')} />
+        <PerfumeName>{perfumeName}</PerfumeName>
+        {(bookmarkYesNo!=='Y')? 
+        <TouchableOpacity onPress={()=>setBookmarkYesNo('Y')}><BookmarkIcon source={require('../../../assets/images/icon/icon-bookmark-no.png')} /></TouchableOpacity>
+        : <TouchableOpacity onPress={()=>setBookmarkYesNo('N')}><BookmarkIcon source={require('../../../assets/images/icon/icon-bookmark-yes.png')} /></TouchableOpacity>
+        }
       </PerfumeNameBookmarkRow>
       <PerfumeIntroductionArea>
-
-        <PerfumeImage source={require('../../../assets/images/dummyImages/BaccaratRouge540Extrait.jpg')} />
+    <View style={{width:"32%", height:167, marginRight:10, backgroundColor:"#B592FF"}}>
+      <Text>이미지 준비중입니다.</Text>
+      </View>
+        {/* <PerfumeImage source={require('../../../assets/images/dummyImages/BaccaratRouge540Extrait.jpg')} />  */}
         <PerfumeIntroductionTexts>
 
-          <PerfumeNameKorean>메종 프란시스 커정</PerfumeNameKorean>
-          <PerfumeNameEnglish>Maison Francis Kurkdjian</PerfumeNameEnglish>
+          <PerfumeNameKorean>{brandName}</PerfumeNameKorean>
+          <PerfumeNameEnglish>{brandName}</PerfumeNameEnglish>
 
 
-          <StarRating disabled={true} maxStars={5} rating={3.5} />
+          {/* <StarRating disabled={true} maxStars={5} rating={3.5} /> */}
 
 
         </PerfumeIntroductionTexts>
