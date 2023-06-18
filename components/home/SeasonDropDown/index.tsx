@@ -8,38 +8,38 @@ import { DropDownListArea, SeasonButton } from './style';
 import { Image } from 'react-native';
 
 
-type Season = {
-  season: string;
-  useSeason: Function;
+type SEASON = {
+  seasonId: Number;
+  setSeasonId: Function;
   showDropDown: boolean;
   useShowDropDown: Function;
 };
 
-const onPressEvent = ( season:string, useSeason:Function, useShowDropDown:Function ) => {
-    useSeason(season);
-    useShowDropDown(false);
+const onPressEvent = ( seasonId:Number, setSeasonId:Function, useShowDropDown:Function ) => {
+  setSeasonId(seasonId);
+  useShowDropDown(false);
     
 }
 
+const SeasonDropDown: React.FC<SEASON> = ({ seasonId, setSeasonId, showDropDown, useShowDropDown }) => {
 
-const SeasonDropDown: React.FC<Season> = ({ season, useSeason, showDropDown, useShowDropDown }) => {
-
+  console.log('setSeasonId', setSeasonId)
 
   return (
     <DropDownListArea>
 
-      <SeasonButton style={{ width:"100%", alignItems:"center",marginTop: 8, marginBottom: 3 }} onPress={() => onPressEvent('spring', useSeason, useShowDropDown)}>
-        <Text style={{ color: (season === 'spring') ? '#000000' : '#8D8D8D' }}>봄</Text>
+      <SeasonButton style={{ width:"100%", alignItems:"center",marginTop: 8, marginBottom: 3 }} onPress={() => onPressEvent(36, setSeasonId, useShowDropDown)}>
+        <Text style={{ color: (seasonId === 36) ? '#000000' : '#8D8D8D' }}>봄</Text>
         <Image style={{position:"absolute", right:9, top:6}}source={require('../../../assets/images/icon/icon-btn-up-arrow.png')}/>
       </SeasonButton>
-      <SeasonButton style={{ width:"100%", alignItems:"center", marginTop: 3, marginBottom: 3 }} onPress={() => onPressEvent('summer', useSeason, useShowDropDown)}>
-        <Text style={{ color: (season === 'summer') ? '#000000' : '#8D8D8D' }}>여름</Text>
+      <SeasonButton style={{ width:"100%", alignItems:"center", marginTop: 3, marginBottom: 3 }} onPress={() => onPressEvent(37, setSeasonId, useShowDropDown)}>
+        <Text style={{ color: (seasonId === 37) ? '#000000' : '#8D8D8D' }}>여름</Text>
       </SeasonButton>
-      <SeasonButton style={{ width:"100%", alignItems:"center", marginTop: 3, marginBottom: 3 }} onPress={() => onPressEvent('autumn', useSeason, useShowDropDown)}>
-        <Text style={{ color: (season === 'autumn') ? '#000000' : '#8D8D8D' }}>가을</Text>
+      <SeasonButton style={{ width:"100%", alignItems:"center", marginTop: 3, marginBottom: 3 }} onPress={() => onPressEvent(38, setSeasonId, useShowDropDown)}>
+        <Text style={{ color: (seasonId === 38) ? '#000000' : '#8D8D8D' }}>가을</Text>
       </SeasonButton>
-      <SeasonButton style={{ width:"100%", alignItems:"center", marginTop: 3, marginBottom: 14 }} onPress={() => onPressEvent('winter', useSeason, useShowDropDown)}>
-        <Text style={{ color: (season === 'winter') ? '#000000' : '#8D8D8D' }}>겨울</Text>
+      <SeasonButton style={{ width:"100%", alignItems:"center", marginTop: 3, marginBottom: 14 }} onPress={() => onPressEvent(39, setSeasonId, useShowDropDown)}>
+        <Text style={{ color: (seasonId === 39) ? '#000000' : '#8D8D8D' }}>겨울</Text>
       </SeasonButton>
     </DropDownListArea>
   )

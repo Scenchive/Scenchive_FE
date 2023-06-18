@@ -1,6 +1,24 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+
+
+const CarouselSliderContentArea=styled.View`
+    height:140px;
+    border-width:1px;
+    border-color:red;
+    margin-top:19px;
+    background-color:transparent;
+    position:absolute;
+    left:0px;
+    right:0px;
+    zIndex:-1;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    
+`
 const CarouselSliderArea=styled.TouchableOpacity`
     height:140px;
     border-width:1px;
@@ -60,4 +78,4 @@ const BrandEnglish=styled.Text`
     margin-top:5px;
 `
 
-export { CarouselSliderArea,LeftArrowIcon, RightArrowIcon, PerfumeImage, PerfumeInformationArea, PerfumeName, BrandKorean, BrandEnglish};
+export { CarouselSliderContentArea, CarouselSliderArea,LeftArrowIcon, RightArrowIcon, PerfumeImage, PerfumeInformationArea, PerfumeName, BrandKorean, BrandEnglish};

@@ -32,7 +32,7 @@ const FilterSearch: React.FC = () => {
             </RequirementTextArea>  
 
             <FirstButton onPress={goSeasonPage}>
-                <FirstButtonText>계열/분위기/계절</FirstButtonText>
+                <FirstButtonText>계절/분위기/계열</FirstButtonText>
                 </FirstButton>
             <SecondButton onPress={goTPOPage}>
                 <SecondButtonText>TPO</SecondButtonText>

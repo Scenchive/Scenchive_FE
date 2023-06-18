@@ -13,13 +13,14 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const Reviews: React.FC = ({ }) => {
+const Reviews= (route: any ) => {
 
   const navigation = useNavigation();
   const goToWriteReview = () => {
     //@ts-ignore
     navigation.navigate("WriteReview")
   }
+  
 
 
 return (

@@ -17,7 +17,31 @@ class ApiService {
     static GETSIGNUPKEYWORD(){
         return axios.get(API_URL+'/survey');
     }
-    
+    static GETSEARCHSEASONPAGEKEYWORD(){
+        return axios.get(API_URL+'/perfumes/recommend/type');
+    }
+    static GETSEARCHTPOPAGEKEYWORD(){
+        return axios.get(API_URL+'/perfumes/recommend/tpo');
+    }
+    static GETSEARCHKEYWORDRESULT(params){
+        return axios.get(API_URL+'/perfumes/recommend?'+params)
+    }
+    static GETPERFUMEBASICINFORMATION(params){
+        return axios.get(API_URL+'/notesinfo/'+params)
+    }
+    static GETSEASONRECOMMENDATION(userId, seasonId){
+
+        return axios.get(API_URL+'/recommend?userId='+userId+'&season='+seasonId)
+    }
+    static GETBOOKMARKLIST(userId){
+        console.log('userIdddd', userId)
+        return axios.get(API_URL+'/bookmark/'+userId)
+    }
+    static GETRECOMMENDATIONBYBOOKMARK(userId){
+        console.log('userIdddd', userId)
+        return axios.get(API_URL+'/bookmark/recommend/'+userId)
+    }
+
 
     // POST 요청 예시
     //   static postExampleData(data) {
@@ -32,6 +56,22 @@ class ApiService {
     static KEYWORDSIGNUP(data){
         return axios.post(API_URL + '/survey', data)
     }
+    static SETBOOKMARKYES(userId,perfumeId ){
+        return axios.post(API_URL + '/bookmark?userId='+userId+'&perfumeId='+perfumeId)
+    }
+    static REGISTERREVIEW(data){
+        console.log('daata', data)
+        return axios.post(API_URL+'/review/', data);
+    }
+
+    // DELETE 요청 예시
+    //   static postExampleData(data) {
+    //     return axios.delete(API_URL + '/signup', data);
+    //   }
+    static SETBOOKMARKNO(userId,perfumeId ){
+        return axios.delete(API_URL + '/bookmark?userId='+userId+'&perfumeId='+perfumeId)
+    }
+    
 }
 
 export default ApiService;

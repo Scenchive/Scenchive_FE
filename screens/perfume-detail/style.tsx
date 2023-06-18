@@ -37,8 +37,10 @@ const AlertIcon=styled.Image`
     margin-left:auto;
 `
 
+const UserReviewArea=styled.View`
+    margin-bottom:30px
+`
 
 
 
-
-export { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle,AlertIcon, };
+export { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle,AlertIcon, UserReviewArea,};

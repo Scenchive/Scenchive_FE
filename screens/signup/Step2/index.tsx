@@ -20,7 +20,6 @@ import ApiService from '../../../ApiService';
 
 const SignupStep2 = (route: any) => {
   const navigation = useNavigation();
-  const id = useId();
 
   const goToLogin = () => {
     //@ts-ignore
@@ -105,6 +104,7 @@ const SignupStep2 = (route: any) => {
 
     ApiService.KEYWORDSIGNUP(keyword_data)
       .then((res) => {
+
         if (res?.data?.length > 0) {
           console.log('키워드 저장 성공');
           Alert.alert('회원가입에 성공했습니다.');
