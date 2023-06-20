@@ -152,7 +152,7 @@ const PerfumeDetail = (route: any,  ) => {
   const setBookmark = () => {
 
     if (bookmarkYesNo === 'Y') {
-      ApiService.SETBOOKMARKYES(35, perfumeId)
+      ApiService.SETBOOKMARKYES(38, perfumeId)
         .then((data) => {
           if (data?.data) {
             console.log('북마크 설정 성공')
@@ -164,7 +164,7 @@ const PerfumeDetail = (route: any,  ) => {
         })
     }
     else if (bookmarkYesNo === 'N') {
-      ApiService.SETBOOKMARKNO(35, perfumeId)
+      ApiService.SETBOOKMARKNO(38, perfumeId)
         .then((data) => {
           console.log('북마크 삭제 성공')
           console.log('data', data)

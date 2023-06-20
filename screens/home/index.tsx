@@ -35,16 +35,16 @@ const Home: React.FC = ({ }) => {
 
 
   //나중에 바꿔야 함.
-  const [userId, setUserId] = useState(33)
+  const [userId, setUserId] = useState(38)
   const [seasonId, setSeasonId] = useState(36);
 
+  let list=[]
 
-  const getSeasonReommendation = () => {
+  const getSeasonRecommendation = () => {
     ApiService.GETSEASONRECOMMENDATION(userId, seasonId)
       .then((data) => {
-        console.log('data---------------')
-        console.log(data?.data)
-        setResultList(data?.data);
+        list=data?.data;
+        setResultList(list);
 
       }
       ).catch((res) => {
@@ -54,12 +54,12 @@ const Home: React.FC = ({ }) => {
   }
 
   useEffect(() => {
-    getSeasonReommendation();
+    getSeasonRecommendation();
   }, [seasonId])
 
 
   console.log('resultListresultList')
-  console.log(resultList[0]?.brandName)
+  console.log(resultList)
 
 
 
@@ -79,7 +79,7 @@ const Home: React.FC = ({ }) => {
 
       <SeasonRecommendArea>
         <SeasonRecommendTitleArea>
-          <RecommendTitle>'김민지'님을 위한</RecommendTitle>
+          <RecommendTitle>'Kirby'님을 위한</RecommendTitle>
           {!showDropDown ?
             <SelectedSeasonButton onPress={() => useShowDropDown(!showDropDown)}>
               <SelectedSeasonText>
@@ -94,10 +94,9 @@ const Home: React.FC = ({ }) => {
 
 
         <FlatList
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item,index) => index.toString()}
           data={resultList}
           horizontal={true}
-
           renderItem={({item}) => { 
             return <CarouselSlider perfumeName={item?.perfumeName} brandName={item?.brandName} id={item?.id} />
            }}
