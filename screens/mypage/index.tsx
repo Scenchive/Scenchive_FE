@@ -22,7 +22,7 @@ const MyPage = () => {
     //@ts-ignore
     navigation.navigate("Tabs", { screen: "홈" })
   }
-  const [userId, setUserId] = useState(35);
+  const [userId, setUserId] = useState(38);
   const [recommendedPerfumeList, setRecommendedPerfumeList] = useState<PERFUME[]>([]);
   const [bookmarkedPerfumeList, setBookmarkedPerfumeList] = useState<PERFUME[]>([]);
 
@@ -84,7 +84,10 @@ const MyPage = () => {
         <PerfumeListArea>
           {bookmarkedPerfumeList.map((el) => (
             <PerfumeCell>
-              <View style={{ width: "100%", height: 135, backgroundColor: "#B592FF" }}><Text>이미지 준비중입니다.</Text></View>
+              <View style={{ width: "100%", height: 135 }}>
+                {/* <Text>이미지 준비중입니다.</Text> */}
+                <Image style={{resizeMode:"contain", width:"100%", height:110, marginTop:0,  }} source={require('../../assets/images/icon/icon-perfume-pic.png')}/>
+                </View>
               <Text>{el?.brand_name}</Text>
               <Text>{el?.perfume_name}</Text>
             </PerfumeCell>
@@ -101,7 +104,10 @@ const MyPage = () => {
         <PerfumeListArea>
           {recommendedPerfumeList3.map((el) => (
             <PerfumeCell>
-              <View style={{ width: "100%", height: 135, backgroundColor: "#B592FF" }}><Text>이미지 준비중입니다.</Text></View>
+                 <View style={{ width: "100%", height: 135 }}>
+                {/* <Text>이미지 준비중입니다.</Text> */}
+                <Image style={{resizeMode:"contain", width:"100%", height:110, marginTop:0,  }} source={require('../../assets/images/icon/icon-perfume-pic.png')}/>
+                </View>
               <Text>{el?.brand_name}</Text>
               <Text>{el?.perfume_name}</Text>
             </PerfumeCell>
