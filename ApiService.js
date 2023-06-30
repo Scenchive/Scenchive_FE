@@ -29,17 +29,27 @@ class ApiService {
     static GETPERFUMEBASICINFORMATION(params){
         return axios.get(API_URL+'/notesinfo/'+params)
     }
+    static GETPERFUMERATING(perfumeId){
+        return axios.get(API_URL+'/perfumerating/'+perfumeId)
+    }    
     static GETSEASONRECOMMENDATION(userId, seasonId){
 
         return axios.get(API_URL+'/recommend?userId='+userId+'&season='+seasonId)
     }
     static GETBOOKMARKLIST(userId){
-        console.log('userIdddd', userId)
         return axios.get(API_URL+'/bookmark/'+userId)
     }
     static GETRECOMMENDATIONBYBOOKMARK(userId){
-        console.log('userIdddd', userId)
         return axios.get(API_URL+'/bookmark/recommend/'+userId)
+    }
+    static GETREVIEWLIST(perfumeId){
+        return axios.get(API_URL+'/review/'+perfumeId)
+    }
+    static GETSHOPPINGINFORMATION(perfumeName){
+        return axios.get(API_URL+'/product/search?query='+perfumeName)
+    }
+    static GETSEARCHRESULTLIST(searchWord){
+        return axios.get(API_URL+'/search?name='+searchWord)
     }
 
 

@@ -28,15 +28,14 @@ const CarouselSlider: React.FC<PERFUMEDATA> = ({ perfumeName, brandName, id }) =
     //@ts-ignore
     navigation.navigate("Stack",{screen:"PerfumeDetail", params:{perfumeId:id, perfumeName:perfumeName, brandName:brandName}})
   }
-  console.log('으으으으으으으ㅡ', perfumeName)
-  console.log('아아아아', brandName)
+
 
   return (
-    <View >
+    <View style={{width:"100%", paddingLeft:20, paddingRight:20}}>
       <TouchableOpacity style={{width:"100%", display:"flex", flexDirection:"row"}} onPress={goToPerfumeDetail}>
       {/* <LeftArrowIcon source={require('../../../assets/images/icon/icon-btn-left-arrow.png')} /> */}
-      {/* <PerfumeImage source={require('../../../assets/images/dummyImages/BaccaratRouge540Extrait.jpg')} /> */}
-      <Text style={{ backgroundColor: "#DABDFF" }}>이미지 준비중입니다.</Text>
+      <PerfumeImage source={require('../../../assets/images/icon/icon-perfume-pic.png')} />
+      {/* <Text style={{ backgroundColor: "#DABDFF" }}>이미지 준비중입니다.</Text> */}
 
       <PerfumeInformationArea>
         <PerfumeName>{perfumeName} </PerfumeName>

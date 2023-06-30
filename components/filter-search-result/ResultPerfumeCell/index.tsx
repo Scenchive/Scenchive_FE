@@ -25,14 +25,15 @@ const ResultPerfumeCell: React.FC<DATA> = ({ perfumeName, brandName, brandNameEn
   const navigation = useNavigation();
   const goToPerfumeDetailPAGE = () => {
     //@ts-ignore
-    navigation.navigate("PerfumeDetail", { perfumeId: perfumeId })
+    navigation.navigate("PerfumeDetail", { perfumeId: perfumeId, perfumeName:perfumeName, brandName:brandName })
   }
 
 
   return (
     <CellArea >
       <TouchableOpacity onPress={goToPerfumeDetailPAGE}>
-        <PerfumeImage> 이미지 준비중입니다.</PerfumeImage>
+        <PerfumeImage source={require('../../../assets/images/icon/icon-perfume-pic.png')}/>
+        {/* <PerfumeImage> 이미지 준비중입니다.</PerfumeImage> */}
         <PerfumeInformationArea>
 
           <PerfumeName>{perfumeName}</PerfumeName>

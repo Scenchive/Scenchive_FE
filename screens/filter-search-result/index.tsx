@@ -18,10 +18,7 @@ const FilterSearchResult: React.FC = (route: any) => {
     const resultArray = route?.route?.params?.resultList;
 
 
-    console.log('으으으')
-    console.log(selectedKeywordsArray)
-    console.log('응?')
-    console.log(resultArray)
+
 
     const navigation = useNavigation();
     const goSeasonPage = () => {
@@ -56,13 +53,15 @@ const FilterSearchResult: React.FC = (route: any) => {
                 <FlatList
                     columnWrapperStyle={{ justifyContent: "space-between" }}
                     data={resultArray}
-                    renderItem={({ item }) =>
+                    renderItem={({ item }) =>{
+
+                    return(
                         <ResultPerfumeCell
-                            perfumeName={item.perfumeName}
-                            brandName={item.brandName}
-                            brandNameEnglish={item.brandName}
-                            perfumeId={item.id}
-                        />}
+                            perfumeName={item?.perfumeName}
+                            brandName={item?.brandName}
+                            brandNameEnglish={item?.brandName}
+                            perfumeId={item?.id}
+                        />);}}
                     numColumns={2}
                     keyExtractor={item => item.id} />
             </ResultPerfumeListArea>

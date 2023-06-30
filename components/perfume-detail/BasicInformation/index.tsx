@@ -26,9 +26,9 @@ type NOTESDATA = {
 
 const BasicInformation: React.FC<NOTESDATA> = ({topNotes, middleNotes, baseNotes, perfumeName, brandName, perfumeId, }) => {
 
-  console.log('perfumeId', perfumeId)
   const navigation = useNavigation();
   const goToWriteReview = () => {
+    console.log('perfumeNameeeee', perfumeName)
 
     //@ts-ignore
     navigation.navigate("WriteReview", { perfumeName:perfumeName, brandName:brandName, perfumeId:perfumeId})
