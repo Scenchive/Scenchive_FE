@@ -52,6 +52,7 @@ const PerfumeImage=styled.Image`
     resize-mode:contain;
     margin-top:10px;
     margin-bottom:10px;
+    margin-right:10px;
 
 `
 const PerfumeInformationArea=styled.View`

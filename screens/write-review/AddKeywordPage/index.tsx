@@ -19,7 +19,7 @@ const AddKeywordPage: React.FC = (route: any) => {
   const goToWriteReview = () => {
 
     //@ts-ignore
-    navigation.navigate("WriteReview",{keywordList:addOrDeleteKeywordArray, perfumeName:route?.route?.params?.perfumeName, brandName:route?.route?.params?.brandName, perfumeId:route?.route?.params?.perfumeId})
+    navigation.navigate("WriteReview", { keywordList: addOrDeleteKeywordArray, perfumeName: route?.route?.params?.perfumeName, brandName: route?.route?.params?.brandName, perfumeId: route?.route?.params?.perfumeId })
 
 
   }
@@ -33,8 +33,9 @@ const AddKeywordPage: React.FC = (route: any) => {
   const [moodKeywords, setMoodKeywords] = useState<MOODKEYWORDSTYPE[]>([]);
 
   type KEYWORDTAGSTYPE = { id: number; ptag: string; ptag_kr: string; ptagtype_id: number }
-  const [keywordTagsArray, setKeywordTagsArray] = useState<KEYWORDTAGSTYPE[]>([]);
-  let addOrDeleteKeywordArray: any[]=[];
+  const [keywordTagsArray, setKeywordTagsArray] = useState<any[]>([]);
+  let addOrDeleteKeywordArray: any[] = [];
+
 
 
   const getKeywords = () => {
@@ -46,7 +47,7 @@ const AddKeywordPage: React.FC = (route: any) => {
         let fragranceWheelArray = [];
 
         for (let i = 0; i < data?.data.length; i++) {
-          if (data?.data[i]?.ptagtype_id ===3) {
+          if (data?.data[i]?.ptagtype_id === 3) {
             placeArray.push(data?.data[i])
           }
           else if (data?.data[i]?.ptagtype_id === 2) {
@@ -72,71 +73,111 @@ const AddKeywordPage: React.FC = (route: any) => {
   }, [])
 
 
-  const addOrDeleteKeyword = (el: { id: number}) => {
-
-    // let doesExist = addOrDeleteKeywordArray.filter(el=> el===el.id)
-    if (addOrDeleteKeywordArray.indexOf(el.id)===-1) {
-      addOrDeleteKeywordArray.push(el.id);
+  const addOrDeleteKeyword = (el: { id: number }) => {
+    if (keywordTagsArray.indexOf(el.id) === -1) {
+      setKeywordTagsArray((prevState)=>[...prevState, el.id])
     } else {
-        // addOrDeleteKeywordArray.pop(el?.id)
-      addOrDeleteKeywordArray = addOrDeleteKeywordArray.filter(keyword => keyword!== el?.id)
+      addOrDeleteKeywordArray = keywordTagsArray.filter(keyword => keyword !== el?.id)
+      setKeywordTagsArray(addOrDeleteKeywordArray)
     }
-    console.log('addOrDelete', addOrDeleteKeywordArray)
-
   }
 
-  
- 
+  useEffect(()=>{
+    console.log('아아아아ㅏ')
+    console.log(keywordTagsArray)
+
+  },[keywordTagsArray])
+
+
+
+
 
   return (
     <View >
-            <ScrollView>
-      <HeaderArea>
-        <BackButton onPress={() => navigation.goBack()}>
-          <Image style={{ position: "absolute" }} source={require('../../../assets/images/icon/icon-btn-back.png')} />
-        </BackButton>
-        <HeaderTitle>장소/분위기/계열</HeaderTitle >
-      </HeaderArea>
+      <ScrollView>
+        <HeaderArea>
+          <BackButton onPress={() => navigation.goBack()}>
+            <Image style={{ position: "absolute" }} source={require('../../../assets/images/icon/icon-btn-back.png')} />
+          </BackButton>
+          <HeaderTitle>장소/분위기/계열</HeaderTitle >
+        </HeaderArea>
 
-      <InputArea>
-        <KeywordInputSection>
-          <SectionTitle>장소</SectionTitle>
-          <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", }}>
+        <InputArea>
+          <KeywordInputSection>
+            <SectionTitle>장소</SectionTitle>
+            <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", }}>
 
-            {
-              placeKeywords.map((el) => <KeywordButton key={el.id} onPress={() => addOrDeleteKeyword(el)}><KeywordText>{el?.ptag_kr}</KeywordText></KeywordButton>)
-            }
-          </View>
-        </KeywordInputSection>
+              {
+                placeKeywords.map((el, index) =>{
 
-        <KeywordInputSection>
-          <SectionTitle>분위기</SectionTitle>
-          <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", }}>
+                  return(
+                  <KeywordButton
+                    style={{
+                      backgroundColor:( keywordTagsArray.indexOf(el.id)===-1 )? "#F6F2FF" : "#B592FF",
+                    }}
+                    key={el.id}
+                    onPress={() => addOrDeleteKeyword(el)}>
+                    <KeywordText
+                     style={{
+                      color:( keywordTagsArray.indexOf(el.id) === -1 )? "#616161" : "#FFFFFF",
+                    }}
+                    
+                    >{el?.ptag_kr}</KeywordText>
+                  </KeywordButton>
+                  );
+              })}
+            </View>
+          </KeywordInputSection>
 
-            {
-              moodKeywords.map((el) => <KeywordButton key={el.id} onPress={() => addOrDeleteKeyword(el)}><KeywordText>{el?.ptag_kr}</KeywordText></KeywordButton>)
-            }
-          </View>
-        </KeywordInputSection>
+          <KeywordInputSection>
+            <SectionTitle>분위기</SectionTitle>
+            <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", }}>
+
+              {
+                moodKeywords.map((el) => <KeywordButton
+                style={{
+                  backgroundColor:( keywordTagsArray.indexOf(el.id)===-1 )? "#F6F2FF" : "#B592FF",
+                }}
+                 key={el.id} 
+                 onPress={() => addOrDeleteKeyword(el)}>
+                  <KeywordText
+                  style={{
+                    color:( keywordTagsArray.indexOf(el.id) === -1 )? "#616161" : "#FFFFFF",
+                  }}
+                  >{el?.ptag_kr}</KeywordText>
+                  </KeywordButton>)
+              }
+            </View>
+          </KeywordInputSection>
 
 
-        <KeywordInputSection >
-          <SectionTitle>계열</SectionTitle>
-          <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", marginBottom:70,}}>
+          <KeywordInputSection >
+            <SectionTitle>계열</SectionTitle>
+            <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", marginBottom: 70, }}>
 
-            {
-              fragranceWheelKeywords.map((el) => <KeywordButton key={el.id} onPress={() => addOrDeleteKeyword(el)}><KeywordText>{el?.ptag_kr}</KeywordText></KeywordButton>)
-            }
-          </View>
+              {
+                fragranceWheelKeywords.map((el) => <KeywordButton
+                style={{
+                  backgroundColor:( keywordTagsArray.indexOf(el.id)===-1 )? "#F6F2FF" : "#B592FF",
+                }}
+                 key={el.id} 
+                 onPress={() => addOrDeleteKeyword(el)}>
+                  <KeywordText 
+                  style={{
+                      color:( keywordTagsArray.indexOf(el.id) === -1 )? "#616161" : "#FFFFFF",
+                    }}>{el?.ptag_kr}</KeywordText>
+                  </KeywordButton>)
+              }
+            </View>
 
-        </KeywordInputSection>
+          </KeywordInputSection>
 
-      </InputArea>        
+        </InputArea>
 
-        </ScrollView>
-        <GetRecommendationsButton onPress={goToWriteReview}>
-          <GetRecommendationsText>키워드 입력</GetRecommendationsText>
-        </GetRecommendationsButton>
+      </ScrollView>
+      <GetRecommendationsButton onPress={goToWriteReview}>
+        <GetRecommendationsText>키워드 입력</GetRecommendationsText>
+      </GetRecommendationsButton>
     </View>
   );
 };

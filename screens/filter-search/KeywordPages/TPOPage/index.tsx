@@ -72,28 +72,40 @@ const TPOPage: React.FC = () => {
 
 
   const addOrDeleteKeyword = (el: { id: number; ptag: string; ptag_kr: string; ptagtype_id: number; }) => {
-    let doesExist = addOrDeleteKeywordArray.filter(keyword => keyword?.id === el?.id)
-    if (doesExist?.length === 0) {
-      addOrDeleteKeywordArray.push(el);
-    } else {
-      addOrDeleteKeywordArray = addOrDeleteKeywordArray.filter(keyword => keyword?.id !== el?.id)
-    }
+    
+    if (keywordTagsArray.length>0){
+      let exists = false;
+    keywordTagsArray.map((item) => {
+      if (item.id === el.id) {
+        exists = true;
+      }
+    })
+    if (exists) {
+      addOrDeleteKeywordArray = keywordTagsArray.filter(keyword => keyword.id !== el.id)
+      setKeywordTagsArray(addOrDeleteKeywordArray)
+    }else if (!exists){
+      setKeywordTagsArray((prevState) => [...prevState, el])
 
+    }
   }
+    else {
+      setKeywordTagsArray((prevState) => [...prevState, el])
+    }
+  }
+
 
   
   const getRecommendations = () => {
     let keywords=[];
-    for (let i=0;i<addOrDeleteKeywordArray.length;i++){
-      keywords.push('keywordId='+addOrDeleteKeywordArray[i]?.id)
+    for (let i=0;i<keywordTagsArray.length;i++){
+      keywords.push('keywordId='+keywordTagsArray[i]?.id)
     }
     keywords.join('&')
     let params=keywords.join('&')
     if (params){
     ApiService.GETSEARCHKEYWORDRESULT(params)
       .then((data) => {
-          console.log('결과 값', data.data)
-          goToResults(addOrDeleteKeywordArray, data.data)
+          goToResults(keywordTagsArray, data.data)
 
       }).catch((res) => {
         console.log('결과 받아오기 실패')
@@ -120,7 +132,18 @@ const TPOPage: React.FC = () => {
           <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", }}>
 
             {
-              placeKeywords.map((el) => <KeywordButton key={el.id} onPress={() => addOrDeleteKeyword(el)}><KeywordText>{el?.ptag_kr}</KeywordText></KeywordButton>)
+              placeKeywords.map((el) => <KeywordButton
+              style={{
+                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+              }}
+              key={el.id} 
+              onPress={() => addOrDeleteKeyword(el)}>
+                <KeywordText
+                style={{
+                  color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
+                }}
+                >{el?.ptag_kr}</KeywordText>
+                </KeywordButton>)
             }
           </View>
         </KeywordInputSection>
@@ -130,7 +153,19 @@ const TPOPage: React.FC = () => {
           <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", }}>
 
             {
-              moodKeywords.map((el) => <KeywordButton key={el.id} onPress={() => addOrDeleteKeyword(el)}><KeywordText>{el?.ptag_kr}</KeywordText></KeywordButton>)
+              moodKeywords.map((el) => <KeywordButton
+              style={{
+                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+              }}
+              key={el.id}
+               onPress={() => addOrDeleteKeyword(el)}>
+                <KeywordText
+                style={{
+                  color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
+                }}>
+                  {el?.ptag_kr}
+                  </KeywordText>
+                </KeywordButton>)
             }
           </View>
         </KeywordInputSection>
@@ -141,7 +176,19 @@ const TPOPage: React.FC = () => {
           <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", marginBottom:70,}}>
 
             {
-              fragranceWheelKeywords.map((el) => <KeywordButton key={el.id} onPress={() => addOrDeleteKeyword(el)}><KeywordText>{el?.ptag_kr}</KeywordText></KeywordButton>)
+              fragranceWheelKeywords.map((el) => 
+              <KeywordButton
+              style={{
+                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+              }}
+               key={el.id} 
+               onPress={() => addOrDeleteKeyword(el)}>
+                <KeywordText
+                style={{
+                  color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
+                }}
+                >{el?.ptag_kr}</KeywordText>
+                </KeywordButton>)
             }
           </View>
 

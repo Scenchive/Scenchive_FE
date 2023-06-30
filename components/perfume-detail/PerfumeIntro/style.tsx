@@ -34,11 +34,10 @@ const PerfumeIntroductionArea = styled.View`
     display:flex;
     flex-direction:row;
     margin-top:12px;
-    // border:1px solid red;
 `
 
 const PerfumeImage = styled.Image`
-    width:32%;
+    width:100%;
     height:167px;
     margin-right:10px;
     resize-mode:contain;
@@ -49,7 +48,6 @@ const PerfumeIntroductionTexts=styled.View`
     display:flex;
     flex:1;
     flex-direction:column;
-    border:1px solid red;
 
 `
 

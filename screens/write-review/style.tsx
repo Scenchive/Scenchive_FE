@@ -51,7 +51,7 @@ const ReviewArea=styled.View`
     width:100%;
     padding-left:20px;
     padding-right:20px;
-    border:1px solid red;
+    // border:1px solid red;
     margin-top:18px;
 `
 const KeywordArea=styled.View` 

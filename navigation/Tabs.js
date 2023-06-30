@@ -29,7 +29,7 @@ const Tabs = () => (
                     iconName = require('../assets/images/icon/icon-btn-tab-search.png');
                 } else if (route.name === '홈') {
                     iconName = require('../assets/images/icon/icon-btn-tab-home.png');
-                } else if (route.name === '필터검색') {
+                } else if (route.name === '필터추천') {
                     iconName = require('../assets/images/icon/icon-btn-tab-filter.png');
                 } else if (route.name === '커뮤니티') {
                     iconName = require('../assets/images/icon/icon-btn-tab-community.png');
@@ -49,7 +49,7 @@ const Tabs = () => (
         <Tab.Screen name="MY" component={MyPage} screenOptions={{ tabBarIcon: <Image source={require('../assets/images/icon/icon-btn-tab-my.png')} /> }} />
         <Tab.Screen name="검색" component={SearchPage} />
         <Tab.Screen name="홈" component={Home} />
-        <Tab.Screen name="필터검색" component={FilterSearch} />
+        <Tab.Screen name="필터추천" component={FilterSearch} />
         <Tab.Screen name="커뮤니티" component={Community} />
         <Tab.Screen name="회원가입" component={Signup} />
 
