@@ -33,7 +33,6 @@ class ApiService {
         return axios.get(API_URL+'/perfumerating/'+perfumeId)
     }    
     static GETSEASONRECOMMENDATION(userId, seasonId){
-
         return axios.get(API_URL+'/recommend?userId='+userId+'&season='+seasonId)
     }
     static GETBOOKMARKLIST(userId){
@@ -50,6 +49,10 @@ class ApiService {
     }
     static GETSEARCHRESULTLIST(searchWord){
         return axios.get(API_URL+'/search?name='+searchWord)
+    }
+
+    static GETUSERKEYWORDLIST(userId){
+        return axios.get(API_URL+'/keyword/'+userId)
     }
 
 
