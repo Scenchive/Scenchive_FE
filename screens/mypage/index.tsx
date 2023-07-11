@@ -35,6 +35,11 @@ const MyPage = () => {
     navigation.navigate("Tabs", { screen: "홈" })
   }
 
+  const goToModifyPerfumeCell = (userId:number, userKeywordList:KEYWORD[]) => {
+    //@ts-ignore
+    navigation.navigate("Stack", { screen: "ModifyPerfumeCellPage", params:{userId:userId, userKeywordList:userKeywordList} })
+  }
+
   const goToPerfumeDetail = (el: PERFUME) => {
     //@ts-ignore
     navigation.navigate("Stack",{screen:"PerfumeDetail", params:{perfumeId:el?.perfume_id, perfumeName:el?.perfume_name, brandName:el?.brand_name}})
@@ -103,7 +108,7 @@ const MyPage = () => {
         <PerfumeCellArea style={{ marginBottom: 33.3 }}>
           <PerfumeCellTitleArea>
             <PerfumeCellAreaTitle>나의 향수세포</PerfumeCellAreaTitle>
-            <ModifyButton >
+            <ModifyButton onPress={()=>goToModifyPerfumeCell(userId, userKeywordList)} >
               <ModifyButtonText># 수정하기</ModifyButtonText>
             </ModifyButton>
 
