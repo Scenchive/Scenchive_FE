@@ -15,6 +15,8 @@ import SeasonPage from "../screens/filter-search/KeywordPages/SeasonPage/index";
 import TPOPage from '../screens/filter-search/KeywordPages/TPOPage/index';
 import FilterSearchResult from '../screens/filter-search-result/index';
 
+import ModifyPerfumeCellPage from "../screens/mypage/modify-perfume-cell/index"
+
 
 const NativeStack = createNativeStackNavigator();
 
@@ -41,6 +43,7 @@ const Stack = () => {
             <NativeStack.Screen name="TPOPage" component={TPOPage}/>
             <NativeStack.Screen name="FilterSearchResult" component={FilterSearchResult}/>
 
+            <NativeStack.Screen name="ModifyPerfumeCellPage" component={ModifyPerfumeCellPage}/>
         </NativeStack.Navigator>
 
     );
