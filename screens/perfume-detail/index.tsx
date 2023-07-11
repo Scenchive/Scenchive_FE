@@ -94,7 +94,6 @@ const PerfumeDetail = (route: any,  ) => {
   const [shoppingInformation, setShoppingInformation] = useState<SHOPPINGDATA[]>([]);
 
   
-
   const getPerfumeBasicInformation = () => {
     ApiService.GETPERFUMEBASICINFORMATION(perfumeId)
       .then((data) => {
@@ -150,7 +149,6 @@ const PerfumeDetail = (route: any,  ) => {
 
 
   const setBookmark = () => {
-
     if (bookmarkYesNo === 'Y') {
       ApiService.SETBOOKMARKYES(38, perfumeId)
         .then((data) => {
