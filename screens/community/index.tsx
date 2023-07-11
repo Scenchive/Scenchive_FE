@@ -72,6 +72,9 @@ const Community = () => {
         </ListTitleArea>
 
       </ListArea>
+      <View>
+        <Text>깃허브 확인</Text>
+      </View>
 
     </View>
   );
