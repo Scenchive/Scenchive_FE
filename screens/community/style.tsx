@@ -52,27 +52,60 @@ const MenuButtonText=styled.Text`
 const ListArea=styled.View`
     flex-direction:column;
     width:100%;
+    height:410px;
     padding-right:20px;
     padding-left:20px;
+    margin-top:30px;
+    border:1px solid blue;
+
 `
 
 const ListTitleArea=styled.View`
     flex-direction:row;
+    border-bottom-color: #D5D5D5;
+    border-bottom-width:1px;
+    padding-bottom:7px;
+    padding-top:7px;
+
 `
 const ListTitleNumber=styled.Text`
     font-size:15px;
     font-weight:600;
-    font-color:#616161;
+    color:#616161;
+
 `
 const ListTitleMenu=styled.Text`
     font-size:15px;
     font-weight:600;
-    font-color:#616161;
+    color:#616161;
+
 `
 
 const ListTitleContent=styled.Text`
     font-size:15px;
     font-weight:600;
-    font-color:#616161;
+    color:#616161;
 ` 
-export {  HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea,MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, };
+
+const WriteButton=styled.TouchableOpacity`
+    background-color:#B592FF;
+    border-radius:20px;
+    width:22%;
+    margin-right:20px;
+    margin-left:auto;
+    margin-top:25px;
+    align-items:center;
+`
+
+const WriteButtonText=styled.Text`
+    font-size:16px;
+    font-weight:500;
+    color:#FFFFFF;
+    margin-right:12px;
+    margin-left:12px;
+    margin-top:8px;
+    margin-bottom:10px;
+`
+
+
+export {  HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea,MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, WriteButton, WriteButtonText,};

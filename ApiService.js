@@ -50,9 +50,11 @@ class ApiService {
     static GETSEARCHRESULTLIST(searchWord){
         return axios.get(API_URL+'/search?name='+searchWord)
     }
-
     static GETUSERKEYWORDLIST(userId){
         return axios.get(API_URL+'/keyword/'+userId)
+    }
+    static GETBOARDSLIST(){
+        return axios.get(API_URL+'/boards')
     }
 
 
@@ -73,9 +75,12 @@ class ApiService {
         return axios.post(API_URL + '/bookmark?userId='+userId+'&perfumeId='+perfumeId)
     }
     static REGISTERREVIEW(data){
-        console.log('daata', data)
         return axios.post(API_URL+'/review/', data);
     }
+    static REGISTERCOMMUNITYBOARD(data){
+        return axios.post(API_URL+'/board', data)
+    }
+
 
     // DELETE 요청 예시
     //   static postExampleData(data) {

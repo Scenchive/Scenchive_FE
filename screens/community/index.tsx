@@ -9,7 +9,9 @@ import {
   Alert,
 } from 'react-native';
 
-import { HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea, MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, } from './style';
+
+import { HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea, MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, WriteButton, WriteButtonText,} from './style';
+
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../../ApiService';
 
@@ -18,15 +20,35 @@ import ApiService from '../../ApiService';
 const Community = () => {
 
   const navigation = useNavigation();
-  const goToHome = () => {
+// <<<<<<< HEAD
+  const goToWrite = () => {
     //@ts-ignore
-    navigation.navigate("Tabs", { screen: "홈" })
+    navigation.navigate("Stack", { screen: "CommunityWrite" })
   }
 
   const [selectedMenu, setSelectedMenu] = useState("전체");
+  
+  const [boardsList, setBoardsList]=useState();
+
+  const getBoardsList = () => {
+    ApiService.GETBOARDSLIST()
+      .then((data) => {
+        console.log('------------')
+        console.log('------------')
+        console.log(data?.data)
+
+      }
+      ).catch((res) => {
+        console.log('게시글 목록 가져오기 실패')
+        console.log(res)
+      })
+  }
+
+  useEffect(()=>{
+    getBoardsList();
+  },[selectedMenu])
 
 
-  console.log(selectedMenu)
   return (
     <View>
       <HeaderArea>
@@ -66,12 +88,22 @@ const Community = () => {
 
       <ListArea>
         <ListTitleArea>
+          <View style={{width:"17%",alignItems:"center", borderColor:'red', borderWidth:1, }}>
           <ListTitleNumber>번호</ListTitleNumber>
+          </View>
+          <View style={{width:"24%",alignItems:"center", borderColor:'red', borderWidth:1,}}>
           <ListTitleMenu>구분</ListTitleMenu>
+          </View>
+          <View style={{width:"59%",alignItems:"center", borderColor:'red', borderWidth:1,}}>
           <ListTitleContent>내용</ListTitleContent>
+          </View>
         </ListTitleArea>
 
       </ListArea>
+      <WriteButton onPress={goToWrite}>
+        <WriteButtonText>작성하기</WriteButtonText>
+        </WriteButton>
+      
 
     </View>
   );
