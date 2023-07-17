@@ -57,6 +57,7 @@ const ListArea=styled.View`
     padding-left:20px;
     margin-top:30px;
     border:1px solid blue;
+
 `
 
 const ListTitleArea=styled.View`
@@ -65,16 +66,19 @@ const ListTitleArea=styled.View`
     border-bottom-width:1px;
     padding-bottom:7px;
     padding-top:7px;
+
 `
 const ListTitleNumber=styled.Text`
     font-size:15px;
     font-weight:600;
     color:#616161;
+
 `
 const ListTitleMenu=styled.Text`
     font-size:15px;
     font-weight:600;
     color:#616161;
+
 `
 
 const ListTitleContent=styled.Text`
@@ -102,5 +106,6 @@ const WriteButtonText=styled.Text`
     margin-top:8px;
     margin-bottom:10px;
 `
+
 
 export {  HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea,MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, WriteButton, WriteButtonText,};

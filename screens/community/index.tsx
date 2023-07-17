@@ -9,7 +9,9 @@ import {
   Alert,
 } from 'react-native';
 
+
 import { HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea, MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, WriteButton, WriteButtonText,} from './style';
+
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../../ApiService';
 
@@ -18,6 +20,7 @@ import ApiService from '../../ApiService';
 const Community = () => {
 
   const navigation = useNavigation();
+// <<<<<<< HEAD
   const goToWrite = () => {
     //@ts-ignore
     navigation.navigate("Stack", { screen: "CommunityWrite" })
