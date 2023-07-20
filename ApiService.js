@@ -32,8 +32,10 @@ class ApiService {
     static GETPERFUMERATING(perfumeId){
         return axios.get(API_URL+'/perfumerating/'+perfumeId)
     }    
-    static GETSEASONRECOMMENDATION(userId, seasonId){
-        return axios.get(API_URL+'/recommend?userId='+userId+'&season='+seasonId)
+    static GETSEASONRECOMMENDATION(seasonId, myHeader){
+        console.log('header----------------')
+        console.log(myHeader)
+        return axios.get(API_URL+'/recommend?season='+seasonId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETBOOKMARKLIST(userId){
         return axios.get(API_URL+'/bookmark/'+userId)

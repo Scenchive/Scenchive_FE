@@ -76,7 +76,7 @@ const SignupStep2 = (route: any) => {
 
     ApiService.SIGNUP(data)
       .then((data) => {
-        if (data.data > 0) {
+        if (data.data?.email.length > 0) {
           console.log('계정 생성 성공');
           signupKeyword();
         } 
@@ -100,7 +100,8 @@ const SignupStep2 = (route: any) => {
       name: route?.route?.params?.userName,
       utags: addOrDeleteKeywordArray,
     }
-
+    console.log('---------------------')
+    console.log(keyword_data)
 
     ApiService.KEYWORDSIGNUP(keyword_data)
       .then((res) => {
