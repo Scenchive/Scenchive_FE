@@ -12,15 +12,16 @@ import {
 import { HeaderArea, BackButton, HeaderTitle, InputRow, InputTitle, InputArea, LoginButton, ButtonText } from './style';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../../ApiService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
+// https://react-native-async-storage.github.io/async-storage/docs/usage
 
 const Login = () => {
 
   const navigation = useNavigation();
   const goToHome = () => {
     //@ts-ignore
-    navigation.navigate("Tabs",{screen:"홈"})
+    navigation.navigate("Tabs", { screen: "홈" })
   }
   const [email, setEmail] = useState<String>("");
   const [password, setPassword] = useState<String>("")
@@ -60,9 +61,19 @@ const Login = () => {
         //   }
         // })
 
-        .then((data) => {
-          if (data.data > 0) {
+        .then( async (data) => {
+          // .then(  (data) => {
+
+          if (data.data?.token.length > 0) {
             console.log('로그인 성공');
+            // 토큰 저장하기
+            try {
+              await AsyncStorage.setItem('my-token', data.data?.token);
+            } catch (e) {
+              console.log(e)
+              console.log('토큰이 저장되지 않았습니다.')
+            }
+
             goToHome();
           } else {
             console.log('data', data)
@@ -105,7 +116,7 @@ const Login = () => {
 
 
       <LoginButton onPress={login}>
-            {/* <LoginButton onPress={goToHome}> */}
+        {/* <LoginButton onPress={goToHome}> */}
 
         <ButtonText>로그인</ButtonText>
       </LoginButton>

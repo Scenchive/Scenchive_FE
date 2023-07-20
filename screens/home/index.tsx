@@ -7,22 +7,23 @@ import {
   FlatList,
 } from 'react-native';
 
-import { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle, SearchBarArea, SearchInput, SearchIcon, SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle, SelectedSeasonButton, SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon,PerfumeImage, PerfumeInformationArea, PerfumeName,BrandKorean, BrandEnglish,  CarouselSliderContentArea, } from './style';
+import { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle, SearchBarArea, SearchInput, SearchIcon, SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle, SelectedSeasonButton, SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon, PerfumeImage, PerfumeInformationArea, PerfumeName, BrandKorean, BrandEnglish, CarouselSliderContentArea, } from './style';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SeasonDropDown from '../../components/home/SeasonDropDown';
 import CarouselSlider from '../../components/home/CarouselSlider';
 import Tabs from '../../navigation/Tabs';
 import TabsNavigation from '../../navigation/Tabs';
 import ApiService from '../../ApiService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-  type PERFUMEDATA = {
-    brandName: string;
-    perfumeName: string;
-    id: Number;
-    keywordIds: any;
-  };
+type PERFUMEDATA = {
+  brandName: string;
+  perfumeName: string;
+  id: Number;
+  keywordIds: any;
+};
 
 
 
@@ -37,13 +38,23 @@ const Home: React.FC = ({ }) => {
   //나중에 바꿔야 함.
   const [userId, setUserId] = useState(38)
   const [seasonId, setSeasonId] = useState(36);
+  const [myToken, setMyToken] = useState<string>('');
 
-  let list=[]
+  let list = []
 
-  const getSeasonRecommendation = () => {
-    ApiService.GETSEASONRECOMMENDATION(userId, seasonId)
+  const getSeasonRecommendation = async () => {
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        setMyToken(result)
+      }else{
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+
+
+    ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
       .then((data) => {
-        list=data?.data;
+        list = data?.data;
         setResultList(list);
 
       }
@@ -57,9 +68,6 @@ const Home: React.FC = ({ }) => {
     getSeasonRecommendation();
   }, [seasonId])
 
-
-  console.log('resultListresultList')
-  console.log(resultList)
 
 
 
@@ -94,16 +102,16 @@ const Home: React.FC = ({ }) => {
 
 
         <FlatList
-          keyExtractor={(item,index) => index.toString()}
+          keyExtractor={(item, index) => index.toString()}
           data={resultList}
           horizontal={true}
-          renderItem={({item}) => { 
+          renderItem={({ item }) => {
             return <CarouselSlider perfumeName={item?.perfumeName} brandName={item?.brandName} id={item?.id} />
-           }}
-          
+          }}
+
         />
 
- 
+
 
 
       </SeasonRecommendArea>

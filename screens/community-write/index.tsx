@@ -50,12 +50,13 @@ const CommunityWrite = () => {
       .then((data) => {
         console.log('------------')
         console.log('------------')
-        console.log(data?.data)
-
+        console.log(data)
+        goToCommunity();
       }
       ).catch((res) => {
-        console.log('게시글 목록 가져오기 실패')
+        console.log('게시글 등록 실패')
         console.log(res)
+        Alert.alert('게시글 등록 실패했습니다.')
       })
     }else{
       Alert.alert("모든 항목을 입력해주세요.")
@@ -117,7 +118,6 @@ const CommunityWrite = () => {
       </MenuTypeArea>
 
        <ContentArea>
-        {/* <KeyboardAwareScrollView> */}
           <TextInput
           onChangeText={(text)=>setContent(text)}
           placeholder="내용을 입력해주세요."
@@ -126,7 +126,6 @@ const CommunityWrite = () => {
           style={{
             height:400,borderColor:"#DFDFDF", borderWidth:1, textAlignVertical:"top", paddingTop:15, paddingLeft:18, paddingRight:18, paddingBottom:15,}}
           />
-          {/* </KeyboardAwareScrollView> */}
 
       </ContentArea> 
       <ButtonArea>
