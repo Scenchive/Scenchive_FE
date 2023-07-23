@@ -20,21 +20,20 @@ class ApiService {
     static GETSEARCHSEASONPAGEKEYWORD(){
         return axios.get(API_URL+'/perfumes/recommend/type');
     }
-    static GETSEARCHTPOPAGEKEYWORD(){
-        return axios.get(API_URL+'/perfumes/recommend/tpo');
+    static GETSEARCHTPOPAGEKEYWORD(myHeader){
+        console.log('------myh', myHeader)
+        return axios.get(API_URL+'/perfumes/recommend/tpo', {headers:{Authorization:`Bearer ${myHeader}`}});
     }
     static GETSEARCHKEYWORDRESULT(params){
         return axios.get(API_URL+'/perfumes/recommend?'+params)
     }
-    static GETPERFUMEBASICINFORMATION(params){
-        return axios.get(API_URL+'/notesinfo/'+params)
+    static GETPERFUMEBASICINFORMATION(params, myHeader){
+        return axios.get(API_URL+'/notesinfo/'+params, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
-    static GETPERFUMERATING(perfumeId){
-        return axios.get(API_URL+'/perfumerating/'+perfumeId)
+    static GETPERFUMERATING(perfumeId, myHeader){
+        return axios.get(API_URL+'/perfumerating/'+perfumeId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }    
     static GETSEASONRECOMMENDATION(seasonId, myHeader){
-        console.log('header----------------')
-        console.log(myHeader)
         return axios.get(API_URL+'/recommend?season='+seasonId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETBOOKMARKLIST(userId){
@@ -43,11 +42,11 @@ class ApiService {
     static GETRECOMMENDATIONBYBOOKMARK(userId){
         return axios.get(API_URL+'/bookmark/recommend/'+userId)
     }
-    static GETREVIEWLIST(perfumeId){
-        return axios.get(API_URL+'/review/'+perfumeId)
+    static GETREVIEWLIST(perfumeId, myHeader){
+        return axios.get(API_URL+'/review/'+perfumeId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
-    static GETSHOPPINGINFORMATION(perfumeName){
-        return axios.get(API_URL+'/product/search?query='+perfumeName)
+    static GETSHOPPINGINFORMATION(perfumeName, myHeader){
+        return axios.get(API_URL+'/product/search?query='+perfumeName, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETSEARCHRESULTLIST(searchWord){
         return axios.get(API_URL+'/search?name='+searchWord)
@@ -55,10 +54,16 @@ class ApiService {
     static GETUSERKEYWORDLIST(userId){
         return axios.get(API_URL+'/keyword/'+userId)
     }
-    static GETBOARDSLIST(){
-        return axios.get(API_URL+'/boards')
+    static GETBOARDSLIST(myHeader){
+        return axios.get(API_URL+'/boards', {headers:{Authorization:`Bearer ${myHeader}`}})
     }
+    static GETMENUBOARDSLIST(selectedMenu, myHeader){
+        return axios.get(API_URL+'/boardtype/'+selectedMenu+'?page=0', {headers:{Authorization:`Bearer ${myHeader}`}})
+    }
+    static GETBOARDDETAIL(boardId, myHeader){
+        return axios.get(API_URL+'/board/'+boardId, {headers:{Authorization:`Bearer ${myHeader}`}})
 
+    }
 
     // POST 요청 예시
     //   static postExampleData(data) {
@@ -73,14 +78,16 @@ class ApiService {
     static KEYWORDSIGNUP(data){
         return axios.post(API_URL + '/survey', data)
     }
-    static SETBOOKMARKYES(userId,perfumeId ){
-        return axios.post(API_URL + '/bookmark?userId='+userId+'&perfumeId='+perfumeId)
+    static SETBOOKMARKYES(perfumeId, myHeader){
+        console.log(`Bearer ${myHeader}`)
+        return axios.post(API_URL + '/bookmark?perfumeId='+perfumeId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
-    static REGISTERREVIEW(data){
-        return axios.post(API_URL+'/review/', data);
+    static REGISTERREVIEW(data, myHeader){
+        console.log('headdddddddddd', myHeader)
+        return axios.post(API_URL+'/review/', data, {headers:{Authorization:`Bearer ${myHeader}`}});
     }
-    static REGISTERCOMMUNITYBOARD(data){
-        return axios.post(API_URL+'/board', data)
+    static REGISTERCOMMUNITYBOARD(data, myHeader){
+        return axios.post(API_URL+'/board', data, {headers:{Authorization:`Bearer ${myHeader}`} })
     }
 
 
@@ -88,8 +95,9 @@ class ApiService {
     //   static postExampleData(data) {
     //     return axios.delete(API_URL + '/signup', data);
     //   }
-    static SETBOOKMARKNO(userId,perfumeId ){
-        return axios.delete(API_URL + '/bookmark?userId='+userId+'&perfumeId='+perfumeId)
+    static SETBOOKMARKNO(perfumeId, myHeader ){
+        console.log('perfumeId', perfumeId)
+        return axios.delete(API_URL + '/bookmark?perfumeId='+perfumeId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     
 }

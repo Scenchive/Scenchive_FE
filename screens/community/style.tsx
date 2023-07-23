@@ -107,5 +107,29 @@ const WriteButtonText=styled.Text`
     margin-bottom:10px;
 `
 
+const ListRowContent=styled.View`
+    flex-direction:row;
+    padding-bottom:7px;
+    padding-top:7px;
 
-export {  HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea,MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, WriteButton, WriteButtonText,};
+`
+const ListRowNumber=styled.View`
+    flex-direction:row;
+    padding-bottom:7px;
+    padding-top:7px;
+    
+
+`
+const ListRowMenu=styled.View`
+    padding-bottom:7px;
+    padding-top:7px;
+    flex-direction:row;
+
+`
+
+const ListRowArea=styled.View`
+    flex-direction:row;
+` 
+
+
+export {  HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea,MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, WriteButton, WriteButtonText,ListRowArea, ListRowContent, ListRowMenu, ListRowNumber};

@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import ApiService from '../../ApiService';
 import { Platform } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
@@ -31,12 +32,20 @@ const CommunityWrite = () => {
   const [selectedMenu, setSelectedMenu] = useState("");
   const [title, setTitle]=useState('');
   const [content, setContent]=useState('');
+  const [myToken, setMyToken] = useState<string>('');
 
-  console.log(title)
-  console.log(content)
-  console.log(selectedMenu)
 
-  const registerCommunityBoard = () => {
+  const registerCommunityBoard = async() => {
+
+
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        setMyToken(result)
+      }else{
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+    
     const data = {
       title: title,
       body: content,
@@ -46,7 +55,7 @@ const CommunityWrite = () => {
       }
     }
     if (title.length>0&&content.length>0&&data?.boardtype?.id>0&&data?.boardtype?.boardtype_name.length>0){
-    ApiService.REGISTERCOMMUNITYBOARD(data)
+    ApiService.REGISTERCOMMUNITYBOARD(data, myToken)
       .then((data) => {
         console.log('------------')
         console.log('------------')

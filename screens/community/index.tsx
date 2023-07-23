@@ -10,32 +10,52 @@ import {
 } from 'react-native';
 
 
-import { HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea, MenuButton, MenuButtonText,ListArea, ListTitleArea,ListTitleNumber,ListTitleMenu,ListTitleContent, WriteButton, WriteButtonText,} from './style';
+import { HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea, MenuButton, MenuButtonText, ListArea, ListTitleArea, ListTitleNumber, ListTitleMenu, ListTitleContent, WriteButton, WriteButtonText, ListRowArea, ListRowContent, ListRowMenu, ListRowNumber } from './style';
 
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../../ApiService';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
 const Community = () => {
 
   const navigation = useNavigation();
-// <<<<<<< HEAD
+  // <<<<<<< HEAD
   const goToWrite = () => {
     //@ts-ignore
     navigation.navigate("Stack", { screen: "CommunityWrite" })
   }
 
-  const [selectedMenu, setSelectedMenu] = useState("전체");
-  
-  const [boardsList, setBoardsList]=useState();
+  const goToCommunityDetail = (boardId: number) => {
+    //@ts-ignore
+    navigation.navigate("Stack",{screen:"CommunityDetail", params:{communityId:boardId,}})
+  }
 
-  const getBoardsList = () => {
-    ApiService.GETBOARDSLIST()
+
+  type BOARDTYPE = {
+    boardtype_name: string,
+    id: number,
+    title: string,
+  }
+  const [selectedMenu, setSelectedMenu] = useState("전체");
+  const [myToken, setMyToken] = useState<string>('');
+  const [boardsList, setBoardsList] = useState<BOARDTYPE[]>();
+
+  const getBoardsList = async () => {
+
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        setMyToken(result)
+      } else {
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+
+
+    ApiService.GETBOARDSLIST(myToken)
       .then((data) => {
-        console.log('------------')
-        console.log('------------')
-        console.log(data?.data)
+        setBoardsList(data?.data)
 
       }
       ).catch((res) => {
@@ -44,9 +64,35 @@ const Community = () => {
       })
   }
 
-  useEffect(()=>{
-    getBoardsList();
-  },[selectedMenu])
+
+  const getMenuBoardsList = (boardType: number) => {
+    ApiService.GETMENUBOARDSLIST(boardType, myToken)
+      .then((data) => {
+        setBoardsList(data?.data)
+      }
+      ).catch((res) => {
+        console.log('선택된 메뉴의 게시글 목록 가져오기 실패')
+        console.log(res)
+      })
+  }
+
+  useEffect(() => {
+    if (selectedMenu === "전체") {
+      getBoardsList();
+    }
+    else {
+      if (selectedMenu === "정/가품") {
+        getMenuBoardsList(2);
+      } else if (selectedMenu === "Q&A") {
+        getMenuBoardsList(1)
+      } else if (selectedMenu === "자유") {
+        getMenuBoardsList(3)
+      }
+    }
+  }, [selectedMenu])
+
+
+
 
 
   return (
@@ -88,22 +134,41 @@ const Community = () => {
 
       <ListArea>
         <ListTitleArea>
-          <View style={{width:"17%",alignItems:"center", borderColor:'red', borderWidth:1, }}>
-          <ListTitleNumber>번호</ListTitleNumber>
+          <View style={{ width: "17%", alignItems: "center" }}>
+            <ListTitleNumber>번호</ListTitleNumber>
           </View>
-          <View style={{width:"24%",alignItems:"center", borderColor:'red', borderWidth:1,}}>
-          <ListTitleMenu>구분</ListTitleMenu>
+          <View style={{ width: "24%", alignItems: "center" }}>
+            <ListTitleMenu>구분</ListTitleMenu>
           </View>
-          <View style={{width:"59%",alignItems:"center", borderColor:'red', borderWidth:1,}}>
-          <ListTitleContent>내용</ListTitleContent>
+          <View style={{ width: "59%", alignItems: "center" }}>
+            <ListTitleContent>내용</ListTitleContent>
           </View>
         </ListTitleArea>
+
+        <ListRowArea>
+          {boardsList?.map((el) =>
+            <TouchableOpacity key={el?.id} onPress={()=>goToCommunityDetail(el?.id)}
+            style={{flexDirection:"row", borderWidth:1, borderTopColor:"#D5D5D5",borderBottomColor:"#D5D5D5", borderLeftColor:"transparent", borderRightColor:"transparent",}}>
+              <View style={{ width: "17%", alignItems: "center", }}>
+                <ListRowNumber><Text> {el?.id} </Text></ListRowNumber>
+              </View>
+              <View style={{ width: "24%", alignItems: "center",  }}>
+                <ListRowMenu><Text> {el?.boardtype_name==="fake"?"정/가품":el?.boardtype_name==="qna"?"Q&A":"자유"}  </Text></ListRowMenu>
+              </View>
+              <View style={{ width: "59%", alignItems: "center",  }}>
+                <ListRowContent><Text>  {el?.title} </Text></ListRowContent>
+              </View>
+            </TouchableOpacity>
+          )}
+
+
+        </ListRowArea>
 
       </ListArea>
       <WriteButton onPress={goToWrite}>
         <WriteButtonText>작성하기</WriteButtonText>
-        </WriteButton>
-      
+      </WriteButton>
+
 
     </View>
   );

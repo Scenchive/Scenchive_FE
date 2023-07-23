@@ -20,6 +20,7 @@ import Reviews from '../../components/perfume-detail/BasicInformation/Reviews';
 import UserReview from '../../components/perfume-detail/BasicInformation/UserReview';
 import ShoppingRow from '../../components/perfume-detail/ShoppingInformation/ShoppingRow';
 import ApiService from '../../ApiService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 // type PERFUMEPARAMS = {
@@ -44,16 +45,16 @@ type PERFUMEDATA = {
 //   }
 // }
 
-type PERFUMERATINGS={
-  perfumeId:number;
-  ratingAvg:number;
-  longevityAvg:number;
-  sillageAvg:number;
-  seasonAvg:{
-    spring:number;
-    summer:number;
-    fall:number;
-    winter:number;
+type PERFUMERATINGS = {
+  perfumeId: number;
+  ratingAvg: number;
+  longevityAvg: number;
+  sillageAvg: number;
+  seasonAvg: {
+    spring: number;
+    summer: number;
+    fall: number;
+    winter: number;
   };
 }
 
@@ -73,12 +74,13 @@ type SHOPPINGDATA = {
   mallName: string;
 }
 
-const PerfumeDetail = (route: any,  ) => {
-  
-  
+const PerfumeDetail = (route: any,) => {
+
+
   const perfumeName1 = route?.route?.params?.perfumeName;
   const brandName = route?.route?.params?.brandName;
   const perfumeId = route?.route?.params?.perfumeId;
+  const [myToken, setMyToken] = useState<string>('');
 
 
   const navigation = useNavigation();
@@ -88,14 +90,25 @@ const PerfumeDetail = (route: any,  ) => {
   }
   const [clickedTab, setClickedTab] = useState<string>('기본정보');
   const [perfumeBasicInformation, setPerfumeBasicInformation] = useState<PERFUMEDATA>();
-  const [perfumeRatingInformation, setPerfumeRatingInformation]=useState<PERFUMERATINGS>();
+  const [perfumeRatingInformation, setPerfumeRatingInformation] = useState<PERFUMERATINGS>();
   const [bookmarkYesNo, setBookmarkYesNo] = useState('');
-  const [reviewList, setReviewList]=useState<REVIEWDATA[]>([])
+  const [reviewList, setReviewList] = useState<REVIEWDATA[]>([])
   const [shoppingInformation, setShoppingInformation] = useState<SHOPPINGDATA[]>([]);
 
-  
+
+  const getToken = async () => {
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        setMyToken(result)
+      } else {
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+  }
+
+
   const getPerfumeBasicInformation = () => {
-    ApiService.GETPERFUMEBASICINFORMATION(perfumeId)
+    ApiService.GETPERFUMEBASICINFORMATION(perfumeId, myToken)
       .then((data) => {
         setPerfumeBasicInformation(data?.data)
       }
@@ -105,11 +118,14 @@ const PerfumeDetail = (route: any,  ) => {
       })
   }
 
-  
+
   const getPerfumeRatingInformation = () => {
-    ApiService.GETPERFUMERATING(perfumeId)
+
+    ApiService.GETPERFUMERATING(perfumeId, myToken)
       .then((data) => {
         setPerfumeRatingInformation(data?.data)
+        console.log('향수 평점 정보 받아오기 성공')
+
       }
       ).catch((res) => {
         console.log('향수 평점 정보 받아오기 실패')
@@ -119,9 +135,13 @@ const PerfumeDetail = (route: any,  ) => {
 
 
   const getReviewList = () => {
-    ApiService.GETREVIEWLIST(perfumeId)
+    ApiService.GETREVIEWLIST(perfumeId, myToken)
       .then((data) => {
+        console.log("dddddddddddddddddddddddd")
+        console.log('data', data)
         setReviewList(data?.data)
+        console.log('향수 리뷰 받아오기 성공')
+
       }
       ).catch((res) => {
         console.log('향수 리뷰 받아오기 실패')
@@ -130,27 +150,34 @@ const PerfumeDetail = (route: any,  ) => {
   }
 
   const getShoppingInformation = () => {
-    ApiService.GETSHOPPINGINFORMATION(perfumeName1)
+    ApiService.GETSHOPPINGINFORMATION(perfumeName1, myToken)
       .then((data) => {
         setShoppingInformation(data?.data)
+        console.log('향수 쇼핑 정보 받아오기 성공')
       }
       ).catch((res) => {
-        console.log('향수 기본 정보 받아오기 실패')
+        console.log('향수 쇼핑 정보 받아오기 실패')
         console.log(res)
       })
   }
+
+  useEffect(() => {
+    getToken();
+  }, [perfumeId])
+
+
 
   useEffect(() => {
     getPerfumeBasicInformation();
     getPerfumeRatingInformation();
     getReviewList();
     getShoppingInformation();
-  }, [route?.route?.params])
+  }, [myToken])
 
 
   const setBookmark = () => {
     if (bookmarkYesNo === 'Y') {
-      ApiService.SETBOOKMARKYES(38, perfumeId)
+      ApiService.SETBOOKMARKYES(perfumeId, myToken)
         .then((data) => {
           if (data?.data) {
             console.log('북마크 설정 성공')
@@ -162,7 +189,7 @@ const PerfumeDetail = (route: any,  ) => {
         })
     }
     else if (bookmarkYesNo === 'N') {
-      ApiService.SETBOOKMARKNO(38, perfumeId)
+      ApiService.SETBOOKMARKNO(perfumeId, myToken)
         .then((data) => {
           console.log('북마크 삭제 성공')
           console.log('data', data)
@@ -180,6 +207,9 @@ const PerfumeDetail = (route: any,  ) => {
   }, [bookmarkYesNo])
 
 
+console.log('------------------------------')
+console.log(reviewList)
+console.log('----------')
 
   return (
     <View style={{ height: "100%" }}>
@@ -198,16 +228,16 @@ const PerfumeDetail = (route: any,  ) => {
 
               <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
             </HeaderArea>
-            <PerfumeIntro 
-             perfumeName={perfumeName1} 
-             brandName={brandName} 
-             bookmarkYesNo={bookmarkYesNo} 
-             setBookmarkYesNo={setBookmarkYesNo} 
-             ratingAvg={perfumeRatingInformation?.ratingAvg||0}
-             longetivityAvg={perfumeRatingInformation?.longevityAvg||0}
-             seasonAvg={perfumeRatingInformation?.seasonAvg||0}
-             sillageAvg={perfumeRatingInformation?.sillageAvg||0}
-             />
+            <PerfumeIntro
+              perfumeName={perfumeName1}
+              brandName={brandName}
+              bookmarkYesNo={bookmarkYesNo}
+              setBookmarkYesNo={setBookmarkYesNo}
+              ratingAvg={perfumeRatingInformation?.ratingAvg || 0}
+              longetivityAvg={perfumeRatingInformation?.longevityAvg || 0}
+              seasonAvg={perfumeRatingInformation?.seasonAvg || 0}
+              sillageAvg={perfumeRatingInformation?.sillageAvg || 0}
+            />
             <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
             <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName1} brandName={brandName} perfumeId={perfumeId} />
           </View>
@@ -232,19 +262,19 @@ const PerfumeDetail = (route: any,  ) => {
             </LogoNameArea>
             <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
           </HeaderArea>
-          <PerfumeIntro   perfumeName={perfumeName1} 
-             brandName={brandName} 
-             bookmarkYesNo={bookmarkYesNo} 
-             setBookmarkYesNo={setBookmarkYesNo} 
-             ratingAvg={perfumeRatingInformation?.ratingAvg||0}
-             longetivityAvg={perfumeRatingInformation?.longevityAvg||0}
-             seasonAvg={perfumeRatingInformation?.seasonAvg||0}
-             sillageAvg={perfumeRatingInformation?.sillageAvg||0}/>
+          <PerfumeIntro perfumeName={perfumeName1}
+            brandName={brandName}
+            bookmarkYesNo={bookmarkYesNo}
+            setBookmarkYesNo={setBookmarkYesNo}
+            ratingAvg={perfumeRatingInformation?.ratingAvg || 0}
+            longetivityAvg={perfumeRatingInformation?.longevityAvg || 0}
+            seasonAvg={perfumeRatingInformation?.seasonAvg || 0}
+            sillageAvg={perfumeRatingInformation?.sillageAvg || 0} />
           <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
           <ShoppingInformation />
 
           {shoppingInformation?.map((el) => (
-          <ShoppingRow cleanedTitle={el?.cleanedTitle} image={el?.image} link={el?.link} lprice={el?.lprice} mallName={el?.mallName}/>
+            <ShoppingRow cleanedTitle={el?.cleanedTitle} image={el?.image} link={el?.link} lprice={el?.lprice} mallName={el?.mallName} />
           ))}
 
 

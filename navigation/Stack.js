@@ -18,6 +18,7 @@ import FilterSearchResult from '../screens/filter-search-result/index';
 import ModifyPerfumeCellPage from "../screens/mypage/modify-perfume-cell/index"
 
 import CommunityWrite from "../screens/community-write/index"
+import CommunityDetail from "../screens/community-detail/index"
 
 const NativeStack = createNativeStackNavigator();
 
@@ -47,7 +48,8 @@ const Stack = () => {
             <NativeStack.Screen name="ModifyPerfumeCellPage" component={ModifyPerfumeCellPage}/>
         
             <NativeStack.Screen name="CommunityWrite" component={CommunityWrite}/>
-        
+            <NativeStack.Screen name="CommunityDetail" component={CommunityDetail}/>
+
         </NativeStack.Navigator>
 
     );
