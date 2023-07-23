@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import ApiService from '../../../ApiService';
 import { ScrollView } from 'react-native';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddKeywordPage: React.FC = (route: any) => {
 
@@ -32,14 +33,31 @@ const AddKeywordPage: React.FC = (route: any) => {
   const [fragranceWheelKeywords, setFragranceWheelKeywords] = useState<FRAGRANCEWHEELKEYWORDSTYPE[]>([]);
   const [moodKeywords, setMoodKeywords] = useState<MOODKEYWORDSTYPE[]>([]);
 
+  const [myToken, setMyToken] = useState<string>('');
+
+
   type KEYWORDTAGSTYPE = { id: number; ptag: string; ptag_kr: string; ptagtype_id: number }
   const [keywordTagsArray, setKeywordTagsArray] = useState<any[]>([]);
   let addOrDeleteKeywordArray: any[] = [];
 
 
 
-  const getKeywords = () => {
-    ApiService.GETSEARCHTPOPAGEKEYWORD()
+  const getToken = async () => {
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        setMyToken(result)
+      } else {
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+  }
+
+
+
+  const getKeywords =  () => {
+
+    console.log('myyyyyyyyyyyyyy', myToken)
+    ApiService.GETSEARCHTPOPAGEKEYWORD(myToken)
       .then((data) => {
 
         let placeArray = [];
@@ -69,8 +87,12 @@ const AddKeywordPage: React.FC = (route: any) => {
   }
 
   useEffect(() => {
-    getKeywords();
+    getToken();
   }, [])
+
+  useEffect(()=>{
+    getKeywords();
+  },[myToken])
 
 
   const addOrDeleteKeyword = (el: { id: number }) => {

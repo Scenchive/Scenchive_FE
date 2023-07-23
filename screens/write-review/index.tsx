@@ -15,12 +15,13 @@ import { SafeAreaView } from 'react-native';
 import { Alert } from 'react-native';
 import ApiService from '../../ApiService';
 import { ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WriteReview: React.FC = (route: any) => {
   const perfumeName = route?.route?.params?.perfumeName;
   const brandName = route?.route?.params.brandName;
   const perfumeId = route?.route?.params?.perfumeId;
-  const [memberId, setMemberId] = useState(38);
+  const [myToken, setMyToken] = useState<string>('');
   const [rating, setRating] = useState<Number>();
   const [longevity, setLongetivity] = useState<Number>();
   const [sillage, setSillage] = useState<Number>();
@@ -51,9 +52,19 @@ const WriteReview: React.FC = (route: any) => {
   }
 
 
-  const registerReview = () => {
+  const registerReview = async() => {
+
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        console.log('reeeee', result)
+        setMyToken(result)
+      }else{
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+    
     let review_data = {
-      "memberId": memberId,
+      
       "perfumeId": perfumeId,
       "rating": rating,
       "longevity": longevity,
@@ -63,7 +74,7 @@ const WriteReview: React.FC = (route: any) => {
       "ptagIds": ptagIds,
     };
 
-    ApiService.REGISTERREVIEW(review_data)
+    ApiService.REGISTERREVIEW(review_data, myToken)
       .then((data) => {
         if (data?.data === "리뷰가 성공적으로 등록되었습니다.") {
           console.log(data?.data)
