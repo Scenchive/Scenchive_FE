@@ -55,11 +55,8 @@ const AddKeywordPage: React.FC = (route: any) => {
 
 
   const getKeywords =  () => {
-
-    console.log('myyyyyyyyyyyyyy', myToken)
     ApiService.GETSEARCHTPOPAGEKEYWORD(myToken)
       .then((data) => {
-
         let placeArray = [];
         let moodArray = [];
         let fragranceWheelArray = [];

@@ -62,7 +62,9 @@ class ApiService {
     }
     static GETBOARDDETAIL(boardId, myHeader){
         return axios.get(API_URL+'/board/'+boardId, {headers:{Authorization:`Bearer ${myHeader}`}})
-
+    }
+    static GETCOMMENTSLIST(boardId, myHeader){
+        return axios.get(API_URL+'/comments/board/'+boardId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
 
     // POST 요청 예시
@@ -80,7 +82,8 @@ class ApiService {
     }
     static SETBOOKMARKYES(perfumeId, myHeader){
         console.log(`Bearer ${myHeader}`)
-        return axios.post(API_URL + '/bookmark?perfumeId='+perfumeId, {headers:{Authorization:`Bearer ${myHeader}`}})
+        console.log(perfumeId)
+        return axios.post(API_URL + '/bookmark?perfumeId='+perfumeId,{headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static REGISTERREVIEW(data, myHeader){
         console.log('headdddddddddd', myHeader)
@@ -88,6 +91,10 @@ class ApiService {
     }
     static REGISTERCOMMUNITYBOARD(data, myHeader){
         return axios.post(API_URL+'/board', data, {headers:{Authorization:`Bearer ${myHeader}`} })
+    }
+    static REGISTERCOMMENT(boardId, commentWrite,myHeader){
+        return axios.post(API_URL+'/comments/board/'+boardId, commentWrite,{headers:{Authorization:`Bearer ${myHeader}`}})
+
     }
 
 
