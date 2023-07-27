@@ -125,4 +125,115 @@ const WriteDateText=styled.Text`
     font-weight:400;
 `
 
-export {  HeaderArea, HeaderTitle, BackButton,TitleWriteArea, TitleText, BoardHeaderArea, MenuTypeButton, MenuTypeButtonText, TitleArea, TitleAreaText,TitleInformationArea, WriterNameArea, WriterNameText, WriteDateArea, WriteDateText,};
+const BoardContentArea=styled.View`
+    width:100%;
+    padding-left:20px;
+    padding-right:20px;
+    
+`
+
+const BoardContentText=styled.Text`
+    color:#717171;
+    font-size:15px;
+    margin-top:30px;
+    margin-bottom:30px;
+    
+
+`
+
+const CommentInputArea=styled.View`
+    width:100%;
+   height:30px;
+    flex:1;
+    flex-direction:row;
+    justify-content:flex-end;
+    border-width:1px;
+    margin-top:auto;
+    border-color:#DFDFDF;
+
+`
+
+const  RegisterCommentButton=styled.TouchableOpacity`
+    width:15%;
+    height:32px;
+    padding-top:4px;
+    padding-bottom:6px;
+    background-color:#B592FF;
+    align-items:center;
+    justify-content:center;
+    margin-top:auto;
+    margin-bottom:10px;
+    margin-right:5px;
+    border-radius:5px;
+
+`
+
+const RegisterCommentButtonText=styled.Text`
+    color:#FFFFFF;
+    font-size:16px;
+    font-weight:600;
+`
+const CommentListArea=styled.View`
+    flex-direction:column;
+
+
+`
+
+const CommentRowArea=styled.View`
+    flex-direction:row;
+    border-width:1px;
+    border-top-color:#E8E8E8;
+    border-left-color:transparent;
+    border-right-color:transparent;
+    border-bottom-color:transparent;
+    margin-left:20px;
+    margin-right:20px;
+    padding-top:17px;
+    padding-bottom:17px;
+
+`
+
+const CommentImage=styled.Image`
+    width:33;
+    height:33;
+    resize-mode:cover;
+    margin-right:9px;
+`
+
+const TextsArea=styled.View`
+    flex-direction:column;
+    width:88%;
+`
+
+const CommentUserName=styled.Text`
+    color:#616161;
+    font-size:13px;
+    font-weight:500;
+`
+
+const CommentContentArea=styled.View`
+    width:100%;
+    padding-top:4px;
+    padding-bottom:2px;
+`
+
+const CommentContent=styled.Text`
+    color:#717171;
+    font-size:13px;
+`
+ 
+const CommentDate=styled.Text`
+    color:#A0A0A0;
+    font-size:11px;
+
+`
+
+export {  HeaderArea, HeaderTitle, BackButton,TitleWriteArea,
+     TitleText, BoardHeaderArea, MenuTypeButton, MenuTypeButtonText,
+      TitleArea, TitleAreaText,TitleInformationArea, WriterNameArea, 
+      WriterNameText, WriteDateArea, WriteDateText,BoardContentArea,
+      BoardContentText,CommentInputArea,  RegisterCommentButton, 
+      RegisterCommentButtonText, CommentListArea, CommentRowArea,
+       CommentImage, TextsArea, CommentUserName,
+       CommentContentArea, CommentContent, CommentDate,
+    };
