@@ -36,11 +36,11 @@ class ApiService {
     static GETSEASONRECOMMENDATION(seasonId, myHeader){
         return axios.get(API_URL+'/recommend?season='+seasonId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
-    static GETBOOKMARKLIST(userId){
-        return axios.get(API_URL+'/bookmark/'+userId)
+    static GETBOOKMARKLIST(myHeader){
+        return axios.get(API_URL+'/bookmark?page=0',{headers:{Authorization:`Bearer ${myHeader}`}})
     }
-    static GETRECOMMENDATIONBYBOOKMARK(userId){
-        return axios.get(API_URL+'/bookmark/recommend/'+userId)
+    static GETRECOMMENDATIONBYBOOKMARK(myHeader){
+        return axios.get(API_URL+'/bookmark/recommend?page=0',{headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETREVIEWLIST(perfumeId, myHeader){
         return axios.get(API_URL+'/review/'+perfumeId, {headers:{Authorization:`Bearer ${myHeader}`}})
@@ -51,8 +51,8 @@ class ApiService {
     static GETSEARCHRESULTLIST(searchWord){
         return axios.get(API_URL+'/search?name='+searchWord)
     }
-    static GETUSERKEYWORDLIST(userId){
-        return axios.get(API_URL+'/keyword/'+userId)
+    static GETUSERKEYWORDLIST(myHeader){
+        return axios.get(API_URL+'/keyword', {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETBOARDSLIST(myHeader){
         return axios.get(API_URL+'/boards', {headers:{Authorization:`Bearer ${myHeader}`}})
@@ -94,8 +94,20 @@ class ApiService {
     }
     static REGISTERCOMMENT(boardId, commentWrite,myHeader){
         return axios.post(API_URL+'/comments/board/'+boardId, commentWrite,{headers:{Authorization:`Bearer ${myHeader}`}})
-
     }
+    static REGISTERREPLY(boardId, replyWrite,commentId, myHeader){
+        return axios.post(API_URL+'/comments/board/'+boardId+'/reply/'+commentId, replyWrite,{headers:{Authorization:`Bearer ${myHeader}`}})
+    }
+
+    // set
+    static PUTMODIFYMYKEYWORDS(data,myHeader){
+        console.log('----')
+        console.log(data)
+        console.log('토큰')
+        console.log(myHeader)
+        return axios.put(API_URL+'/keyword', data,{headers:{Authorization:`Bearer ${myHeader}`}})
+    }
+    
 
 
     // DELETE 요청 예시

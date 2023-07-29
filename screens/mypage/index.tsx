@@ -10,24 +10,32 @@ import {
 } from 'react-native';
 
 import { HeaderArea, BackButton, HeaderTitle, PerfumeCellArea, PerfumeCellTitleArea, PerfumeCellAreaTitle, ModifyButton, ModifyButtonText, PerfumeCellListArea, PerfumeArea, PerfumeTitleArea, PerfumeAreaTitle, MoreButton, MoreText, PerfumeListArea, PerfumeCell, } from './style';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import ApiService from '../../ApiService';
 import { ScrollView } from "react-native";
 import MyPerfumeCell from "../../components/mypage/MyPerfumeCell";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
 const MyPage = () => {
 
-  const [userId, setUserId] = useState(38);
-
+  const [myToken, setMyToken]=useState("")
   const [userKeywordList, setUserKeywordList] = useState<KEYWORD[]>([]);
   const [recommendedPerfumeList, setRecommendedPerfumeList] = useState<PERFUME[]>([]);
-  const [bookmarkedPerfumeList, setBookmarkedPerfumeList] = useState<PERFUME[]>([]);
+  const [bookmarkedPerfumeList, setBookmarkedPerfumeList] = useState<PERFUME[]>();
 
-  let recommendedPerfumeList3 = recommendedPerfumeList.slice(0, 3)
-  type PERFUME = { brand_name: string, perfume_name: string, perfume_id:number }
+  type PERFUME = { brand_name: string, perfume_name: string, perfume_id: number }
   type KEYWORD = { id: number, utag: string, utag_kr: string, utagtype_id: number }
+  type BOOKMARKEDLIST ={totalBookmarkPerfumeCount:number, perfumes:
+    [{
+      perfume_id:number,
+      perfume_name:string,
+      brand_name:string,
+    }]
+  }
+
+  const isFocused=useIsFocused();
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -35,61 +43,94 @@ const MyPage = () => {
     navigation.navigate("Tabs", { screen: "홈" })
   }
 
-  const goToModifyPerfumeCell = (userId:number, userKeywordList:KEYWORD[]) => {
+  const goToModifyPerfumeCell = (userKeywordList: KEYWORD[]) => {
     //@ts-ignore
-    navigation.navigate("Stack", { screen: "ModifyPerfumeCellPage", params:{userId:userId, userKeywordList:userKeywordList} })
+    navigation.navigate("Stack", { screen: "ModifyPerfumeCellPage", params: { userKeywordList: userKeywordList } })
   }
 
   const goToPerfumeDetail = (el: PERFUME) => {
     //@ts-ignore
-    navigation.navigate("Stack",{screen:"PerfumeDetail", params:{perfumeId:el?.perfume_id, perfumeName:el?.perfume_name, brandName:el?.brand_name}})
+    navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: el?.perfume_id, perfumeName: el?.perfume_name, brandName: el?.brand_name } })
   }
 
-  const getUserKeywordList = () => {
-    ApiService.GETUSERKEYWORDLIST(userId)
-      .then((data) => {
-        // console.log('data-=-=-=-=-=-=')
-        // console.log(data.data)
-        setUserKeywordList(data?.data.slice(0,8))
+  // const getMyToken = () => {
+  //   AsyncStorage.getItem('my-token', (err, result) => {
+  //     if (result) {
+  //       setMyToken(result)
+  //     } else {
+  //       console.log('토큰을 가져올 수 없습니다.')
+  //     }
+  //   });
+  // }
 
+  const getUserKeywordList =  (myToken: any) => {
+      ApiService.GETUSERKEYWORDLIST(myToken)
+        .then((data) => {
+          setUserKeywordList(data?.data.slice(0, 8))
+        }).catch(error => {
+          console.log(error)
+        })
+    }
+  
+
+  const getRecommendationByBookmark =  (myToken: string) => {
+    if (myToken){
+    ApiService.GETRECOMMENDATIONBYBOOKMARK(myToken)
+      .then((data) => {
+
+        if (data?.data?.perfumes.length > 3) {
+          setRecommendedPerfumeList(data?.data?.perfumes.slice(0, 3))
+        } else {
+          setRecommendedPerfumeList(data?.data?.perfumes)
+        }
+      }).catch(function (err) {
+        console.log(`Error Message: ${err}`);
       })
+    }
   }
 
 
-  const getRecommendationByBookmark = () => {
-    ApiService.GETRECOMMENDATIONBYBOOKMARK(userId)
-      .then((data) => {
-        // console.log('-----------------------')
-        // console.log('data', data?.data.slice(0,3))
-        setRecommendedPerfumeList(data?.data.slice(0, 3))
-      }
-      ).catch(function (err) {
-        console.log(`Error Message: ${err}`);
-      }
-      )
+  const getBookmarkedList =  (myToken: string) => {
+    if (myToken) {
+      ApiService.GETBOOKMARKLIST(myToken)
+        .then((data) => {
+  
+          if (data?.data.length > 3) {
+            setBookmarkedPerfumeList(data?.data?.perfumes.slice(0, 3))
+          } else {
+            setBookmarkedPerfumeList(data?.data?.perfumes)
+          }
+        }
+        ).catch(function (err) {
+          console.log(`Error Message: ${err}`);
+        }
+        )
+    }
   }
 
 
-  const getBookmarkedList = () => {
-    ApiService.GETBOOKMARKLIST(userId)
-      .then((data) => {
-        console.log('============')
-        console.log('data', data?.data.slice(0,3))
-        setBookmarkedPerfumeList(data?.data.slice(0, 3))
-      }
-      ).catch(function (err) {
-        console.log(`Error Message: ${err}`);
-      }
-      )
-  }
 
-  // console.log('recommended', recommendedPerfumeList)
+  // const getMyToken=async()=> {
+    
+  // }
 
   useEffect(() => {
-    getUserKeywordList();
-    getRecommendationByBookmark();
-    getBookmarkedList();
+     AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+       setMyToken(result)
+      } else {
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
   }, [])
+
+  useEffect(()=>{
+    getUserKeywordList(myToken);
+    getRecommendationByBookmark(myToken);
+    getBookmarkedList(myToken);
+  }, [myToken, isFocused])
+
+
 
 
 
@@ -108,7 +149,7 @@ const MyPage = () => {
         <PerfumeCellArea style={{ marginBottom: 33.3 }}>
           <PerfumeCellTitleArea>
             <PerfumeCellAreaTitle>나의 향수세포</PerfumeCellAreaTitle>
-            <ModifyButton onPress={()=>goToModifyPerfumeCell(userId, userKeywordList)} >
+            <ModifyButton onPress={() => goToModifyPerfumeCell(userKeywordList)} >
               <ModifyButtonText># 수정하기</ModifyButtonText>
             </ModifyButton>
 
@@ -116,13 +157,13 @@ const MyPage = () => {
           </PerfumeCellTitleArea>
 
           <PerfumeCellListArea>
-           {userKeywordList.map((el)=>(
-           <MyPerfumeCell 
-           utag_kr={el.utag_kr} 
-           id={el.id} 
-           utag={el.utag} 
-           utagtype_id={el.utagtype_id}/>
-           ))} 
+            {userKeywordList.map((el) => (
+              <MyPerfumeCell
+                utag_kr={el.utag_kr}
+                id={el.id}
+                utag={el.utag}
+                utagtype_id={el.utagtype_id} />
+            ))}
 
           </PerfumeCellListArea>
         </PerfumeCellArea>
@@ -133,8 +174,8 @@ const MyPage = () => {
             <MoreButton><MoreText>더보기</MoreText></MoreButton>
           </PerfumeTitleArea>
           <PerfumeListArea>
-            {bookmarkedPerfumeList.map((el, index) => (
-              <PerfumeCell key={index} onPress={()=>goToPerfumeDetail(el)}>
+            { bookmarkedPerfumeList?.map((el, index) => (
+              <PerfumeCell key={index} onPress={() => goToPerfumeDetail(el)}>
                 <View style={{ width: "100%", height: 135 }}>
                   {/* <Text>이미지 준비중입니다.</Text> */}
                   <Image style={{ resizeMode: "contain", width: "100%", height: 110, marginTop: 0, }} source={require('../../assets/images/icon/icon-perfume-pic.png')} />
@@ -153,8 +194,8 @@ const MyPage = () => {
             <MoreButton><MoreText>더보기</MoreText></MoreButton>
           </PerfumeTitleArea>
           <PerfumeListArea>
-            {recommendedPerfumeList3.map((el, index) => (
-              <PerfumeCell key={index} onPress={()=>goToPerfumeDetail(el)}>
+            {recommendedPerfumeList?.map((el, index) => (
+              <PerfumeCell key={index} onPress={() => goToPerfumeDetail(el)}>
                 <View style={{ width: "100%", height: 135 }}>
                   {/* <Text>이미지 준비중입니다.</Text> */}
                   <Image style={{ resizeMode: "contain", width: "100%", height: 110, marginTop: 0, }} source={require('../../assets/images/icon/icon-perfume-pic.png')} />

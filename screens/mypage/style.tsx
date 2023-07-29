@@ -45,7 +45,7 @@ const PerfumeCellAreaTitle=styled.Text`
 
 const ModifyButton=styled.TouchableOpacity`
     background-color:#B592FF;
-    border-radius:20;
+    border-radius:20px;
     padding-top:4px;
     padding-bottom:7px;
     padding-left:10px;

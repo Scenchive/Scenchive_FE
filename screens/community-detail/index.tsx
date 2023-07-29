@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Text,
   TextInput,
@@ -19,6 +19,7 @@ import {
   RegisterCommentButton, RegisterCommentButtonText,
   CommentListArea, CommentRowArea, CommentImage, TextsArea, CommentUserName,
   CommentContentArea, CommentContent, CommentDate,
+  ReplyButton, ReplyButtonText, CancelReplyButton, CancelReplyButtonIcon,
 } from './style';
 import { useNavigation } from '@react-navigation/native';
 import ApiService from '../../ApiService';
@@ -51,21 +52,26 @@ const CommunityDetail = (route: any,) => {
     deleted: boolean,
     id: number,
     memberName: string,
-    parentId: null | string,
+    parentId: null | number,
   }
 
-  const [selectedMenu, setSelectedMenu] = useState("");
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  // const [selectedMenu, setSelectedMenu] = useState("");
+  // const [title, setTitle] = useState('');
+  // const [content, setContent] = useState('');
   const [myToken, setMyToken] = useState<string>('');
   const [communityDetail, setCommunityDetail] = useState<COMMUNITYDETAILTYPE>();
   const [commentList, setCommentList] = useState<COMMENTTYPE[]>();
 
-  const [commentWrite, setCommentWrite] = useState("");
+  const [commentWrite, setCommentWrite] = useState<string>("");
   const [commentInputHeight, setCommentInputHeight] = useState<number>();
 
-  const getToken = async () => {
+  const [isReply, setIsReply] = useState<boolean>(false);
+  const [replyWrite, setReplyWrite] = useState<string>("");
+  const [commentId, setCommentId] = useState<number>();
 
+  const ReplyInputRef = useRef<TextInput | null>(null);
+
+  const getToken = async () => {
     await AsyncStorage.getItem('my-token', (err, result) => {
       if (result) {
         setMyToken(result)
@@ -78,21 +84,16 @@ const CommunityDetail = (route: any,) => {
   const getCommunityDetail = () => {
     ApiService.GETBOARDDETAIL(communityId, myToken)
       .then((data) => {
-        console.log(data?.data)
         setCommunityDetail(data?.data)
       }
       ).catch((res) => {
-        console.log('게시글 정보 가져오기 실패')
-        console.log(res)
         // Alert.alert('게시글 정보 가져오기에 실패했습니다.')
       })
-
   }
 
   const getCommentsList = () => {
     ApiService.GETCOMMENTSLIST(communityId, myToken)
       .then((data) => {
-        console.log(data?.data)
         setCommentList(data?.data)
       }
       ).catch((res) => {
@@ -101,9 +102,9 @@ const CommunityDetail = (route: any,) => {
       })
   }
 
-
   const clearTextInput = () => {
     setCommentWrite("");
+    setReplyWrite("");
   }
 
   const registerComment = () => {
@@ -113,7 +114,6 @@ const CommunityDetail = (route: any,) => {
       }
       ApiService.REGISTERCOMMENT(communityId, comment_body, myToken)
         .then((data) => {
-          console.log(data?.data)
           Alert.alert('댓글을 등록하였습니다.')
           getCommentsList();
           clearTextInput();
@@ -126,11 +126,40 @@ const CommunityDetail = (route: any,) => {
     } else {
       Alert.alert('내용을 입력해주세요.')
     }
-
   }
 
+  const registerReply = () => {
+    if (replyWrite.trim().length > 0) {
+      let reply_body = {
+        "content": replyWrite
+      }
+      ApiService.REGISTERREPLY(communityId, reply_body, commentId, myToken)
+        .then((data) => {
+          Alert.alert('답글을 등록하였습니다.')
+          getCommentsList();
+          clearTextInput();
+          setIsReply(false);
+        }
+        ).catch((res) => {
+          console.log('답글 작성 실패')
+          console.log(res)
+          Alert.alert('댓글 작성을 실패했습니다.')
+        })
+    } else {
+      Alert.alert('내용을 입력해주세요.')
+    }
+  }
 
+  const setFocusToReply = (commentId: React.SetStateAction<number | undefined>) => {
+    setIsReply(true);
+    setCommentId(commentId);
+    ReplyInputRef.current?.focus(), 100;
+  }
 
+  const cancelReply = () => {
+    setIsReply(false);
+    setCommentId(undefined);
+  }
 
   useEffect(() => {
     getToken();
@@ -141,15 +170,6 @@ const CommunityDetail = (route: any,) => {
   useEffect(() => {
     getCommentsList();
   }, [myToken])
-
-  // useEffect(()=>{
-  //   getCommentsList();
-  //   setCommentWrite("");
-  // },[()=>registerComment()])
-
-
-
-
 
   return (
     <>
@@ -186,63 +206,104 @@ const CommunityDetail = (route: any,) => {
               </WriteDateArea>
             </TitleInformationArea>
 
-
           </BoardHeaderArea>
           <BoardContentArea>
             <BoardContentText>
               {communityDetail?.body}
             </BoardContentText>
-
           </BoardContentArea>
 
           <View>
             <CommentListArea >
-
-              {commentList?.map((comment) =>
-                <CommentRowArea key={comment?.id}>
-                  <CommentImage source={require("../../assets/images/icon/icon-perfume-pic.png")} />
-                  <TextsArea>
-                    <CommentUserName>{comment?.memberName}</CommentUserName>
-                    <CommentContentArea>
-                      <CommentContent >{comment?.content}</CommentContent>
-                    </CommentContentArea>
-                    <CommentDate>{comment?.createdAt}</CommentDate>
-                  </TextsArea>
-                </CommentRowArea>
-
+              {commentList?.filter((el) => !el.parentId).map((comment) =>
+                <>
+                  <CommentRowArea key={comment?.id}>
+                    <CommentImage source={require("../../assets/images/icon/icon-perfume-pic.png")} />
+                    <TextsArea>
+                      <CommentUserName>{comment?.memberName}</CommentUserName>
+                      <CommentContentArea>
+                        <CommentContent >{comment?.content}</CommentContent>
+                      </CommentContentArea>
+                      <View style={{ flexDirection: "row" }}>
+                        <CommentDate>{comment?.createdAt}</CommentDate>
+                        <ReplyButton onPress={() => setFocusToReply(comment?.id)}>
+                          <ReplyButtonText>
+                            답글쓰기
+                          </ReplyButtonText>
+                        </ReplyButton>
+                      </View>
+                    </TextsArea>
+                  </CommentRowArea>
+                  {commentList?.filter((el2) => el2?.parentId===comment?.id).map((comment) =>
+                    <>
+                      <CommentRowArea key={comment?.id} 
+                      style={{marginLeft:60}}>
+                        <CommentImage source={require("../../assets/images/icon/icon-perfume-pic.png")} />
+                        <TextsArea>
+                          <CommentUserName>{comment?.memberName}</CommentUserName>
+                          <CommentContentArea>
+                            <CommentContent >{comment?.content}</CommentContent>
+                          </CommentContentArea>
+                          <View style={{ flexDirection: "row" }}>
+                            <CommentDate>{comment?.createdAt}</CommentDate>
+                          </View>
+                        </TextsArea>
+                      </CommentRowArea>
+                      </>)}
+                </>
               )}
             </CommentListArea>
 
           </View>
-
-
-
-
-
         </KeyboardAwareScrollView>
-
       </ScrollView>
       <View style={{ width: "100%", height: commentInputHeight, minHeight: 60, maxHeight: 100 }}>
-        <CommentInputArea >
-          <TextInput
-            value={commentWrite}
-            onChangeText={(text) => { setCommentWrite(text) }}
-            onContentSizeChange={event => {
-              setCommentInputHeight(event.nativeEvent.contentSize.height);
-            }}
-            placeholder="댓글을 입력해주세요."
-            multiline={true}
-            numberOfLines={2}
-            style={{
-              height: commentInputHeight, maxHeight: 100, minHeight: 60, fontSize: 16
-              , textAlignVertical: "center", width: "80%"
-              , paddingTop: 7, paddingBottom: 7
-            }} />
+        {isReply === false ?
+          <CommentInputArea >
+            <TextInput
+              value={commentWrite}
+              onChangeText={(text) => { setCommentWrite(text) }}
+              onContentSizeChange={event => {
+                setCommentInputHeight(event.nativeEvent.contentSize.height);
+              }}
+              placeholder="댓글을 입력해주세요."
+              multiline={true}
+              numberOfLines={2}
+              style={{
+                height: commentInputHeight, maxHeight: 100, minHeight: 60, fontSize: 16
+                , textAlignVertical: "center", width: "80%"
+                , paddingTop: 7, paddingBottom: 7
+              }} />
+            <RegisterCommentButton onPress={registerComment}>
+              <RegisterCommentButtonText >등록</RegisterCommentButtonText>
+            </RegisterCommentButton>
+          </CommentInputArea>
+          :
+          <CommentInputArea >
+            <CancelReplyButton onPress={cancelReply}>
+              <CancelReplyButtonIcon source={require('../../assets/images/icon/icon-btn-X.png')} />
+            </CancelReplyButton>
+            <TextInput
+              ref={ReplyInputRef}
+              value={replyWrite}
+              onChangeText={(text) => { setReplyWrite(text) }}
+              onContentSizeChange={event => {
+                setCommentInputHeight(event.nativeEvent.contentSize.height);
+              }}
+              placeholder="답글을 입력해주세요."
+              multiline={true}
+              numberOfLines={2}
+              style={{
+                height: commentInputHeight, maxHeight: 100, minHeight: 60, fontSize: 16
+                , textAlignVertical: "center", ...{ width: !isReply ? "80%" : "70%" }
+                , paddingTop: 7, paddingBottom: 7
+              }} />
 
-          <RegisterCommentButton onPress={registerComment}>
-            <RegisterCommentButtonText >등록</RegisterCommentButtonText>
-          </RegisterCommentButton>
-        </CommentInputArea>
+            <RegisterCommentButton onPress={registerReply}>
+              <RegisterCommentButtonText >등록</RegisterCommentButtonText>
+            </RegisterCommentButton>
+          </CommentInputArea>
+        }
       </View>
     </>
   );
