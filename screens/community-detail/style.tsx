@@ -25,7 +25,7 @@ const BackButton = styled.TouchableOpacity`
     
 `
 
-const TitleWriteArea=styled.View`
+const TitleWriteArea = styled.View`
     diplay:flex;
     flex-direction:row;
     padding-left:20px;
@@ -36,7 +36,7 @@ const TitleWriteArea=styled.View`
 `
 
 
-const TitleText=styled.Text`
+const TitleText = styled.Text`
     color:#717171;
     font-size:16px;
     font-weight:600;
@@ -44,7 +44,7 @@ const TitleText=styled.Text`
     margin-top:6px;
 `
 
-const BoardHeaderArea=styled.View`
+const BoardHeaderArea = styled.View`
     width:100%;
     padding-left:20px;
     padding-right:20px;
@@ -52,7 +52,7 @@ const BoardHeaderArea=styled.View`
 `
 
 
-const MenuTypeButton=styled.View`
+const MenuTypeButton = styled.View`
     border-radius:20px;
     background-color:#B592FF;
     height:38px;
@@ -64,14 +64,14 @@ const MenuTypeButton=styled.View`
     margin-bottom:17px;
 `
 
-const MenuTypeButtonText=styled.Text`
+const MenuTypeButtonText = styled.Text`
     color:#FFFFFF;
     font-weight:500;
     font-size:15px;
 
 `
 
-const TitleArea=styled.View`
+const TitleArea = styled.View`
     width:100%;
     padding-bottom:14px;
     border-width:1px;
@@ -81,19 +81,19 @@ const TitleArea=styled.View`
     border-right-color:transparent;
 `
 
-const TitleAreaText=styled.Text`
+const TitleAreaText = styled.Text`
     font-size:17px;
     font-weight:500;
     color:#616161;
 
 `
 
-const TitleInformationArea=styled.View`
+const TitleInformationArea = styled.View`
     flex-direction:row;
     
 `
 
-const WriterNameArea=styled.View`
+const WriterNameArea = styled.View`
     width:13%;
     padding-right:auto;
     border-width:1px;
@@ -106,33 +106,33 @@ const WriterNameArea=styled.View`
 `
 
 
-const WriterNameText=styled.Text`
+const WriterNameText = styled.Text`
     font-size:15px;
     color:#616161;
     font-weight:400;
 `
 
-const WriteDateArea=styled.View`
+const WriteDateArea = styled.View`
     width:87%;
     padding-right:auto;
     padding-left:10px;
     padding-top:4px;
 
 `
-const WriteDateText=styled.Text`
+const WriteDateText = styled.Text`
     font-size:15px;
     color:#616161;
     font-weight:400;
 `
 
-const BoardContentArea=styled.View`
+const BoardContentArea = styled.View`
     width:100%;
     padding-left:20px;
     padding-right:20px;
     
 `
 
-const BoardContentText=styled.Text`
+const BoardContentText = styled.Text`
     color:#717171;
     font-size:15px;
     margin-top:30px;
@@ -141,7 +141,7 @@ const BoardContentText=styled.Text`
 
 `
 
-const CommentInputArea=styled.View`
+const CommentInputArea = styled.View`
     width:100%;
    height:30px;
     flex:1;
@@ -150,10 +150,11 @@ const CommentInputArea=styled.View`
     border-width:1px;
     margin-top:auto;
     border-color:#DFDFDF;
+    
 
 `
 
-const  RegisterCommentButton=styled.TouchableOpacity`
+const RegisterCommentButton = styled.TouchableOpacity`
     width:15%;
     height:32px;
     padding-top:4px;
@@ -168,18 +169,18 @@ const  RegisterCommentButton=styled.TouchableOpacity`
 
 `
 
-const RegisterCommentButtonText=styled.Text`
+const RegisterCommentButtonText = styled.Text`
     color:#FFFFFF;
     font-size:16px;
     font-weight:600;
 `
-const CommentListArea=styled.View`
+const CommentListArea = styled.View`
     flex-direction:column;
 
 
 `
 
-const CommentRowArea=styled.View`
+const CommentRowArea = styled.View`
     flex-direction:row;
     border-width:1px;
     border-top-color:#E8E8E8;
@@ -193,47 +194,74 @@ const CommentRowArea=styled.View`
 
 `
 
-const CommentImage=styled.Image`
-    width:33;
-    height:33;
+const CommentImage = styled.Image`
+    width:33px;
+    height:33px;
     resize-mode:cover;
     margin-right:9px;
 `
 
-const TextsArea=styled.View`
+const TextsArea = styled.View`
     flex-direction:column;
     width:88%;
 `
 
-const CommentUserName=styled.Text`
+const CommentUserName = styled.Text`
     color:#616161;
     font-size:13px;
     font-weight:500;
 `
 
-const CommentContentArea=styled.View`
+const CommentContentArea = styled.View`
     width:100%;
     padding-top:4px;
     padding-bottom:2px;
 `
 
-const CommentContent=styled.Text`
+const CommentContent = styled.Text`
     color:#717171;
-    font-size:13px;
+    font-size:14px;
 `
- 
-const CommentDate=styled.Text`
+
+const CommentDate = styled.Text`
     color:#A0A0A0;
     font-size:11px;
+    margin-top:2px;
 
 `
 
-export {  HeaderArea, HeaderTitle, BackButton,TitleWriteArea,
-     TitleText, BoardHeaderArea, MenuTypeButton, MenuTypeButtonText,
-      TitleArea, TitleAreaText,TitleInformationArea, WriterNameArea, 
-      WriterNameText, WriteDateArea, WriteDateText,BoardContentArea,
-      BoardContentText,CommentInputArea,  RegisterCommentButton, 
-      RegisterCommentButtonText, CommentListArea, CommentRowArea,
-       CommentImage, TextsArea, CommentUserName,
-       CommentContentArea, CommentContent, CommentDate,
-    };
+const ReplyButton = styled.TouchableOpacity`
+    background-color:transparent;
+`
+
+const ReplyButtonText = styled.Text`
+    font-size:12px;
+    color:#A0A0A0;
+    margin-left:20px;
+
+`
+
+const CancelReplyButton=styled.TouchableOpacity`
+    margin-left:20px;
+`
+const CancelReplyButtonIcon=styled.Image`
+    width:25px;
+    height:25px;
+    resize-mode:cover;
+    margin-top:19px;
+    margin-right:10px;
+    margin-bottom:auto;
+`
+
+
+export {
+    HeaderArea, HeaderTitle, BackButton, TitleWriteArea,
+    TitleText, BoardHeaderArea, MenuTypeButton, MenuTypeButtonText,
+    TitleArea, TitleAreaText, TitleInformationArea, WriterNameArea,
+    WriterNameText, WriteDateArea, WriteDateText, BoardContentArea,
+    BoardContentText, CommentInputArea, RegisterCommentButton,
+    RegisterCommentButtonText, CommentListArea, CommentRowArea,
+    CommentImage, TextsArea, CommentUserName,
+    CommentContentArea, CommentContent, CommentDate, ReplyButton, ReplyButtonText,
+    CancelReplyButton, CancelReplyButtonIcon,
+};

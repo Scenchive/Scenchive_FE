@@ -137,8 +137,6 @@ const PerfumeDetail = (route: any,) => {
   const getReviewList = () => {
     ApiService.GETREVIEWLIST(perfumeId, myToken)
       .then((data) => {
-        console.log("dddddddddddddddddddddddd")
-        console.log('data', data)
         setReviewList(data?.data)
         console.log('향수 리뷰 받아오기 성공')
 
@@ -207,9 +205,6 @@ const PerfumeDetail = (route: any,) => {
   }, [bookmarkYesNo])
 
 
-console.log('------------------------------')
-console.log(reviewList)
-console.log('----------')
 
   return (
     <View style={{ height: "100%" }}>
