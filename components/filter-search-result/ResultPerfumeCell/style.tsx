@@ -16,9 +16,7 @@ const CellArea=styled.View`
 const PerfumeImage=styled.Image`
     width:100%;
     height:114px;
-    // font-size:15px;
-    // color:black;
-    // background-color:#F2ECFF;
+
     resize-mode:contain;
 
 `
