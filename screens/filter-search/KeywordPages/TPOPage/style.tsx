@@ -49,7 +49,7 @@ const FirstButton=styled.TouchableOpacity`
     background-color:#B592FF;
     width: 75.33%;
     height:170px;
-    border-radius:20;
+    border-radius:20px;
     align-items:center;
     justify-content:center;
     margin-top:22.5px;
@@ -66,7 +66,7 @@ const SecondButton=styled.TouchableOpacity`
     background-color:#947AFD;
     width: 75.33%;
     height:170px;
-    border-radius:20;
+    border-radius:20px;
     align-items:center;
     justify-content:center;
     margin-bottom:17.5px;

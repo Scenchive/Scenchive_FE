@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 
 const PerfumeCellButton=styled.View`
     background-color:#F6F2FF;
-    border-radius:30;
+    border-radius:30px;
     border-color:#A281FF;
     border-width:1.5px;
     padding-top:8px;

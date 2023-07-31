@@ -34,7 +34,7 @@ const MenuButtonArea=styled.View`
 const MenuButton=styled.TouchableOpacity`
     border-width:1px;
     border-color:#B3B3B3;
-    border-radius:20;
+    border-radius:20px;
     padding-left:15px;
     padding-right:15px;
     padding-top:4px;

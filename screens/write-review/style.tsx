@@ -71,7 +71,7 @@ const KeywordTitle=styled.Text`
 const AddKeywordButton=styled.TouchableOpacity`
     border-color:#D1D1D1;
     border-width:1.5px;
-    border-radius:20;
+    border-radius:20px;
     align-self:center;
     padding-left:12px;
     padding-right:12px;
@@ -110,7 +110,7 @@ const AnswerArea=styled.View`
 const AnswerButton=styled.TouchableOpacity`
     border-color:#B3B3B3;
     border-width:1.5px;
-    border-radius:20;
+    border-radius:20px;
     align-self:center;
     padding-left:16px;
     padding-right:16px;
@@ -139,7 +139,7 @@ const InputTitle=styled.Text`
 const WriteButton=styled.TouchableOpacity`
     width:22.8%;
     background-color: #B592FF;
-    border-radius:20;
+    border-radius:20px;
     padding-left:12px;
     padding-right:12px;
     padding-top:5px;
