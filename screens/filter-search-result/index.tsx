@@ -15,9 +15,9 @@ import ResultPerfumeCell from '../../components/filter-search-result/ResultPerfu
 
 const FilterSearchResult: React.FC = (route: any) => {
     const selectedKeywordsArray = route?.route?.params?.keywordList;
-    const resultArray = route?.route?.params?.resultList;
+    const resultArray = route?.route?.params?.resultList.perfumes;
 
-
+    console.log('resuuuuuuuuuuu', resultArray)
 
 
     const navigation = useNavigation();
@@ -27,46 +27,40 @@ const FilterSearchResult: React.FC = (route: any) => {
     }
 
 
-    
+
 
     return (
         <View >
-            {/* <ScrollView> */}
-            <HeaderArea>
-                <BackButton onPress={() => navigation.goBack()}>
-                    <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
-                </BackButton>
-                <HeaderTitle>결과</HeaderTitle >
-            </HeaderArea>
+            <ScrollView>
+                <HeaderArea>
+                    <BackButton onPress={() => navigation.goBack()}>
+                        <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
+                    </BackButton>
+                    <HeaderTitle>결과</HeaderTitle >
+                </HeaderArea>
 
-            <KeywordArea>
-                <ScrollView horizontal={true}>
-                    {
-                        selectedKeywordsArray.map((el: { id: number; ptag: string; ptag_kr: string, ptagtype_id: number }) => <KeywordStyle><KeywordText># {el?.ptag_kr}</KeywordText></KeywordStyle>)
-                    }
-                </ScrollView>
+                <KeywordArea>
+                    <ScrollView horizontal={true}>
+                        {
+                            selectedKeywordsArray.map((el: { id: number; ptag: string; ptag_kr: string, ptagtype_id: number }) => <KeywordStyle key={el?.id}><KeywordText># {el?.ptag_kr}</KeywordText></KeywordStyle>)
+                        }
+                    </ScrollView>
 
-            </KeywordArea>
-            <ResultPerfumeListArea>
+                </KeywordArea>
+                <ResultPerfumeListArea>
 
-
-                <FlatList
-                    columnWrapperStyle={{ justifyContent: "space-between" }}
-                    data={resultArray}
-                    renderItem={({ item }) =>{
-
-                    return(
+                    {resultArray.map((item: { perfumeName: string; brandName: string; id: Number; }) =>
                         <ResultPerfumeCell
                             perfumeName={item?.perfumeName}
                             brandName={item?.brandName}
                             brandNameEnglish={item?.brandName}
                             perfumeId={item?.id}
-                        />);}}
-                    numColumns={2}
-                    keyExtractor={item => item.id} />
-            </ResultPerfumeListArea>
+                        />
+                    )}
 
-            {/* </ScrollView> */}
+                </ResultPerfumeListArea>
+
+            </ScrollView>
         </View >
     );
 };
