@@ -65,6 +65,9 @@ class ApiService {
     }
     static GETCOMMENTSLIST(boardId, myHeader){
         return axios.get(API_URL+'/comments/board/'+boardId, {headers:{Authorization:`Bearer ${myHeader}`}})
+    }   
+    static GETUSERNAME( myHeader){
+        return axios.get(API_URL+'/username', {headers:{Authorization:`Bearer ${myHeader}`}})
     }
 
     // POST 요청 예시

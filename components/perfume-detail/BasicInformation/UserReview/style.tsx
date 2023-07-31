@@ -45,7 +45,7 @@ const KeywordStyle=styled.View`
     background-color:#F6F2FF;
     border-color:#B592FF;
     border-width:1px;
-    border-radius:20;
+    border-radius:20px;
     padding-left:9px;
     padding-right:9px;
     align-self:center;

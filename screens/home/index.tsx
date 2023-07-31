@@ -36,9 +36,9 @@ const Home: React.FC = ({ }) => {
 
 
   //나중에 바꿔야 함.
-  const [userId, setUserId] = useState(38)
   const [seasonId, setSeasonId] = useState(36);
   const [myToken, setMyToken] = useState<string>('');
+  const [userName, setUserName]=useState<string>('');
 
   let list = []
 
@@ -64,8 +64,30 @@ const Home: React.FC = ({ }) => {
       })
   }
 
+  const getUserName = async () => {
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        setMyToken(result)
+      }else{
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+
+
+    ApiService.GETUSERNAME(myToken)
+      .then((data) => {
+        setUserName(data?.data);
+
+      }
+      ).catch((res) => {
+        console.log('닉네임 받아오기 실패')
+        console.log(res)
+      })
+  }
+
   useEffect(() => {
     getSeasonRecommendation();
+    getUserName();
   }, [seasonId])
 
 
@@ -87,7 +109,7 @@ const Home: React.FC = ({ }) => {
 
       <SeasonRecommendArea>
         <SeasonRecommendTitleArea>
-          <RecommendTitle>'Kirby'님을 위한</RecommendTitle>
+          <RecommendTitle>' {userName} '님을 위한</RecommendTitle>
           {!showDropDown ?
             <SelectedSeasonButton onPress={() => useShowDropDown(!showDropDown)}>
               <SelectedSeasonText>
