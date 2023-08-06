@@ -7,40 +7,58 @@ import {
     Image,
 } from 'react-native';
 
-import { HeaderArea, LogoNameArea, HeaderLogoImage, SearchArea, SearchInput, SearchIcon, ResultListArea, ResultRow, SearchImage, ResultInformation, BrandNameText, PerfumeNameText, } from './style';
+import { HeaderArea, LogoNameArea, HeaderLogoImage, SearchArea, SearchInput, SearchIcon, ResultListArea, BrandResultRow, BrandImage, SearchImage, ResultInformation, BrandNameText, PerfumeNameText, PerfumeResultRow } from './style';
 import { useNavigation } from '@react-navigation/native';
 
 import { FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import ApiService from '../../ApiService';
 import { ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SearchPage: React.FC = () => {
 
-    type RESULTLISTTYPE = { brandName: string, perfumeName: string }
+    type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null }
+    type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string | null }
     const [searchWord, setSearchWord] = useState("");
-    const [resultList, setResultList] = useState<RESULTLISTTYPE[]>([]);
+    const [brandResultList, setBrandResultList] = useState<BRANDRESULTLISTTYPE[]>([]);
+    const [perfumeResultList, setPerfumeResultList] = useState<PERFUMERESULTLISTTYPE[]>([]);
+    const [myToken, setMyToken] = useState<string>('');
+    const [resultExistence, setResultExistence] = useState<boolean | undefined>();
 
     const navigation = useNavigation();
     const goToHome = () => {
         //@ts-ignore
         navigation.navigate("Home")
     }
+    const goToPerfumeDetailPAGE = (perfumeId: number, perfumeName: string, brandName: string) => {
+        //@ts-ignore
+        navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName } })
+    }
+    const goToBrandDetailPAGE = (brandName:string, brandName_kr:string|null) => {
+        //@ts-ignore
+        navigation.navigate("Stack", { screen: "BrandDetail", params: { brandName: brandName, brandName_kr: brandName_kr,  } })
+    }
 
+    const getAutoFill = async () => {
 
-    const getAutoFill = () => {
-        ApiService.GETSEARCHRESULTLIST(searchWord)
-            .then((data) => {
-                console.log('----------------')
-                console.log('------------')
-                console.log(data.data)
-                setResultList(data?.data)
-
-
+        await AsyncStorage.getItem('my-token', (err, result) => {
+            if (result) {
+                setMyToken(result)
+            } else {
+                console.log('토큰을 가져올 수 없습니다.')
             }
-            ).catch((res) => {
+        });
 
-            })
+        if (myToken.length > 0) {
+            ApiService.GETSEARCHRESULTLIST(searchWord, myToken)
+                .then((data) => {
+                    setBrandResultList(data?.data?.brands)
+                    setPerfumeResultList(data?.data.perfumes)
+                }
+                ).catch((res) => {
+                })
+        }
     }
 
     useEffect(() => {
@@ -49,9 +67,8 @@ const SearchPage: React.FC = () => {
         }
     }, [searchWord])
 
-    console.log('====', searchWord)
 
-
+    console.log(brandResultList)
 
     return (
         <View style={{ height: "100%" }}>
@@ -67,22 +84,39 @@ const SearchPage: React.FC = () => {
                 </LogoNameArea>
 
             </HeaderArea>
-            {resultList ?
-                <ResultListArea>
-                    <ScrollView>
-                        {resultList.map((el, index) =>
-                            <ResultRow>
-                                <SearchImage source={require('../../assets/images/icon/icon-search.png')} />
-                                <ResultInformation key={index}>
-                                    <BrandNameText numberOfLines={1} ellipsizeMode='tail'>{el.brandName}</BrandNameText>
-                                    <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText>
+            {/* 결과가 없다면 검색 결과가 없습니다. */}
+            {/* {brandResultList ? */}
+            <ResultListArea>
+                <ScrollView>
+                    {brandResultList?.map((el, index) =>
+                        <TouchableOpacity onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr, )}>
+                            <BrandResultRow>
+                                <BrandImage source={require('../../assets/images/icon/icon-search.png')} />
+                                <ResultInformation key={index + 'brand'}>
+                                    <BrandNameText style={{ marginBottom: 5 }} numberOfLines={1} ellipsizeMode='tail'>{el.brandName}</BrandNameText>
+                                    <BrandNameText numberOfLines={1} ellipsizeMode='tail'>{el.brandName_kr}</BrandNameText>
+                                    {/* <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText> */}
                                 </ResultInformation>
-                            </ResultRow>
+                            </BrandResultRow>
+                        </TouchableOpacity>
+                    )}
+                    {perfumeResultList?.map((el, index) =>
+                        <TouchableOpacity onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName)}>
+                            <PerfumeResultRow>
+                                <SearchImage source={require('../../assets/images/icon/icon-search.png')} />
+                                <View key={index + 'perfume'}>
+                                    <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText>
+                                    {/* <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText> */}
+                                </View>
+                            </PerfumeResultRow>
+                        </TouchableOpacity>
+                    )}
 
-                        )}
+                </ScrollView>
+            </ResultListArea>
+            {/* : null} */}
 
-                    </ScrollView>
-                </ResultListArea> : null}
+
         </View>
     );
 };

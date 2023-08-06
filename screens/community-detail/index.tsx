@@ -236,7 +236,7 @@ const CommunityDetail = (route: any,) => {
                   </CommentRowArea>
                   {commentList?.filter((el2) => el2?.parentId===comment?.id).map((comment) =>
                     <>
-                      <CommentRowArea key={comment?.id} 
+                      <CommentRowArea key={comment?.id+'reply'} 
                       style={{marginLeft:60}}>
                         <CommentImage source={require("../../assets/images/icon/icon-perfume-pic.png")} />
                         <TextsArea>

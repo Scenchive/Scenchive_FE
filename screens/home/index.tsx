@@ -51,7 +51,6 @@ const Home: React.FC = ({ }) => {
       }
     });
 
-
     ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
       .then((data) => {
         list = data?.data;
@@ -87,8 +86,19 @@ const Home: React.FC = ({ }) => {
 
   useEffect(() => {
     getSeasonRecommendation();
-    getUserName();
   }, [seasonId])
+
+
+  useEffect(()=>{
+    getUserName();
+    getSeasonRecommendation();
+  }, [myToken])
+
+  useEffect(()=>{
+    getUserName();
+  })
+
+  // console.log('ddddddddddddddd', userName)
 
 
 

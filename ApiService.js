@@ -17,15 +17,15 @@ class ApiService {
     static GETSIGNUPKEYWORD(){
         return axios.get(API_URL+'/survey');
     }
-    static GETSEARCHSEASONPAGEKEYWORD(){
-        return axios.get(API_URL+'/perfumes/recommend/type');
+    static GETSEARCHSEASONPAGEKEYWORD(myHeader){
+        return axios.get(API_URL+'/perfumes/recommend/type', {headers:{Authorization:`Bearer ${myHeader}`}});
     }
     static GETSEARCHTPOPAGEKEYWORD(myHeader){
         console.log('------myh', myHeader)
         return axios.get(API_URL+'/perfumes/recommend/tpo', {headers:{Authorization:`Bearer ${myHeader}`}});
     }
-    static GETSEARCHKEYWORDRESULT(params){
-        return axios.get(API_URL+'/perfumes/recommend?'+params)
+    static GETSEARCHKEYWORDRESULT(params, myHeader){
+        return axios.get(API_URL+'/perfumes/recommend?'+params, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETPERFUMEBASICINFORMATION(params, myHeader){
         return axios.get(API_URL+'/notesinfo/'+params, {headers:{Authorization:`Bearer ${myHeader}`}})
@@ -48,8 +48,8 @@ class ApiService {
     static GETSHOPPINGINFORMATION(perfumeName, myHeader){
         return axios.get(API_URL+'/product/search?query='+perfumeName, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
-    static GETSEARCHRESULTLIST(searchWord){
-        return axios.get(API_URL+'/search?name='+searchWord)
+    static GETSEARCHRESULTLIST(searchWord, myHeader){
+        return axios.get(API_URL+'/search?name='+searchWord+'&page=0', {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETUSERKEYWORDLIST(myHeader){
         return axios.get(API_URL+'/keyword', {headers:{Authorization:`Bearer ${myHeader}`}})
@@ -68,6 +68,9 @@ class ApiService {
     }   
     static GETUSERNAME( myHeader){
         return axios.get(API_URL+'/username', {headers:{Authorization:`Bearer ${myHeader}`}})
+    }
+    static GETBRANDPERFUMELIST(brand_name,myHeader){
+        return axios.get(API_URL+'/brandperfume?name='+brand_name+'&page=0', {headers:{Authorization:`Bearer ${myHeader}`}})
     }
 
     // POST 요청 예시

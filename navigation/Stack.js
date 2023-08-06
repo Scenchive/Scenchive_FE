@@ -10,6 +10,7 @@ import Home from "../screens/home/index";
 import PerfumeDetail from "../screens/perfume-detail";
 import WriteReview from "../screens/write-review";
 import AddKeywordPage from "../screens/write-review/AddKeywordPage"
+import BrandDetail from "../screens/brand-detail";
 
 import SeasonPage from "../screens/filter-search/KeywordPages/SeasonPage/index";
 import TPOPage from '../screens/filter-search/KeywordPages/TPOPage/index';
@@ -19,6 +20,9 @@ import ModifyPerfumeCellPage from "../screens/mypage/modify-perfume-cell/index"
 
 import CommunityWrite from "../screens/community-write/index"
 import CommunityDetail from "../screens/community-detail/index"
+
+import BrandSearchResultPage from "../screens/brand-search-result/index"
+import PerfumeSearchResultPage from "../screens/perfume-search-result/index"
 
 const NativeStack = createNativeStackNavigator();
 
@@ -40,6 +44,7 @@ const Stack = () => {
             <NativeStack.Screen name="PerfumeDetail" component={PerfumeDetail} />
             <NativeStack.Screen name="WriteReview" component={WriteReview} />
             <NativeStack.Screen name="AddKeywordPage" component={AddKeywordPage} />
+            <NativeStack.Screen name="BrandDetail" component={BrandDetail} />
 
             <NativeStack.Screen name="SeasonPage" component={SeasonPage}/>
             <NativeStack.Screen name="TPOPage" component={TPOPage}/>
@@ -49,6 +54,10 @@ const Stack = () => {
         
             <NativeStack.Screen name="CommunityWrite" component={CommunityWrite}/>
             <NativeStack.Screen name="CommunityDetail" component={CommunityDetail}/>
+
+            <NativeStack.Screen name="BrandSearchResultPage" component={BrandSearchResultPage}/>
+            <NativeStack.Screen name="PerfumeSearchResultPage" component={PerfumeSearchResultPage}/>
+
 
         </NativeStack.Navigator>
 

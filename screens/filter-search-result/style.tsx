@@ -66,7 +66,8 @@ const ResultPerfumeListArea=styled.SafeAreaView`
     width:100%;
     padding-left:20px;
     padding-right:20px;
-    // justify-content:space-between
+    flex-direction:row;
+    flex-wrap:wrap;
 `
 
 

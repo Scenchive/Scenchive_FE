@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle, AlertIcon, UserReviewArea, } from './style';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused, } from '@react-navigation/native';
 import PerfumeIntro from "../../components/perfume-detail/PerfumeIntro/index"
 import DetailTab from '../../components/perfume-detail/DetailTab/index'
 import BasicInformation from "../../components/perfume-detail/BasicInformation/index";
@@ -23,27 +23,13 @@ import ApiService from '../../ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-// type PERFUMEPARAMS = {
-//   perfumeId: Number;
-// };
+
 type PERFUMEDATA = {
   top: any;
   middle: any;
   base: any;
 };
 
-// {
-//   "perfumeId": 1,
-//   "ratingAvg": 5.0,
-//   "longevityAvg": 5.0,
-//   "sillageAvg": 5.0,
-//   "seasonAvg": {
-//       "spring": 0.0,
-//       "summer": 0.0,
-//       "fall": 0.0,
-//       "winter": 100.0
-//   }
-// }
 
 type PERFUMERATINGS = {
   perfumeId: number;
@@ -82,6 +68,7 @@ const PerfumeDetail = (route: any,) => {
   const perfumeId = route?.route?.params?.perfumeId;
   const [myToken, setMyToken] = useState<string>('');
 
+  const isFocused=useIsFocused();
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -170,7 +157,7 @@ const PerfumeDetail = (route: any,) => {
     getPerfumeRatingInformation();
     getReviewList();
     getShoppingInformation();
-  }, [myToken])
+  }, [myToken, isFocused])
 
 
   const setBookmark = () => {
@@ -238,7 +225,7 @@ const PerfumeDetail = (route: any,) => {
           </View>
           <UserReviewArea>
             {reviewList?.map((el)=>(
-               <UserReview content={el?.content} created_at={el?.created_at} name={el?.name} />
+               <UserReview key={el?.created_at} content={el?.content} created_at={el?.created_at} name={el?.name} />
 
             ))}
 
