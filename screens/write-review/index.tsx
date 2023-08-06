@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { HeaderArea, BackButton, HeaderTitle, PerfumeInformationArea, PerfumeBrand, PerfumeName, ReviewArea, KeywordArea, KeywordTitle, AddKeywordButton, AddKeywordTitle, QuestionRow, QuestionTitle, AnswerArea, AnswerButton, AnswerText, InputRow, InputTitle, WriteButton, WriteButtonText, } from './style';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 import { FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native';
@@ -21,7 +21,7 @@ const WriteReview: React.FC = (route: any) => {
   const perfumeName = route?.route?.params?.perfumeName;
   const brandName = route?.route?.params.brandName;
   const perfumeId = route?.route?.params?.perfumeId;
-  const [myToken, setMyToken] = useState<string>('');
+  // const [myToken, setMyToken] = useState<string>('');
   const [rating, setRating] = useState<Number>();
   const [longevity, setLongetivity] = useState<Number>();
   const [sillage, setSillage] = useState<Number>();
@@ -30,16 +30,7 @@ const WriteReview: React.FC = (route: any) => {
   let ptagIds = route?.route?.params?.keywordList;
 
 
-  // console.log('route', route?.route)
-  //   "memberId": 10,
-  //   "perfumeId": 90,
-  //   "rating": 2,
-  //   "longevity": 5,
-  //   "sillage": 3,
-  //   "season": 36,
-  //   "content": "This is test content",
-  //   "ptagIds": [22, 34]
-  // }
+
 
   const navigation = useNavigation();
   const goToAddKeywordPage = () => {
@@ -53,18 +44,19 @@ const WriteReview: React.FC = (route: any) => {
 
 
   const registerReview = async() => {
+    let myToken="";
 
     await AsyncStorage.getItem('my-token', (err, result) => {
       if (result) {
         console.log('reeeee', result)
-        setMyToken(result)
+        // setMyToken(result)
+        myToken=result;
       }else{
         console.log('토큰을 가져올 수 없습니다.')
       }
     });
     
     let review_data = {
-      
       "perfumeId": perfumeId,
       "rating": rating,
       "longevity": longevity,

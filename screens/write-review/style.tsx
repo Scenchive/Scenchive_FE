@@ -83,7 +83,7 @@ const AddKeywordButton=styled.TouchableOpacity`
 
 const AddKeywordTitle=styled.Text`
     font-size:14px;
-    font-color:#BBBBBB;
+    color:#BBBBBB;
     font-weight:600;
 `
 
