@@ -9,7 +9,13 @@ import {
   Alert,
 } from 'react-native';
 
-import { HeaderArea, BackButton, HeaderTitle, PerfumeCellArea, PerfumeCellTitleArea, PerfumeCellAreaTitle, ModifyButton, ModifyButtonText, PerfumeCellListArea, PerfumeArea, PerfumeTitleArea, PerfumeAreaTitle, MoreButton, MoreText, PerfumeListArea, PerfumeCell, } from './style';
+import {
+  HeaderArea, BackButton, HeaderTitle, PerfumeCellArea, PerfumeCellTitleArea, PerfumeCellAreaTitle,
+  UserInformationArea, ProfilePic, UserInformationTextArea, UserNameText, UserEmailText,
+  ModifyButton, ModifyButtonText, PerfumeCellListArea, PerfumeArea,
+  PerfumeTitleArea, PerfumeAreaTitle, MoreButton, MoreText, PerfumeListArea,
+  PerfumeCell, LogoutButton, LogoutIcon, LogoutButtonText,
+} from './style';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import ApiService from '../../ApiService';
 import { ScrollView } from "react-native";
@@ -20,22 +26,25 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MyPage = () => {
 
-  const [myToken, setMyToken]=useState("")
+  const [myToken, setMyToken] = useState("")
+  const [userEmail, setUserEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [userKeywordList, setUserKeywordList] = useState<KEYWORD[]>([]);
   const [recommendedPerfumeList, setRecommendedPerfumeList] = useState<PERFUME[]>([]);
   const [bookmarkedPerfumeList, setBookmarkedPerfumeList] = useState<PERFUME[]>();
 
   type PERFUME = { brand_name: string, perfume_name: string, perfume_id: number }
   type KEYWORD = { id: number, utag: string, utag_kr: string, utagtype_id: number }
-  type BOOKMARKEDLIST ={totalBookmarkPerfumeCount:number, perfumes:
+  type BOOKMARKEDLIST = {
+    totalBookmarkPerfumeCount: number, perfumes:
     [{
-      perfume_id:number,
-      perfume_name:string,
-      brand_name:string,
+      perfume_id: number,
+      perfume_name: string,
+      brand_name: string,
     }]
   }
 
-  const isFocused=useIsFocused();
+  const isFocused = useIsFocused();
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -53,48 +62,60 @@ const MyPage = () => {
     navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: el?.perfume_id, perfumeName: el?.perfume_name, brandName: el?.brand_name } })
   }
 
-  // const getMyToken = () => {
-  //   AsyncStorage.getItem('my-token', (err, result) => {
-  //     if (result) {
-  //       setMyToken(result)
-  //     } else {
-  //       console.log('토큰을 가져올 수 없습니다.')
-  //     }
-  //   });
-  // }
+  const getMyToken = () => {
+    AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        setMyToken(result)
+      } else {
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+  }
 
-  const getUserKeywordList =  (myToken: any) => {
-      ApiService.GETUSERKEYWORDLIST(myToken)
-        .then((data) => {
-          setUserKeywordList(data?.data.slice(0, 8))
-        }).catch(error => {
-          console.log(error)
-        })
-    }
-  
-
-  const getRecommendationByBookmark =  (myToken: string) => {
-    if (myToken){
-    ApiService.GETRECOMMENDATIONBYBOOKMARK(myToken)
+  const getUserInformation = () => {
+    ApiService.GETUSERINFORMATION(myToken)
       .then((data) => {
-
-        if (data?.data?.perfumes.length > 3) {
-          setRecommendedPerfumeList(data?.data?.perfumes.slice(0, 3))
-        } else {
-          setRecommendedPerfumeList(data?.data?.perfumes)
-        }
-      }).catch(function (err) {
+        setUserEmail(data?.data?.email)
+        setUserName(data?.data?.name)
+      }
+      ).catch(function (err) {
         console.log(`Error Message: ${err}`);
+      }
+      )
+  }
+
+  const getUserKeywordList = () => {
+    ApiService.GETUSERKEYWORDLIST(myToken)
+      .then((data) => {
+        setUserKeywordList(data?.data.slice(0, 8))
+      }).catch(error => {
+        console.log(error)
       })
+  }
+
+
+  const getRecommendationByBookmark = () => {
+    if (myToken) {
+      ApiService.GETRECOMMENDATIONBYBOOKMARK(myToken)
+        .then((data) => {
+
+          if (data?.data?.perfumes.length > 3) {
+            setRecommendedPerfumeList(data?.data?.perfumes.slice(0, 3))
+          } else {
+            setRecommendedPerfumeList(data?.data?.perfumes)
+          }
+        }).catch(function (err) {
+          console.log(`Error Message: ${err}`);
+        })
     }
   }
 
 
-  const getBookmarkedList =  (myToken: string) => {
+  const getBookmarkedList = () => {
     if (myToken) {
       ApiService.GETBOOKMARKLIST(myToken)
         .then((data) => {
-  
+
           if (data?.data.length > 3) {
             setBookmarkedPerfumeList(data?.data?.perfumes.slice(0, 3))
           } else {
@@ -108,30 +129,32 @@ const MyPage = () => {
     }
   }
 
+  const Logout = () => {
+    console.log('myToken', myToken)
+
+      ApiService.LOGOUT(myToken)
+        .then((data) => {
+          if (data?.data==='로그아웃 성공'){
+            goToHome();
+          }
+
+        }).catch(function (err) {
+          console.log(`Error Message: ${err}`);
+        })
+  }
 
 
-  // const getMyToken=async()=> {
-    
-  // }
 
   useEffect(() => {
-     AsyncStorage.getItem('my-token', (err, result) => {
-      if (result) {
-       setMyToken(result)
-      } else {
-        console.log('토큰을 가져올 수 없습니다.')
-      }
-    });
+    getMyToken();
   }, [])
 
-  useEffect(()=>{
-    getUserKeywordList(myToken);
-    getRecommendationByBookmark(myToken);
-    getBookmarkedList(myToken);
+  useEffect(() => {
+    getUserInformation();
+    getUserKeywordList();
+    getRecommendationByBookmark();
+    getBookmarkedList();
   }, [myToken, isFocused])
-
-
-
 
 
   return (
@@ -145,6 +168,19 @@ const MyPage = () => {
           <HeaderTitle>내 프로필</HeaderTitle >
 
         </HeaderArea>
+        <UserInformationArea>
+          <ProfilePic source={require('../../assets/images/icon/icon-profile-pic.png')} />
+          <UserInformationTextArea>
+            <UserNameText numberOfLines={2}>
+              {userName}
+            </UserNameText>
+            <UserEmailText numberOfLines={2}>
+              {userEmail}
+            </UserEmailText>
+          </UserInformationTextArea>
+
+        </UserInformationArea>
+
 
         <PerfumeCellArea style={{ marginBottom: 33.3 }}>
           <PerfumeCellTitleArea>
@@ -162,7 +198,8 @@ const MyPage = () => {
                 utag_kr={el.utag_kr}
                 id={el.id}
                 utag={el.utag}
-                utagtype_id={el.utagtype_id} />
+                utagtype_id={el.utagtype_id} 
+                key={el.id}/>
             ))}
 
           </PerfumeCellListArea>
@@ -174,7 +211,7 @@ const MyPage = () => {
             <MoreButton><MoreText>더보기</MoreText></MoreButton>
           </PerfumeTitleArea>
           <PerfumeListArea>
-            { bookmarkedPerfumeList?.map((el, index) => (
+            {bookmarkedPerfumeList?.map((el, index) => (
               <PerfumeCell key={index} onPress={() => goToPerfumeDetail(el)}>
                 <View style={{ width: "100%", height: 135 }}>
                   {/* <Text>이미지 준비중입니다.</Text> */}
@@ -197,7 +234,6 @@ const MyPage = () => {
             {recommendedPerfumeList?.map((el, index) => (
               <PerfumeCell key={index} onPress={() => goToPerfumeDetail(el)}>
                 <View style={{ width: "100%", height: 135 }}>
-                  {/* <Text>이미지 준비중입니다.</Text> */}
                   <Image style={{ resizeMode: "contain", width: "100%", height: 110, marginTop: 0, }} source={require('../../assets/images/icon/icon-perfume-pic.png')} />
                 </View>
                 <Text>{el?.brand_name}</Text>
@@ -207,6 +243,11 @@ const MyPage = () => {
           </PerfumeListArea>
         </PerfumeArea>
 
+
+        <LogoutButton onPress={Logout}>
+          <LogoutIcon source={require('../../assets/images/icon/icon-btn-logout.png')} />
+          <LogoutButtonText>로그아웃</LogoutButtonText>
+        </LogoutButton>
       </ScrollView>
     </View>
   );

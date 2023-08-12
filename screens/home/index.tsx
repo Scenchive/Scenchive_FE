@@ -102,7 +102,6 @@ const Home: React.FC = ({ }) => {
 
 
 
-
   return (
     <View>
       <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
