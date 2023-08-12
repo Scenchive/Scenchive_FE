@@ -43,6 +43,44 @@ const PerfumeCellAreaTitle=styled.Text`
     color:#000000;
 ` 
 
+const  UserInformationArea=styled.View`
+    width:100%;
+    padding-left:20px;
+    padding-right:20px;
+    flex-direction:row;
+    margin-bottom:10px;
+`
+
+const ProfilePic=styled.Image`
+    width:20%;
+    height:80px;
+    resize-mode:cover;
+`
+
+const UserInformationTextArea=styled.View`
+    flex-direction:column;
+    width:78%;
+    margin-left:10px;
+    margin-top:auto;
+    margin-bottom:auto;
+    
+`
+
+const UserNameText=styled.Text`
+    color:#616161;
+    font-size:18px;
+    margin-bottom:10px;
+
+`
+
+const UserEmailText=styled.Text`
+    color:#929292;
+    
+
+`
+
+
+
 const ModifyButton=styled.TouchableOpacity`
     background-color:#B592FF;
     border-radius:20px;
@@ -110,4 +148,26 @@ const PerfumeCell=styled.TouchableOpacity`
 
 `
 
-export { HeaderArea,  BackButton, HeaderTitle,PerfumeCellArea, PerfumeCellTitleArea, PerfumeCellAreaTitle, ModifyButton, ModifyButtonText,PerfumeCellListArea, PerfumeArea, PerfumeTitleArea, PerfumeAreaTitle,MoreButton, MoreText,  PerfumeListArea,  PerfumeCell, };
+const LogoutButton=styled.TouchableOpacity`
+    flex-direction:row;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:20px;
+`
+
+const LogoutIcon=styled.Image`
+    width:20px;
+    height:20px;
+    margin-right:1px;
+` 
+
+const LogoutButtonText=styled.Text`
+    color:#B2B2B2;
+    font-size:15px;
+    font-weight:500;
+`
+
+export { HeaderArea,  BackButton, HeaderTitle,PerfumeCellArea, PerfumeCellTitleArea, PerfumeCellAreaTitle, 
+    UserInformationArea, ProfilePic, UserInformationTextArea, UserNameText, UserEmailText,
+    ModifyButton, ModifyButtonText,PerfumeCellListArea, PerfumeArea, PerfumeTitleArea, PerfumeAreaTitle
+    ,MoreButton, MoreText,  PerfumeListArea,  PerfumeCell, LogoutButton, LogoutIcon, LogoutButtonText,};

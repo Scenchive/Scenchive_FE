@@ -21,11 +21,13 @@ class ApiService {
         return axios.get(API_URL+'/perfumes/recommend/type', {headers:{Authorization:`Bearer ${myHeader}`}});
     }
     static GETSEARCHTPOPAGEKEYWORD(myHeader){
-        console.log('------myh', myHeader)
         return axios.get(API_URL+'/perfumes/recommend/tpo', {headers:{Authorization:`Bearer ${myHeader}`}});
     }
     static GETSEARCHKEYWORDRESULT(params, myHeader){
         return axios.get(API_URL+'/perfumes/recommend?'+params, {headers:{Authorization:`Bearer ${myHeader}`}})
+    }
+    static GETCHECKBOOKMARK(perfumeId, myHeader){
+        return axios.get(API_URL+'/checkmarked?perfumeId='+perfumeId, {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETPERFUMEBASICINFORMATION(params, myHeader){
         return axios.get(API_URL+'/notesinfo/'+params, {headers:{Authorization:`Bearer ${myHeader}`}})
@@ -50,6 +52,9 @@ class ApiService {
     }
     static GETSEARCHRESULTLIST(searchWord, myHeader){
         return axios.get(API_URL+'/search?name='+searchWord+'&page=0', {headers:{Authorization:`Bearer ${myHeader}`}})
+    }
+    static GETUSERINFORMATION( myHeader){
+        return axios.get(API_URL+'/profile', {headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static GETUSERKEYWORDLIST(myHeader){
         return axios.get(API_URL+'/keyword', {headers:{Authorization:`Bearer ${myHeader}`}})
@@ -83,13 +88,14 @@ class ApiService {
     static LOGIN(data) {
         return axios.post(API_URL + '/login', data);
     }
+    static LOGOUT(myHeader) {
+        return axios.post(API_URL + '/service-logout',{},{headers:{Authorization:`Bearer ${myHeader}`}});
+    }
     static KEYWORDSIGNUP(data){
         return axios.post(API_URL + '/survey', data)
     }
     static SETBOOKMARKYES(perfumeId, myHeader){
-        console.log(`Bearer ${myHeader}`)
-        console.log(perfumeId)
-        return axios.post(API_URL + '/bookmark?perfumeId='+perfumeId,{headers:{Authorization:`Bearer ${myHeader}`}})
+        return axios.post(API_URL + '/bookmark?perfumeId='+perfumeId,{},{headers:{Authorization:`Bearer ${myHeader}`}})
     }
     static REGISTERREVIEW(data, myHeader){
         console.log('headdddddddddd', myHeader)

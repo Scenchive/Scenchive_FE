@@ -93,6 +93,21 @@ const PerfumeDetail = (route: any,) => {
     });
   }
 
+  const getCheckBookmark = () => {
+    ApiService.GETCHECKBOOKMARK(perfumeId, myToken)
+      .then((data) => {
+        if (data?.data==="이미 북마크한 향수입니다."){
+          setBookmarkYesNo('Y')
+        }else{
+          setBookmarkYesNo('N')
+        }
+      }
+      ).catch((res) => {
+        console.log('향수 쇼핑 정보 받아오기 실패')
+        console.log(res)
+      })
+  }
+
 
   const getPerfumeBasicInformation = () => {
     ApiService.GETPERFUMEBASICINFORMATION(perfumeId, myToken)
@@ -153,6 +168,7 @@ const PerfumeDetail = (route: any,) => {
 
 
   useEffect(() => {
+    getCheckBookmark();
     getPerfumeBasicInformation();
     getPerfumeRatingInformation();
     getReviewList();
@@ -177,11 +193,11 @@ const PerfumeDetail = (route: any,) => {
       ApiService.SETBOOKMARKNO(perfumeId, myToken)
         .then((data) => {
           console.log('북마크 삭제 성공')
-          console.log('data', data)
+          console.log('data', data?.data)
         }
         ).catch((res) => {
           console.log('북마크 삭제 실패')
-          console.log(res)
+          console.log(res?.data)
         })
     }
   }
