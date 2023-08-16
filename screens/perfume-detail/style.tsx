@@ -5,7 +5,7 @@ const HeaderArea = styled.View`
     width:100%;
     display:flex;
     flex-direction:row;
-    justify-content:center;
+    // justify-content:center;
     padding-left:20px;
     padding-right:20px;
     padding-top:32px;

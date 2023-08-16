@@ -207,6 +207,8 @@ const PerfumeDetail = (route: any,) => {
     setBookmark();
   }, [bookmarkYesNo])
 
+  console.log(perfumeBasicInformation)
+
 
 
   return (
@@ -224,7 +226,7 @@ const PerfumeDetail = (route: any,) => {
                 </LogoNameArea>
               </TouchableOpacity>
 
-              <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
+              {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
             </HeaderArea>
             <PerfumeIntro
               perfumeName={perfumeName1}
