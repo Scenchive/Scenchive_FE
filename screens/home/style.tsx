@@ -14,6 +14,7 @@ const HomePageTitleArea = styled.View`
     align-items:center;
     justify-content:center;
     margin-bottom : 26px;
+    margin-top:150px;
 `;
 
 const HomePageKoreanTitle=styled.Text`

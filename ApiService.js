@@ -88,6 +88,9 @@ class ApiService {
     static LOGIN(data) {
         return axios.post(API_URL + '/login', data);
     }
+    static TOKENVALIDATION(myHeader){
+        return axios.post(API_URL+'/token-validation', {} ,{headers:{Authorization:`Bearer ${myHeader}`}})
+    }
     static LOGOUT(myHeader) {
         return axios.post(API_URL + '/service-logout',{},{headers:{Authorization:`Bearer ${myHeader}`}});
     }
