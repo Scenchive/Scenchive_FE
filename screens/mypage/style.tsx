@@ -151,19 +151,19 @@ const PerfumeCell=styled.TouchableOpacity`
 const LogoutButton=styled.TouchableOpacity`
     flex-direction:row;
     margin-left:auto;
-    margin-right:auto;
+    margin-right:20px;
     margin-bottom:20px;
 `
 
 const LogoutIcon=styled.Image`
-    width:20px;
-    height:20px;
+    width:17px;
+    height:17px;
     margin-right:1px;
 ` 
 
 const LogoutButtonText=styled.Text`
     color:#B2B2B2;
-    font-size:15px;
+    font-size:13px;
     font-weight:500;
 `
 

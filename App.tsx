@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
 } from 'react-native';
 import Root from "./navigation/Root";
 import {NavigationContainer} from '@react-navigation/native';
- 
+
 
 
 // import Signup from './screens/signup/index'
 import Tabs from './navigation/Tabs';
 import Stack from './navigation/Stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -42,6 +43,22 @@ import Stack from './navigation/Stack';
 
 function App(): JSX.Element {
 
+  // useEffect(() => {
+  //   //setTimeout을 이용하면 몇초간 스플래시 스크린을 보여주고 싶은지 설정할 수 있다.
+  //   setTimeout(() => {
+  //     SplashScreen.hide();
+  //     // AsyncStorage.getItem('my-token', (err, result) => {
+  //     //   if (result) {
+          
+  //     //   } else {
+  //     //     console.log('토큰을 가져올 수 없습니다.')
+  //     //   }
+  //     // });
+
+  //   }, 1000);
+  // }, []);
+
+  
   return (
     // 로그인을 했다면 아래
       <NavigationContainer>

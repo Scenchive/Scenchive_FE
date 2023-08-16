@@ -15,6 +15,7 @@ import Tabs from '../../navigation/Tabs';
 import TabsNavigation from '../../navigation/Tabs';
 import ApiService from '../../ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from 'react-native-splash-screen';
 
 
 
@@ -34,19 +35,27 @@ const Home: React.FC = ({ }) => {
 
   const [resultList, setResultList] = useState<PERFUMEDATA[]>([]);
 
+  const [isInital, setIsInitial]=useState<boolean>(false);
 
   //나중에 바꿔야 함.
   const [seasonId, setSeasonId] = useState(36);
   const [myToken, setMyToken] = useState<string>('');
-  const [userName, setUserName]=useState<string>('');
+  const [isValidToken, setIsValidToken]=useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
 
   let list = []
+
+  const navigation = useNavigation();
+  const goToSignupORLogin = () => {
+    //@ts-ignore
+    navigation.navigate("Stack", { screen: "SignupORLogin" })
+  }
 
   const getSeasonRecommendation = async () => {
     await AsyncStorage.getItem('my-token', (err, result) => {
       if (result) {
         setMyToken(result)
-      }else{
+      } else {
         console.log('토큰을 가져올 수 없습니다.')
       }
     });
@@ -54,6 +63,7 @@ const Home: React.FC = ({ }) => {
     ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
       .then((data) => {
         list = data?.data;
+        console.log('data---', data?.data)
         setResultList(list);
 
       }
@@ -66,13 +76,12 @@ const Home: React.FC = ({ }) => {
   const getUserName = async () => {
     await AsyncStorage.getItem('my-token', (err, result) => {
       if (result) {
+        // console.log(result)
         setMyToken(result)
-      }else{
+      } else {
         console.log('토큰을 가져올 수 없습니다.')
       }
     });
-
-
     ApiService.GETUSERNAME(myToken)
       .then((data) => {
         setUserName(data?.data);
@@ -89,22 +98,56 @@ const Home: React.FC = ({ }) => {
   }, [seasonId])
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getUserName();
     getSeasonRecommendation();
   }, [myToken])
 
-  useEffect(()=>{
-    getUserName();
-  })
-
-  // console.log('ddddddddddddddd', userName)
+  // useEffect(() => {
+  //   getUserName();
+  // })
 
 
+  useEffect(() => {
+    //setTimeout을 이용하면 몇초간 스플래시 스크린을 보여주고 싶은지 설정할 수 있다.
+    if (isInital===false){
+    AsyncStorage.getItem('my-token', (err, result) => {
+        console.log('result', result)
+        // 토큰 유효성 검사
+        if (result) {
+          ApiService.TOKENVALIDATION(result)
+            .then((data) => {
+              // console.log('토큰', data?.data)
+              if (data?.data) {
+                setIsValidToken(true);
+                setIsInitial(true);
+              } else {
+                console.log('유효하지 않은 토큰입니다.1')
+                goToSignupORLogin();
+
+              }
+            }
+            ).catch((res) => {
+              console.log('유효하지 않은 토큰입니다.2')
+              console.log(res)
+              goToSignupORLogin();
+            })
+        } else {
+          goToSignupORLogin();
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
+  }, [isValidToken]);
 
   return (
     <View>
-      <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
+      {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
 
       <HomePageTitleArea>
         <HomePageKoreanTitle>센카이브</HomePageKoreanTitle>

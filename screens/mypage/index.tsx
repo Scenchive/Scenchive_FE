@@ -51,6 +51,10 @@ const MyPage = () => {
     //@ts-ignore
     navigation.navigate("Tabs", { screen: "홈" })
   }
+  const goToSignupORLogin=()=>{
+    //@ts-ignore
+    navigation.navigate("Stack", { screen: "SignupORLogin" })
+  }
 
   const goToModifyPerfumeCell = (userKeywordList: KEYWORD[]) => {
     //@ts-ignore
@@ -135,7 +139,7 @@ const MyPage = () => {
       ApiService.LOGOUT(myToken)
         .then((data) => {
           if (data?.data==='로그아웃 성공'){
-            goToHome();
+            goToSignupORLogin();
           }
 
         }).catch(function (err) {
