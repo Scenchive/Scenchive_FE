@@ -35,6 +35,8 @@ const SearchBarArea=styled.View`
     width:73.07%;
     margin-left:auto;
     margin-right:auto;
+    padding-left:3px;
+    padding-right:3px;
     display:flex;
     flex-direction:row;
     border:1.5px solid #DABDFF;
