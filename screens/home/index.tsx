@@ -35,12 +35,12 @@ const Home: React.FC = ({ }) => {
 
   const [resultList, setResultList] = useState<PERFUMEDATA[]>([]);
 
-  const [isInital, setIsInitial]=useState<boolean>(false);
+  const [isInital, setIsInitial] = useState<boolean>(false);
 
   //나중에 바꿔야 함.
   const [seasonId, setSeasonId] = useState(36);
   const [myToken, setMyToken] = useState<string>('');
-  const [isValidToken, setIsValidToken]=useState<boolean>(false);
+  const [isValidToken, setIsValidToken] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>('');
 
   let list = []
@@ -110,8 +110,8 @@ const Home: React.FC = ({ }) => {
 
   useEffect(() => {
     //setTimeout을 이용하면 몇초간 스플래시 스크린을 보여주고 싶은지 설정할 수 있다.
-    if (isInital===false){
-    AsyncStorage.getItem('my-token', (err, result) => {
+    if (isInital === false) {
+      AsyncStorage.getItem('my-token', (err, result) => {
         console.log('result', result)
         // 토큰 유효성 검사
         if (result) {
@@ -153,12 +153,23 @@ const Home: React.FC = ({ }) => {
         <HomePageKoreanTitle>센카이브</HomePageKoreanTitle>
         <HomePageEnglishTitle>Scenchive</HomePageEnglishTitle>
       </HomePageTitleArea>
+      <TouchableOpacity>
+        <SearchBarArea >
+          <Text
+            style={{
+              width: "80.70%",
+              paddingLeft: 0,
+              paddingTop: 9,
+              paddingBottom: 12,
+              fontSize: 14,
+              color: "#B2B2B2"
+            }}
 
-      <SearchBarArea>
-        <SearchInput placeholder="향수 이름 혹은 브랜드명을 검색하세요" placeholderTextColor={"#B2B2B2"} />
-        <SearchIcon source={require('../../assets/images/icon/icon-search.png')} />
-      </SearchBarArea>
-
+          >향수 이름 혹은 브랜드명을 검색하세요</Text>
+          {/* <SearchInput placeholder="향수 이름 혹은 브랜드명을 검색하세요" placeholderTextColor={"#B2B2B2"} /> */}
+          <SearchIcon source={require('../../assets/images/icon/icon-search.png')} />
+        </SearchBarArea>
+      </TouchableOpacity>
       <SeasonRecommendArea>
         <SeasonRecommendTitleArea>
           <RecommendTitle>' {userName} '님을 위한</RecommendTitle>

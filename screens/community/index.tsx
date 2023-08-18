@@ -92,7 +92,7 @@ const Community = () => {
   }, [selectedMenu])
 
 
-
+console.log(boardsList)
 
 
   return (

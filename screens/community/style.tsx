@@ -128,7 +128,8 @@ const ListRowMenu=styled.View`
 `
 
 const ListRowArea=styled.View`
-    flex-direction:row;
+    flex-direction:column;
+    border:1px solid red;
 ` 
 
 
