@@ -5,9 +5,16 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  TextInput,
 } from 'react-native';
 
-import { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle, SearchBarArea, SearchInput, SearchIcon, SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle, SelectedSeasonButton, SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon, PerfumeImage, PerfumeInformationArea, PerfumeName, BrandKorean, BrandEnglish, CarouselSliderContentArea, } from './style';
+import {
+  AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle,
+  SearchBarArea, SearchInput, SearchIcon, SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle,
+  SelectedSeasonButton, SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon, PerfumeImage,
+  PerfumeInformationArea, PerfumeName, BrandKorean, BrandEnglish, CarouselSliderContentArea,
+  ModalSearchRowArea, BackButton,
+} from './style';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SeasonDropDown from '../../components/home/SeasonDropDown';
 import CarouselSlider from '../../components/home/CarouselSlider';
@@ -16,6 +23,7 @@ import TabsNavigation from '../../navigation/Tabs';
 import ApiService from '../../ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from 'react-native-splash-screen';
+import { Modal } from 'react-native';
 
 
 
@@ -28,7 +36,7 @@ type PERFUMEDATA = {
 
 
 
-const Home: React.FC = ({ }) => {
+const Home: React.FC= ({ }) => {
 
   // const [season, useseason] = useState<string>('spring');
   const [showDropDown, useShowDropDown] = useState(false);
@@ -36,12 +44,11 @@ const Home: React.FC = ({ }) => {
   const [resultList, setResultList] = useState<PERFUMEDATA[]>([]);
 
   const [isInital, setIsInitial] = useState<boolean>(false);
-
-  //나중에 바꿔야 함.
   const [seasonId, setSeasonId] = useState(36);
   const [myToken, setMyToken] = useState<string>('');
   const [isValidToken, setIsValidToken] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   let list = []
 
@@ -145,16 +152,22 @@ const Home: React.FC = ({ }) => {
     }, 2000);
   }, [isValidToken]);
 
+
+  console.log(isModalOpen, 'lllll')
   return (
     <View>
       {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
+      {/* <Image source={{url:'https://scenchive.s3.ap-northeast-2.amazonaws.com/brand/100Bon.jpg'}}/> */}
+      {/* <Image 
+      style={{height:100, width:100, borderColor:"red", borderWidth:1 }} resizeMode="cover" source={{uri: 'https://scenchive.s3.ap-northeast-2.amazonaws.com/brand/100Bon.jpg'}}/>
+     */}
 
       <HomePageTitleArea>
         <HomePageKoreanTitle>센카이브</HomePageKoreanTitle>
         <HomePageEnglishTitle>Scenchive</HomePageEnglishTitle>
       </HomePageTitleArea>
-      <TouchableOpacity>
-        <SearchBarArea >
+       <TouchableOpacity style={{backgroundColor:"red"}} onPressOut={() => setIsModalOpen(true)}>
+        <SearchBarArea>
           <Text
             style={{
               width: "80.70%",
@@ -164,12 +177,11 @@ const Home: React.FC = ({ }) => {
               fontSize: 14,
               color: "#B2B2B2"
             }}
-
           >향수 이름 혹은 브랜드명을 검색하세요</Text>
-          {/* <SearchInput placeholder="향수 이름 혹은 브랜드명을 검색하세요" placeholderTextColor={"#B2B2B2"} /> */}
-          <SearchIcon source={require('../../assets/images/icon/icon-search.png')} />
+           {/* <SearchInput placeholder="향수 이름 혹은 브랜드명을 검색하세요" placeholderTextColor={"#B2B2B2"} /> */}
+           <SearchIcon source={require('../../assets/images/icon/icon-search.png')} />
         </SearchBarArea>
-      </TouchableOpacity>
+      </TouchableOpacity> 
       <SeasonRecommendArea>
         <SeasonRecommendTitleArea>
           <RecommendTitle>' {userName} '님을 위한</RecommendTitle>
@@ -193,13 +205,28 @@ const Home: React.FC = ({ }) => {
           renderItem={({ item }) => {
             return <CarouselSlider perfumeName={item?.perfumeName} brandName={item?.brandName} id={item?.id} />
           }}
-
         />
-
-
-
-
       </SeasonRecommendArea>
+
+      <Modal
+        transparent={true}
+        visible={isModalOpen}
+        onRequestClose={() => {
+          // Alert.alert('Modal has been closed.');
+          setIsModalOpen(!isModalOpen);
+        }}
+      >
+        <View style={{height:"100%", backgroundColor:"#FFFFFF",}}>
+          <ModalSearchRowArea>
+            <BackButton onPress={()=>setIsModalOpen(false)}>
+              <Image source={require('../../assets/images/icon/icon-btn-back.png')} />
+            </BackButton>
+            <TextInput style={{width:"75%"}}/>
+            <SearchIcon style={{width:19, height:19, marginLeft:10, marginBottom:"auto", marginTop:"auto", marginRight:20}} source={require('../../assets/images/icon/icon-search.png')} />
+
+          </ModalSearchRowArea>
+        </View>
+      </Modal>
 
     </View>
   );

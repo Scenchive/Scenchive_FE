@@ -23,7 +23,7 @@ const onPressEvent = ( seasonId:Number, setSeasonId:Function, useShowDropDown:Fu
 
 const SeasonDropDown: React.FC<SEASON> = ({ seasonId, setSeasonId, showDropDown, useShowDropDown }) => {
 
-  console.log('setSeasonId', setSeasonId)
+  // console.log('setSeasonId', setSeasonId)
 
   return (
     <DropDownListArea>

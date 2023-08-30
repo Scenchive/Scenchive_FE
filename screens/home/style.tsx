@@ -55,7 +55,7 @@ const SearchInput=styled.TextInput`
 `
 
 const SearchIcon=styled.Image`
-    top:12.5px;
+    
 `
 
 const SeasonRecommendArea = styled.View`
@@ -176,5 +176,30 @@ const BrandEnglish=styled.Text`
     margin-top:5px;
 `
 
+const ModalSearchRowArea=styled.View`
+    width:100%;
+    height:60px;
+    flex-direction:row;    
+    border-bottom-color:#CCA4FF;
+    border-top-color:transparent;
+    border-left-color:transparent;
+    border-right-color:transparent;
+    border-width:2.5px;
+`
 
-export { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle, SearchBarArea, SearchInput, SearchIcon,SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle, SelectedSeasonButton,SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon,PerfumeImage, PerfumeInformationArea, PerfumeName,BrandKorean, BrandEnglish,  CarouselSliderContentArea,};
+const BackButton = styled.TouchableOpacity`
+    width:20px;
+    height:20px;
+    margin-right:auto;
+    margin-left:20px;
+    margin-top:auto;
+    margin-bottom:auto;
+    
+`
+
+export { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle, SearchBarArea,
+     SearchInput, SearchIcon,SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle
+     , SelectedSeasonButton,SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon
+     ,PerfumeImage, PerfumeInformationArea, PerfumeName,BrandKorean,
+     BrandEnglish,  CarouselSliderContentArea,
+     ModalSearchRowArea, BackButton};
