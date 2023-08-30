@@ -54,7 +54,8 @@ const BasicInformation: React.FC<NOTESDATA> = ({ topNotes, middleNotes, baseNote
           </NotesTitle>
 
           {isLoading === false ?
-            topNotes?.length > 0 ? topNotes.map((el: string, index: number) => <NotesList key={index}>{el}</NotesList>) : <Text>노트 정보가 없습니다.</Text>
+            topNotes?.length > 0 ? topNotes.map((el: string, index: number) =>
+             <NotesList key={index}>{el}</NotesList>) : <Text>노트 정보가 없습니다.</Text>
             : null}
 
         </EachNotesArea>
@@ -74,7 +75,9 @@ const BasicInformation: React.FC<NOTESDATA> = ({ topNotes, middleNotes, baseNote
             베이스노트
           </NotesTitle>
           {isLoading === false ?
-            baseNotes?.length > 0 ? baseNotes?.map((el: string) => <NotesList>{el}</NotesList>) : <Text>노트 정보가 없습니다.</Text>
+            baseNotes?.length > 0 ? baseNotes?.map((el: string) =>
+             <NotesList key={el}>{el}</NotesList>) 
+             : <Text>노트 정보가 없습니다.</Text>
             : null}
 
         </EachNotesArea>

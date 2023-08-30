@@ -98,7 +98,7 @@ const SignupStep2 = (route: any) => {
   const signupKeyword = () => {
     const keyword_data = {
       name: route?.route?.params?.userName,
-      utags: addOrDeleteKeywordArray,
+      utags: keywordTagsArray,
     }
     console.log('---------------------')
     console.log(keyword_data)
@@ -125,27 +125,51 @@ const SignupStep2 = (route: any) => {
   }
 
   const Signup=()=>{
-    if (addOrDeleteKeywordArray.length>0){
+    if (keywordTagsArray.length>0){
       signupAccount();
     }else{
       Alert.alert('키워드를 1개 이상 선택해주세요.')
     }
   }
 
+  console.log(keywordTagsArray)
 
-  const addOrDeleteKeyword=(el: { id: number; utag: string; utag_kr: string; utagtype_id: number; })=>{
-    let doesExist=addOrDeleteKeywordArray.filter(keyword=>keyword?.id===el?.id)
-    // console.log('어디')
-    if (doesExist?.length===0){
-      // console.log('el', el)
-      addOrDeleteKeywordArray.push(el);
-      // console.log('addOrDeleteKeywordArray',addOrDeleteKeywordArray)
+  // const addOrDeleteKeyword=(el: { id: number; utag: string; utag_kr: string; utagtype_id: number; })=>{
+  //   let doesExist=addOrDeleteKeywordArray.filter(keyword=>keyword?.id===el?.id)
+  //   // console.log('어디')
+  //   if (doesExist?.length===0){
+  //     // console.log('el', el)
+  //     addOrDeleteKeywordArray.push(el);
+  //     // console.log('addOrDeleteKeywordArray',addOrDeleteKeywordArray)
       
-    }else{
-      addOrDeleteKeywordArray=addOrDeleteKeywordArray.filter(keyword=>keyword?.id!==el?.id)
-      // console.log('addOrDeleteKeywordArray',addOrDeleteKeywordArray)
-    }
+  //   }else{
+  //     addOrDeleteKeywordArray=addOrDeleteKeywordArray.filter(keyword=>keyword?.id!==el?.id)
+  //     // console.log('addOrDeleteKeywordArray',addOrDeleteKeywordArray)
+  //   }
 
+  // }
+
+  const addOrDeleteKeyword = (el: { id: number; utag: string; utag_kr: string; utagtype_id: number; }) => {
+    console.log('el', el)
+    console.log('???', keywordTagsArray)
+    if (keywordTagsArray.length > 0) {
+      let exists = false;
+      keywordTagsArray.map((item) => {
+        if (item.id === el.id) {
+          exists = true;
+        }
+      })
+      if (exists) {
+        addOrDeleteKeywordArray = keywordTagsArray.filter(keyword => keyword.id !== el.id)
+        setKeywordTagsArray(addOrDeleteKeywordArray)
+      } else if (!exists) {
+        setKeywordTagsArray((prevState) => [...prevState, el])
+
+      }
+    }
+    else {
+      setKeywordTagsArray((prevState) => [...prevState, el])
+    }
   }
 
 
@@ -171,7 +195,19 @@ const SignupStep2 = (route: any) => {
           <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start", }}>
 
             {
-              fragranceWheelKeywords.map((el) => <KeywordButton key={el.id} onPress={()=>addOrDeleteKeyword(el)}><KeywordText>{el?.utag_kr}</KeywordText></KeywordButton>)
+              fragranceWheelKeywords.map((el) => 
+              <KeywordButton 
+              style={{
+                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+              }}
+              key={el.id} onPress={()=>addOrDeleteKeyword(el)}>
+                <KeywordText
+                style={{
+                  color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
+                }}>
+                  {el?.utag_kr}
+                  </KeywordText>
+                </KeywordButton>)
             }
             {/* <KeywordButton><KeywordText>플로럴</KeywordText></KeywordButton> */}
           </View>
@@ -183,7 +219,19 @@ const SignupStep2 = (route: any) => {
           <View style={{ display: "flex", width: "100%", flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start" }}>
 
             {
-              moodKeywords.map((el) => <KeywordButton key={el.id}  onPress={()=>addOrDeleteKeyword(el)}><KeywordText>{el?.utag_kr}</KeywordText></KeywordButton>)
+              moodKeywords.map((el) => 
+              <KeywordButton 
+              style={{
+                backgroundColor: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#B592FF" : "#F6F2FF",
+              }}
+              key={el.id}  onPress={()=>addOrDeleteKeyword(el)}>
+                <KeywordText
+                style={{
+                  color: (keywordTagsArray.filter((item) => item.id === el.id)?.length) ? "#FFFFFF" : "#616161",
+                }}>
+                  {el?.utag_kr}
+                  </KeywordText>
+                </KeywordButton>)
             }
 
 

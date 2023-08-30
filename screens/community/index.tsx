@@ -99,7 +99,7 @@ console.log(boardsList)
     <View>
       <HeaderArea>
         <HeaderTitle>Scentalk</HeaderTitle >
-        <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
+        {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
       </HeaderArea>
       <MenuButtonArea>
         <MenuButton onPress={() => setSelectedMenu("전체")}
