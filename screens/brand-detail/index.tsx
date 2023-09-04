@@ -34,6 +34,7 @@ type PERFUMELISTTYPE = {
   brandName_kr: string | null;
   perfumeId: number;
   perfumeName: string;
+  perfumeImage:string;
 };
 
 
@@ -43,6 +44,7 @@ const BrandDetail = (route: any,) => {
 
   const brandName = route?.route?.params?.brandName;
   const brandName_kr = route?.route?.params?.brandName_kr;
+  const brandImage=route?.route?.params?.brandImage;
   const [myToken, setMyToken] = useState<string>('');
   const [perfumeTotal, setPerfumeTotal] = useState<number>();
   const [brandPerfumeList, setBrandPerfumeList] = useState<PERFUMELISTTYPE[]>();
@@ -75,6 +77,7 @@ const BrandDetail = (route: any,) => {
     if (myToken.length > 0) {
       ApiService.GETBRANDPERFUMELIST(brandName, myToken)
         .then((data) => {
+          console.log('data?.data?.data', data?.data)
           setBrandPerfumeList(data?.data?.perfumes);
           setPerfumeTotal(data?.data?.totalBrandPerfumeCount)
         }
@@ -109,7 +112,7 @@ const BrandDetail = (route: any,) => {
 
 
       <BrandArea>
-        <BrandImage source={require('../../assets/images/icon/icon-perfume-pic.png')} />
+        <BrandImage  source={brandImage ? { uri: `${brandImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')}/>
         <BrandKoreanName>
           {brandName_kr}
         </BrandKoreanName>
@@ -123,7 +126,7 @@ const BrandDetail = (route: any,) => {
         {brandPerfumeList?.map((perfume) =>
         <TouchableOpacity key={perfume?.perfumeId} onPress={()=>goToPerfumeDetail(perfume?.perfumeId, perfume?.perfumeName, perfume?.brandName)}>
           <PerfumeRow>
-            <PerfumeImage source={require("../../assets/images/icon/icon-perfume-pic.png")}/>
+            <PerfumeImage source={perfume?.perfumeImage ? { uri: `${perfume?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')}/>
             <PerfumeInformationArea>
               <PerfumeNameKorean numberOfLines={1}>
                 {perfume?.perfumeName + "***한국어로 바꿔야함*****"}

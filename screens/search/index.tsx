@@ -18,7 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SearchPage: React.FC = () => {
 
-    type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null, brandImage: string | null }
+    type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null, brandImage: string}
     type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string , perfumeImage: string  }
     const [searchWord, setSearchWord] = useState("");
     const [brandResultList, setBrandResultList] = useState<BRANDRESULTLISTTYPE[]>([]);
@@ -35,9 +35,9 @@ const SearchPage: React.FC = () => {
         //@ts-ignore
         navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName , brandNameKorean:brandName_kr, perfumeImage:perfumeImage} })
     }
-    const goToBrandDetailPAGE = (brandName: string, brandName_kr: string | null) => {
+    const goToBrandDetailPAGE = (brandName: string, brandName_kr: string | null, brandImage:string) => {
         //@ts-ignore
-        navigation.navigate("Stack", { screen: "BrandDetail", params: { brandName: brandName, brandName_kr: brandName_kr, } })
+        navigation.navigate("Stack", { screen: "BrandDetail", params: { brandName: brandName, brandName_kr: brandName_kr,brandImage:brandImage } })
     }
 
     const getAutoFill = async () => {
@@ -89,7 +89,7 @@ const SearchPage: React.FC = () => {
                 <ScrollView>
                     <View>
                         {brandResultList?.map((el, index) =>
-                            <TouchableOpacity onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,)}>
+                            <TouchableOpacity onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,el?.brandImage)}>
                                 <BrandResultRow>
                                     {/* <BrandImage source={{ uri: `${el.brandImage}` }} /> */}
                                     <BrandImage source={el?.brandImage ? { uri: `${el?.brandImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />

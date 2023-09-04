@@ -35,11 +35,11 @@ type PERFUMEDATA = {
   perfumeName: string;
   id: Number;
   keywordIds: any;
-  perfumeImage:string|null;
+  perfumeImage:string;
   ratingAvg:Number|null;
 };
 
-type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null, brandImage: string | null }
+type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null, brandImage: string}
 type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string , perfumeImage: string | null }
 
 
@@ -78,9 +78,9 @@ const Home: React.FC = ({ }) => {
     setBrandResultList([]);
     setPerfumeResultList([]);
   }
-  const goToBrandDetailPAGE = (brandName: string, brandName_kr: string | null) => {
+  const goToBrandDetailPAGE = (brandName: string, brandName_kr: string | null, brandImage:string) => {
     //@ts-ignore
-    navigation.navigate("Stack", { screen: "BrandDetail", params: { brandName: brandName, brandName_kr: brandName_kr, } })
+    navigation.navigate("Stack", { screen: "BrandDetail", params: { brandName: brandName, brandName_kr: brandName_kr, brandImage:brandImage} })
     setIsModalOpen(false);
     setSearchWord("");
     setBrandResultList([]);
@@ -283,7 +283,7 @@ const Home: React.FC = ({ }) => {
           <View style={{ width: "100%", paddingLeft: 40, paddingRight: 40, marginTop: 30 }}>
             <ScrollView>
               {brandResultList?.map((el, index) =>
-                <TouchableOpacity key={'brand' + index} onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,)}>
+                <TouchableOpacity key={'brand' + index} onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr, el?.brandImage)}>
                   <View style={{ borderColor: "#D2D2D2", borderWidth: 1.5, height: 70, display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20 }}>
                     <Image
                       style={{ width: "30%", height: "100%", marginRight: 12, resizeMode: "contain" }}
