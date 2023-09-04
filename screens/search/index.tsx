@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SearchPage: React.FC = () => {
 
     type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null, brandImage: string | null }
-    type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string , perfumeImage: string | null }
+    type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string , perfumeImage: string  }
     const [searchWord, setSearchWord] = useState("");
     const [brandResultList, setBrandResultList] = useState<BRANDRESULTLISTTYPE[]>([]);
     const [perfumeResultList, setPerfumeResultList] = useState<PERFUMERESULTLISTTYPE[]>([]);
@@ -31,10 +31,9 @@ const SearchPage: React.FC = () => {
         //@ts-ignore
         navigation.navigate("Home")
     }
-    const goToPerfumeDetailPAGE = (perfumeId: number, perfumeName: string, brandName: string, brandName_kr:string) => {
-        console.log('////////', brandName_kr)
+    const goToPerfumeDetailPAGE = (perfumeId: number, perfumeName: string, brandName: string, brandName_kr:string, perfumeImage:string) => {
         //@ts-ignore
-        navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName , brandNameKorean:brandName_kr} })
+        navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName , brandNameKorean:brandName_kr, perfumeImage:perfumeImage} })
     }
     const goToBrandDetailPAGE = (brandName: string, brandName_kr: string | null) => {
         //@ts-ignore
@@ -69,8 +68,6 @@ const SearchPage: React.FC = () => {
     }, [searchWord])
 
 
-    console.log(brandResultList)
-    console.log(perfumeResultList)
 
     return (
         <View style={{ height: "100%" }}>
@@ -106,7 +103,7 @@ const SearchPage: React.FC = () => {
                             </TouchableOpacity>
                         )}
                         {perfumeResultList?.map((el, index) =>
-                            <TouchableOpacity onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName, el?.brandName_kr)}>
+                            <TouchableOpacity onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName, el?.brandName_kr, el?.perfumeImage)}>
                                 <PerfumeResultRow>
                                     <SearchImage source={el?.perfumeImage ? { uri: `${el?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
 

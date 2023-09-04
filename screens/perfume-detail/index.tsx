@@ -68,7 +68,6 @@ const PerfumeDetail = (route: any,) => {
   const perfumeImage=route?.route?.params?.perfumeImage;
   const brandNameKorean=route?.route?.params?.brandNameKorean;
 
-  console.log('/??????', route?.route?.params)
   const [myToken, setMyToken] = useState<string>('');
 
   const isFocused=useIsFocused();
@@ -129,7 +128,6 @@ const PerfumeDetail = (route: any,) => {
 
     ApiService.GETPERFUMERATING(perfumeId, myToken)
       .then((data) => {
-        console.log('data????????????', data?.data)
         setPerfumeRatingInformation(data?.data)
         console.log('향수 평점 정보 받아오기 성공')
 
@@ -140,7 +138,6 @@ const PerfumeDetail = (route: any,) => {
       })
   }
 
-console.log('dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ', brandNameKorean)
   const getReviewList = () => {
     ApiService.GETREVIEWLIST(perfumeId, myToken)
       .then((data) => {

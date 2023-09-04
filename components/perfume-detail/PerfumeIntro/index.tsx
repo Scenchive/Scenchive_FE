@@ -52,7 +52,6 @@ const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, brandNameKorean,perfum
     //@ts-ignore
     navigation.navigate("Home")
   }
-  console.log('brandNameKorean', brandNameKorean)
 
 
   return (
