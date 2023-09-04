@@ -99,7 +99,6 @@ const Home: React.FC = ({ }) => {
     ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
       .then((data) => {
         list = data?.data;
-        console.log('list', list)
         setResultList(list);
 
       }
@@ -190,7 +189,6 @@ const Home: React.FC = ({ }) => {
     if (myToken.length > 0) {
       ApiService.GETSEARCHRESULTLIST(searchWord, myToken)
         .then((data) => {
-          // console.log('data', data)
           setBrandResultList(data?.data?.brands)
           setPerfumeResultList(data?.data.perfumes)
         }
