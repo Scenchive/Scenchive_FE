@@ -18,8 +18,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SearchPage: React.FC = () => {
 
-    type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null }
-    type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string | null }
+    type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null, brandImage: string}
+    type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string , perfumeImage: string  }
     const [searchWord, setSearchWord] = useState("");
     const [brandResultList, setBrandResultList] = useState<BRANDRESULTLISTTYPE[]>([]);
     const [perfumeResultList, setPerfumeResultList] = useState<PERFUMERESULTLISTTYPE[]>([]);
@@ -31,13 +31,13 @@ const SearchPage: React.FC = () => {
         //@ts-ignore
         navigation.navigate("Home")
     }
-    const goToPerfumeDetailPAGE = (perfumeId: number, perfumeName: string, brandName: string) => {
+    const goToPerfumeDetailPAGE = (perfumeId: number, perfumeName: string, brandName: string, brandName_kr:string, perfumeImage:string) => {
         //@ts-ignore
-        navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName } })
+        navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName , brandNameKorean:brandName_kr, perfumeImage:perfumeImage} })
     }
-    const goToBrandDetailPAGE = (brandName:string, brandName_kr:string|null) => {
+    const goToBrandDetailPAGE = (brandName: string, brandName_kr: string | null, brandImage:string) => {
         //@ts-ignore
-        navigation.navigate("Stack", { screen: "BrandDetail", params: { brandName: brandName, brandName_kr: brandName_kr,  } })
+        navigation.navigate("Stack", { screen: "BrandDetail", params: { brandName: brandName, brandName_kr: brandName_kr,brandImage:brandImage } })
     }
 
     const getAutoFill = async () => {
@@ -68,7 +68,6 @@ const SearchPage: React.FC = () => {
     }, [searchWord])
 
 
-    console.log(brandResultList)
 
     return (
         <View style={{ height: "100%" }}>
@@ -88,30 +87,34 @@ const SearchPage: React.FC = () => {
             {/* {brandResultList ? */}
             <ResultListArea>
                 <ScrollView>
-                    {brandResultList?.map((el, index) =>
-                        <TouchableOpacity onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr, )}>
-                            <BrandResultRow>
-                                <BrandImage source={require('../../assets/images/icon/icon-search.png')} />
-                                <ResultInformation key={index + 'brand'}>
-                                    <BrandNameText style={{ marginBottom: 5 }} numberOfLines={1} ellipsizeMode='tail'>{el.brandName}</BrandNameText>
-                                    <BrandNameText numberOfLines={1} ellipsizeMode='tail'>{el.brandName_kr}</BrandNameText>
-                                    {/* <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText> */}
-                                </ResultInformation>
-                            </BrandResultRow>
-                        </TouchableOpacity>
-                    )}
-                    {perfumeResultList?.map((el, index) =>
-                        <TouchableOpacity onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName)}>
-                            <PerfumeResultRow>
-                                <SearchImage source={require('../../assets/images/icon/icon-search.png')} />
-                                <View key={index + 'perfume'}>
-                                    <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText>
-                                    {/* <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText> */}
-                                </View>
-                            </PerfumeResultRow>
-                        </TouchableOpacity>
-                    )}
+                    <View>
+                        {brandResultList?.map((el, index) =>
+                            <TouchableOpacity onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,el?.brandImage)}>
+                                <BrandResultRow>
+                                    {/* <BrandImage source={{ uri: `${el.brandImage}` }} /> */}
+                                    <BrandImage source={el?.brandImage ? { uri: `${el?.brandImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
 
+                                    <ResultInformation key={index + 'brand'}>
+                                        <BrandNameText style={{ marginBottom: 5 }} numberOfLines={1} ellipsizeMode='tail'>{el.brandName}</BrandNameText>
+                                        <BrandNameText numberOfLines={1} ellipsizeMode='tail'>{el.brandName_kr}</BrandNameText>
+                                        {/* <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el.perfumeName}</PerfumeNameText> */}
+                                    </ResultInformation>
+                                </BrandResultRow>
+                            </TouchableOpacity>
+                        )}
+                        {perfumeResultList?.map((el, index) =>
+                            <TouchableOpacity onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName, el?.brandName_kr, el?.perfumeImage)}>
+                                <PerfumeResultRow>
+                                    <SearchImage source={el?.perfumeImage ? { uri: `${el?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
+
+                                    <View style={{ marginTop: "auto", marginBottom: "auto" }} key={index + 'perfume'}>
+                                        <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el?.perfumeName}</PerfumeNameText>
+                                        <PerfumeNameText numberOfLines={1} ellipsizeMode='tail'>{el?.brandName_kr}</PerfumeNameText>
+                                    </View>
+                                </PerfumeResultRow>
+                            </TouchableOpacity>
+                        )}
+                    </View>
                 </ScrollView>
             </ResultListArea>
             {/* : null} */}

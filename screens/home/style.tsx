@@ -14,7 +14,7 @@ const HomePageTitleArea = styled.View`
     align-items:center;
     justify-content:center;
     margin-bottom : 26px;
-    margin-top:150px;
+    margin-top:210px;
 `;
 
 const HomePageKoreanTitle=styled.Text`
@@ -55,7 +55,9 @@ const SearchInput=styled.TextInput`
 `
 
 const SearchIcon=styled.Image`
-    
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-right:12px;
 `
 
 const SeasonRecommendArea = styled.View`
@@ -197,9 +199,12 @@ const BackButton = styled.TouchableOpacity`
     
 `
 
+
+
 export { AlertIcon, HomePageTitleArea, HomePageKoreanTitle, HomePageEnglishTitle, SearchBarArea,
      SearchInput, SearchIcon,SeasonRecommendArea, SeasonRecommendTitleArea, RecommendTitle
      , SelectedSeasonButton,SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon
      ,PerfumeImage, PerfumeInformationArea, PerfumeName,BrandKorean,
      BrandEnglish,  CarouselSliderContentArea,
-     ModalSearchRowArea, BackButton};
+     ModalSearchRowArea, BackButton,
+    };
