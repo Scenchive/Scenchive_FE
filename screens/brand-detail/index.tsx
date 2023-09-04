@@ -129,7 +129,7 @@ const BrandDetail = (route: any,) => {
             <PerfumeImage source={perfume?.perfumeImage ? { uri: `${perfume?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')}/>
             <PerfumeInformationArea>
               <PerfumeNameKorean numberOfLines={1}>
-                {perfume?.perfumeName + "***한국어로 바꿔야함*****"}
+                {perfume?.perfumeName}
               </PerfumeNameKorean>
               <PerfumeNameEnglish numberOfLines={1} >
                 {perfume?.perfumeName}
