@@ -30,7 +30,7 @@ const NativeStack = createNativeStackNavigator();
 const Stack = () => {
     return (
 
-        <NativeStack.Navigator >
+        <NativeStack.Navigator screenOptions={{ headerShown: false }}>
             {/* <NativeStack.Screen name="One" components={ScreenOne} />
         <NativeStack.Screen name="Two" components={ScreenTwo} />
         <NativeStack.Screen name="Three" components={ScreenThree} /> */}

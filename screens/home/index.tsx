@@ -16,7 +16,7 @@ import {
   SelectedSeasonButton, SelectedSeasonText, CarouselSliderArea, LeftArrowIcon, RightArrowIcon, PerfumeImage,
   PerfumeInformationArea, PerfumeName, BrandKorean, BrandEnglish, CarouselSliderContentArea,
   ModalSearchRowArea, BackButton,
- 
+
 } from './style';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SeasonDropDown from '../../components/home/SeasonDropDown';
@@ -35,10 +35,12 @@ type PERFUMEDATA = {
   perfumeName: string;
   id: Number;
   keywordIds: any;
+  perfumeImage:string|null;
+  ratingAvg:Number|null;
 };
 
-type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null }
-type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string | null }
+type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string | null, brandImage: string | null }
+type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string , perfumeImage: string | null }
 
 
 const Home: React.FC = ({ }) => {
@@ -67,9 +69,10 @@ const Home: React.FC = ({ }) => {
     navigation.navigate("Stack", { screen: "SignupORLogin" })
   }
 
-  const goToPerfumeDetailPAGE = (perfumeId: number, perfumeName: string, brandName: string) => {
+  const goToPerfumeDetailPAGE = (perfumeId: number, perfumeName: string, brandName: string,brandName_kr:string, perfumeImage:string|null) => {
     //@ts-ignore
-    navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName } })
+    navigation.navigate("Stack", { screen: "PerfumeDetail", params: { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName , brandNameKorean:brandName_kr,perfumeImage:perfumeImage,} })
+
     setIsModalOpen(false);
     setSearchWord("");
     setBrandResultList([]);
@@ -96,6 +99,7 @@ const Home: React.FC = ({ }) => {
     ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
       .then((data) => {
         list = data?.data;
+        console.log('list', list)
         setResultList(list);
 
       }
@@ -186,6 +190,7 @@ const Home: React.FC = ({ }) => {
     if (myToken.length > 0) {
       ApiService.GETSEARCHRESULTLIST(searchWord, myToken)
         .then((data) => {
+          // console.log('data', data)
           setBrandResultList(data?.data?.brands)
           setPerfumeResultList(data?.data.perfumes)
         }
@@ -201,7 +206,7 @@ const Home: React.FC = ({ }) => {
   }, [searchWord])
 
 
-  const closeModal=()=>{
+  const closeModal = () => {
     setIsModalOpen(false);
     setBrandResultList([]);
     setPerfumeResultList([]);
@@ -214,7 +219,7 @@ const Home: React.FC = ({ }) => {
         <HomePageKoreanTitle>센카이브</HomePageKoreanTitle>
         <HomePageEnglishTitle>Scenchive</HomePageEnglishTitle>
       </HomePageTitleArea>
-      <TouchableOpacity style={{ backgroundColor: "red" }} onPressOut={() => setIsModalOpen(true)}>
+      <TouchableOpacity style={{ alignSelf: 'center'}} onPressOut={() => setIsModalOpen(true)}>
         <SearchBarArea>
           <Text
             style={{
@@ -251,7 +256,7 @@ const Home: React.FC = ({ }) => {
           data={resultList}
           horizontal={true}
           renderItem={({ item }) => {
-            return <CarouselSlider perfumeName={item?.perfumeName} brandName={item?.brandName} id={item?.id} />
+            return <CarouselSlider perfumeName={item?.perfumeName} brandName={item?.brandName}  id={item?.id} perfumeImage={item?.perfumeImage} ratingAvg={item?.ratingAvg}/>
           }}
         />
       </SeasonRecommendArea>
@@ -277,19 +282,21 @@ const Home: React.FC = ({ }) => {
             <SearchIcon style={{ width: 19, height: 19, marginLeft: 10, marginBottom: "auto", marginTop: "auto", marginRight: 20 }} source={require('../../assets/images/icon/icon-search.png')} />
 
           </ModalSearchRowArea>
-          <View style={{width:"100%", paddingLeft:50, paddingRight:40, marginTop:20}}>
+          <View style={{ width: "100%", paddingLeft: 40, paddingRight: 40, marginTop: 30 }}>
             <ScrollView>
               {brandResultList?.map((el, index) =>
                 <TouchableOpacity key={'brand' + index} onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,)}>
-                  <View style={{ height: 50, display: "flex", flexDirection: "row", alignItems: "center" }}>
+                  <View style={{ borderColor: "#D2D2D2", borderWidth: 1.5, height: 70, display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 20 }}>
                     <Image
-                      style={{ width: "25%", height: "100%", marginRight: 12, resizeMode: "contain" }}
-                      source={require('../../assets/images/icon/icon-search.png')} />
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                      <Text style={{ color: "#000000", fontSize: 16, width: "100%", marginRight: 10 }}>
+                      style={{ width: "30%", height: "100%", marginRight: 12, resizeMode: "contain" }}
+                      source={el?.brandImage ? { uri: `${el?.brandImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
+
+
+                    <View style={{ display: "flex", flexDirection: "column" }}>
+                      <Text style={{ color: "#2E2E2E", fontSize: 18, width: "100%", marginRight: 10 }}>
                         {el?.brandName}
                       </Text>
-                      <Text style={{ color: "#000000", fontSize: 16, width: "100%", marginRight: 10 }}>
+                      <Text style={{ color: "#2E2E2E", fontSize: 18, width: "100%", marginRight: 10 }}>
                         {el?.brandName_kr}
                       </Text>
                     </View>
@@ -298,15 +305,21 @@ const Home: React.FC = ({ }) => {
               )
               }
               {perfumeResultList?.map((el, index) =>
-                <TouchableOpacity key={'perfume' + index} onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName)}>
-                  <View style={{ display: "flex", flexDirection: "row", marginBottom:10, width:"100%"}}>
-                    <Image source={require('../../assets/images/icon/icon-search.png')} />
-                    <Text style={{ color: "#A9A9A9", fontSize: 14, width: "100%" }}>
-                      {el?.perfumeName}
-                    </Text>
-                    <Text style={{ color: "#A9A9A9", fontSize: 14, width: "100%" }}>
-                      {el?.brandName_kr}
-                    </Text>
+                <TouchableOpacity key={'perfume' + index} onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName,  el?.brandName_kr, el?.perfumeImage,)}>
+                  <View style={{ display: "flex", flexDirection: "row", marginBottom: 10, width: "100%", height: 50 }}>
+                    <Image style={{ marginRight: 10, marginTop: "auto", marginBottom: "auto", width: 50, height: 50, resizeMode: "contain" }}
+                      source={el?.perfumeImage ? { uri: `${el?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
+                    <View style={{ marginTop: "auto", marginBottom: "auto" }} key={index + 'perfume'}>
+                      <Text numberOfLines={1} ellipsizeMode='tail' style={{ color: "#A9A9A9", fontSize: 15, }}>
+                         {el?.perfumeName}
+                      </Text>
+                      <Text numberOfLines={1} ellipsizeMode='tail' style={{ color: "#A9A9A9", fontSize: 15, }}>
+                        {el?.brandName_kr} 
+                      </Text>
+                    </View>
+                    {/* <Text style={{ color: "#A9A9A9", fontSize: 15,  }}>
+                      
+                    </Text> */}
                   </View>
                 </TouchableOpacity>
               )}

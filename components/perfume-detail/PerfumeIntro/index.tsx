@@ -30,23 +30,29 @@ const styles = StyleSheet.create({
 
 type PERFUMEDATA = {
   brandName: string;
+  brandNameKorean:string;
   perfumeName: string;
+  perfumeImage:string|null;
   bookmarkYesNo: string;
   setBookmarkYesNo: Function;
   ratingAvg: number;
   longetivityAvg: number;
-  seasonAvg: Object;
+  springAvg:number|undefined, 
+  summerAvg:number|undefined,
+   fallAvg:number|undefined,
+    winterAvg:number|undefined,
   sillageAvg: number;
 };
 
 
-const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, perfumeName, bookmarkYesNo, setBookmarkYesNo, ratingAvg, longetivityAvg, seasonAvg, sillageAvg }) => {
+const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, brandNameKorean,perfumeName,perfumeImage, bookmarkYesNo, setBookmarkYesNo, ratingAvg, longetivityAvg, springAvg, summerAvg, fallAvg, winterAvg, sillageAvg }) => {
 
   const navigation = useNavigation();
   const goToHome = () => {
     //@ts-ignore
     navigation.navigate("Home")
   }
+  console.log('brandNameKorean', brandNameKorean)
 
 
   return (
@@ -63,11 +69,11 @@ const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, perfumeName, bookmarkY
           <Text>이미지 준비중입니다.</Text>
         </View> */}
         <View style={{ width: "32%", height: 167, marginRight: 10 }}> 
-          <PerfumeImage source={require('../../../assets/images/icon/icon-perfume-pic.png')} />
+          <PerfumeImage source={perfumeImage ? { uri: `${perfumeImage}` } : require('../../../assets/images/icon/icon-perfume-pic.png')} />
         </View>
         <PerfumeIntroductionTexts>
 
-          <PerfumeNameKorean>{brandName}</PerfumeNameKorean>
+          <PerfumeNameKorean>{brandNameKorean}</PerfumeNameKorean>
           <PerfumeNameEnglish>{brandName}</PerfumeNameEnglish>
           <View style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
             <View style={{ display: "flex", flexDirection: "column", width: "30%" }}>
@@ -77,10 +83,10 @@ const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, perfumeName, bookmarkY
             </View>
             <View style={{ display: "flex", flexDirection: "column", width: "30%" }}>
 
-              <Text>봄: {seasonAvg?.spring || 0}</Text>
-              <Text>여름: {seasonAvg?.summer || 0}</Text>
-              <Text>가을: {seasonAvg?.fall || 0}</Text>
-              <Text>겨울: {seasonAvg?.winter || 0}</Text>
+              <Text>봄: {springAvg || 0}</Text>
+              <Text>여름: {summerAvg || 0}</Text>
+              <Text>가을: {fallAvg || 0}</Text>
+              <Text>겨울: {winterAvg || 0}</Text>
             </View>
           </View>
           {/* <StarRating disabled={true} maxStars={5} rating={3.5} /> */}

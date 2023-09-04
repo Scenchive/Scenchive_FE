@@ -7,6 +7,7 @@ import Home from "../screens/home";
 import FilterSearch from "../screens/filter-search";
 import Community from "../screens/community";
 import Signup from "../screens/signup";
+import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,6 +45,7 @@ const Tabs = () => (
                 marginBottom:7,
 
             },
+            headerShown:false
             
         })}>
         <Tab.Screen name="MY" component={MyPage} screenOptions={{ tabBarIcon: <Image source={require('../assets/images/icon/icon-btn-tab-my.png')} /> }} />

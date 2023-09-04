@@ -54,9 +54,9 @@ const SearchIcon=styled.Image`
 
 const ResultListArea=styled.View`
     width:100%;
-    padding-left:50px;
+    padding-left:40px;
     padding-right:40px;
-    margin-top:20px;
+    margin-top:30px;
 
 `
 
@@ -65,37 +65,40 @@ const PerfumeResultRow=styled.View`
     flex-direction:row;
     margin-bottom:10px;
     width:100%;
+    height:50px;
 `
 const BrandResultRow=styled.View`
-    height:50px;
+    height:75px;
     display:flex;
     flex-direction:row;
     align-items:center;
+    border:1.5px solid #D2D2D2
+    margin-bottom:20px;
 `
 
 const BrandImage=styled.Image`
-    width:25%;
+    width:30%;
     height:100%;
     margin-right:12px;
-    border:1px solid red;
     resize-mode:contain;
 `
 
 const SearchImage=styled.Image`
-    width:5%;
+    width:50px;
+    height:50px;
     resize-mode:cover;
     margin-right:10px;
 `
 
 const ResultInformation=styled.View`
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
 
 `
 
 const BrandNameText=styled.Text`
-    color:#000000;
-    font-size:16px;
+    color:#2E2E2E;
+    font-size:17px;
     width:100%;
     margin-right:10px;
 
@@ -105,6 +108,7 @@ const PerfumeNameText=styled.Text`
     color:#A9A9A9;
     font-size:14px;
     width:100%;
+
 `
 
 export { HeaderArea,LogoNameArea,HeaderLogoImage, SearchArea, SearchInput, SearchIcon,ResultListArea, BrandResultRow, PerfumeResultRow,BrandImage,  SearchImage,ResultInformation, BrandNameText, PerfumeNameText,  };

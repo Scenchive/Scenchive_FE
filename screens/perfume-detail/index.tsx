@@ -62,10 +62,13 @@ type SHOPPINGDATA = {
 
 const PerfumeDetail = (route: any,) => {
 
-
   const perfumeName1 = route?.route?.params?.perfumeName;
   const brandName = route?.route?.params?.brandName;
   const perfumeId = route?.route?.params?.perfumeId;
+  const perfumeImage=route?.route?.params?.perfumeImage;
+  const brandNameKorean=route?.route?.params?.brandNameKorean;
+
+  console.log('/??????', route?.route?.params)
   const [myToken, setMyToken] = useState<string>('');
 
   const isFocused=useIsFocused();
@@ -112,6 +115,7 @@ const PerfumeDetail = (route: any,) => {
   const getPerfumeBasicInformation = () => {
     ApiService.GETPERFUMEBASICINFORMATION(perfumeId, myToken)
       .then((data) => {
+        
         setPerfumeBasicInformation(data?.data)
       }
       ).catch((res) => {
@@ -125,6 +129,7 @@ const PerfumeDetail = (route: any,) => {
 
     ApiService.GETPERFUMERATING(perfumeId, myToken)
       .then((data) => {
+        console.log('data????????????', data?.data)
         setPerfumeRatingInformation(data?.data)
         console.log('향수 평점 정보 받아오기 성공')
 
@@ -135,7 +140,7 @@ const PerfumeDetail = (route: any,) => {
       })
   }
 
-
+console.log('dㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ', brandNameKorean)
   const getReviewList = () => {
     ApiService.GETREVIEWLIST(perfumeId, myToken)
       .then((data) => {
@@ -193,7 +198,7 @@ const PerfumeDetail = (route: any,) => {
       ApiService.SETBOOKMARKNO(perfumeId, myToken)
         .then((data) => {
           console.log('북마크 삭제 성공')
-          console.log('data', data?.data)
+          // console.log('data', data?.data)
         }
         ).catch((res) => {
           console.log('북마크 삭제 실패')
@@ -207,7 +212,7 @@ const PerfumeDetail = (route: any,) => {
     setBookmark();
   }, [bookmarkYesNo])
 
-  console.log(perfumeBasicInformation)
+  // console.log('peeeeeeeeeee', perfumeRatingInformation)
 
 
 
@@ -231,11 +236,16 @@ const PerfumeDetail = (route: any,) => {
             <PerfumeIntro
               perfumeName={perfumeName1}
               brandName={brandName}
+              brandNameKorean={brandNameKorean}
+              perfumeImage={perfumeImage}
               bookmarkYesNo={bookmarkYesNo}
               setBookmarkYesNo={setBookmarkYesNo}
               ratingAvg={perfumeRatingInformation?.ratingAvg || 0}
               longetivityAvg={perfumeRatingInformation?.longevityAvg || 0}
-              seasonAvg={perfumeRatingInformation?.seasonAvg || 0}
+              springAvg={perfumeRatingInformation?.seasonAvg?.spring}
+              summerAvg={perfumeRatingInformation?.seasonAvg?.summer}
+              fallAvg={perfumeRatingInformation?.seasonAvg?.fall}
+              winterAvg={perfumeRatingInformation?.seasonAvg?.winter}
               sillageAvg={perfumeRatingInformation?.sillageAvg || 0}
             />
             <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
@@ -264,11 +274,16 @@ const PerfumeDetail = (route: any,) => {
           </HeaderArea>
           <PerfumeIntro perfumeName={perfumeName1}
             brandName={brandName}
+            brandNameKorean={brandNameKorean}
+            perfumeImage={perfumeImage}
             bookmarkYesNo={bookmarkYesNo}
             setBookmarkYesNo={setBookmarkYesNo}
             ratingAvg={perfumeRatingInformation?.ratingAvg || 0}
             longetivityAvg={perfumeRatingInformation?.longevityAvg || 0}
-            seasonAvg={perfumeRatingInformation?.seasonAvg || 0}
+            springAvg={perfumeRatingInformation?.seasonAvg?.spring || 0}
+            summerAvg={perfumeRatingInformation?.seasonAvg?.summer||0}
+            fallAvg={perfumeRatingInformation?.seasonAvg?.fall||0}
+            winterAvg={perfumeRatingInformation?.seasonAvg?.winter||0}
             sillageAvg={perfumeRatingInformation?.sillageAvg || 0} />
           <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
           <ShoppingInformation />
