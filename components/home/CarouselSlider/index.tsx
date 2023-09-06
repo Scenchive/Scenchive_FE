@@ -15,6 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 
 type PERFUMEDATA = {
   brandName: string;
+  brandNameKorean:string;
   perfumeName: string;
   id: Number;
   perfumeImage:string|null;
@@ -22,13 +23,13 @@ type PERFUMEDATA = {
 };
 
 
-const CarouselSlider: React.FC<PERFUMEDATA> = ({ perfumeName, brandName, id, perfumeImage, ratingAvg }) => {
+const CarouselSlider: React.FC<PERFUMEDATA> = ({ perfumeName, brandName, brandNameKorean,id, perfumeImage, ratingAvg }) => {
 
   const navigation = useNavigation();
   const goToPerfumeDetail = () => {
     console.log('id', id)
     //@ts-ignore
-    navigation.navigate("Stack",{screen:"PerfumeDetail", params:{perfumeId:id, perfumeName:perfumeName, brandName:brandName, perfumeImage:perfume}})
+    navigation.navigate("Stack",{screen:"PerfumeDetail", params:{perfumeId:id, perfumeName:perfumeName, brandName:brandName, brandNameKorean:brandNameKorean, perfumeImage:perfumeImage}})
   }
   return (
     <View style={{ paddingLeft:20, paddingRight:20, marginTop:10}}>
@@ -39,7 +40,7 @@ const CarouselSlider: React.FC<PERFUMEDATA> = ({ perfumeName, brandName, id, per
 
       <PerfumeInformationArea>
         <PerfumeName>{perfumeName} </PerfumeName>
-        <BrandKorean>{brandName}</BrandKorean>
+        <BrandKorean>{brandNameKorean}</BrandKorean>
         <BrandEnglish>{brandName}</BrandEnglish>
         <View style={{ display: "flex", flexDirection: "row", marginTop: 4, marginLeft: -3 }}>
           <Image source={require('../../../assets/images/icon/icon-yellow-star.png')} />

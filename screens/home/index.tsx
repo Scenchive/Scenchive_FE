@@ -32,6 +32,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 type PERFUMEDATA = {
   brandName: string;
+  brandName_kr:string;
   perfumeName: string;
   id: Number;
   keywordIds: any;
@@ -99,6 +100,7 @@ const Home: React.FC = ({ }) => {
     ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
       .then((data) => {
         list = data?.data;
+        console.log('list', list)
         setResultList(list);
 
       }
@@ -254,7 +256,7 @@ const Home: React.FC = ({ }) => {
           data={resultList}
           horizontal={true}
           renderItem={({ item }) => {
-            return <CarouselSlider perfumeName={item?.perfumeName} brandName={item?.brandName}  id={item?.id} perfumeImage={item?.perfumeImage} ratingAvg={item?.ratingAvg}/>
+            return <CarouselSlider perfumeName={item?.perfumeName} brandName={item?.brandName} brandNameKorean={item?.brandName_kr} id={item?.id} perfumeImage={item?.perfumeImage} ratingAvg={item?.ratingAvg}/>
           }}
         />
       </SeasonRecommendArea>

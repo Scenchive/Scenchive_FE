@@ -89,7 +89,7 @@ const SearchPage: React.FC = () => {
                 <ScrollView>
                     <View>
                         {brandResultList?.map((el, index) =>
-                            <TouchableOpacity onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,el?.brandImage)}>
+                            <TouchableOpacity key={index+'brand'} onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,el?.brandImage)}>
                                 <BrandResultRow>
                                     {/* <BrandImage source={{ uri: `${el.brandImage}` }} /> */}
                                     <BrandImage source={el?.brandImage ? { uri: `${el?.brandImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
@@ -103,7 +103,7 @@ const SearchPage: React.FC = () => {
                             </TouchableOpacity>
                         )}
                         {perfumeResultList?.map((el, index) =>
-                            <TouchableOpacity onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName, el?.brandName_kr, el?.perfumeImage)}>
+                            <TouchableOpacity key={index+'perfume'} onPress={() => goToPerfumeDetailPAGE(el?.perfumeId, el?.perfumeName, el?.brandName, el?.brandName_kr, el?.perfumeImage)}>
                                 <PerfumeResultRow>
                                     <SearchImage source={el?.perfumeImage ? { uri: `${el?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
 
