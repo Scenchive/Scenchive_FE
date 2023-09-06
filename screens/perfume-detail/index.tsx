@@ -267,7 +267,7 @@ const PerfumeDetail = (route: any,) => {
               <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} />
               <HeaderTitle>센카이브</HeaderTitle >
             </LogoNameArea>
-            <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} />
+            {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
           </HeaderArea>
           <PerfumeIntro perfumeName={perfumeName1}
             brandName={brandName}

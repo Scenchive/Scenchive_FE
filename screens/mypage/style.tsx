@@ -45,16 +45,19 @@ const PerfumeCellAreaTitle=styled.Text`
 
 const  UserInformationArea=styled.View`
     width:100%;
+    align-self:center;
     padding-left:20px;
     padding-right:20px;
     flex-direction:row;
-    margin-bottom:10px;
+    padding-bottom:25px;
+    border-bottom-color:red;
 `
 
 const ProfilePic=styled.Image`
     width:20%;
     height:80px;
     resize-mode:cover;
+
 `
 
 const UserInformationTextArea=styled.View`
@@ -68,15 +71,18 @@ const UserInformationTextArea=styled.View`
 
 const UserNameText=styled.Text`
     color:#616161;
-    font-size:18px;
-    margin-bottom:10px;
-
+    font-size:26px;
+    margin-top:auto;
+    margin-bottom:auto;
+    font-weight:500;
 `
 
 const UserEmailText=styled.Text`
     color:#929292;
-    
-
+    font-size:16px;
+    margin-left:10px;
+    margin-top:auto;
+    margin-bottom:3px;
 `
 
 
@@ -136,8 +142,7 @@ const PerfumeListArea=styled.View`
     display:flex;
     width:100%;
     flex-direction:row;
-    // border:1px solid red;
-    justify-content:space-between;
+ 
 
 `
 const PerfumeCell=styled.TouchableOpacity`
