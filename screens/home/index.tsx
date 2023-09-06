@@ -100,7 +100,6 @@ const Home: React.FC = ({ }) => {
     ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
       .then((data) => {
         list = data?.data;
-        console.log('list', list)
         setResultList(list);
 
       }

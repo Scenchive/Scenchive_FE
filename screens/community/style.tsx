@@ -56,7 +56,7 @@ const ListArea=styled.View`
     padding-right:20px;
     padding-left:20px;
     margin-top:30px;
-    border:1px solid blue;
+    // border:1px solid blue;
 
 `
 
@@ -129,7 +129,7 @@ const ListRowMenu=styled.View`
 
 const ListRowArea=styled.View`
     flex-direction:column;
-    border:1px solid red;
+    // border:1px solid red;
 ` 
 
 

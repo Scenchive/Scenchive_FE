@@ -33,7 +33,7 @@ const MyPage = () => {
   const [recommendedPerfumeList, setRecommendedPerfumeList] = useState<PERFUME[]>([]);
   const [bookmarkedPerfumeList, setBookmarkedPerfumeList] = useState<PERFUME[]>();
 
-  type PERFUME = { brand_name: string, perfume_name: string, perfume_id: number }
+  type PERFUME = { brand_name: string, perfume_name: string, perfume_id: number, perfumeImage:string, }
   type KEYWORD = { id: number, utag: string, utag_kr: string, utagtype_id: number }
   type BOOKMARKEDLIST = {
     totalBookmarkPerfumeCount: number, perfumes:
@@ -41,6 +41,7 @@ const MyPage = () => {
       perfume_id: number,
       perfume_name: string,
       brand_name: string,
+      
     }]
   }
 
@@ -160,6 +161,7 @@ const MyPage = () => {
     getBookmarkedList();
   }, [myToken, isFocused])
 
+  console.log(bookmarkedPerfumeList)
 
   return (
     <View>
@@ -173,15 +175,15 @@ const MyPage = () => {
 
         </HeaderArea>
         <UserInformationArea>
-          <ProfilePic source={require('../../assets/images/icon/icon-profile-pic.png')} />
-          <UserInformationTextArea>
+          {/* <ProfilePic source={require('../../assets/images/icon/icon-profile-pic.png')} /> */}
+          {/* <UserInformationTextArea> */}
             <UserNameText numberOfLines={2}>
               {userName}
             </UserNameText>
             <UserEmailText numberOfLines={2}>
               {userEmail}
             </UserEmailText>
-          </UserInformationTextArea>
+          {/* </UserInformationTextArea> */}
 
         </UserInformationArea>
 
@@ -216,10 +218,14 @@ const MyPage = () => {
           </PerfumeTitleArea>
           <PerfumeListArea>
             {bookmarkedPerfumeList?.map((el, index) => (
-              <PerfumeCell key={index} onPress={() => goToPerfumeDetail(el)}>
+              <PerfumeCell style={{marginRight:index!==2?18:0}} key={index} onPress={() => goToPerfumeDetail(el)}>
                 <View style={{ width: "100%", height: 135 }}>
                   {/* <Text>이미지 준비중입니다.</Text> */}
-                  <Image style={{ resizeMode: "contain", width: "100%", height: 110, marginTop: 0, }} source={require('../../assets/images/icon/icon-perfume-pic.png')} />
+                  {/* <Image style={{ resizeMode: "contain", width: "100%", height: 110, marginTop: 0, }} source={require('../../assets/images/icon/icon-perfume-pic.png')} /> */}
+                  <Image
+                      style={{ width: "100%", height: "100%", marginRight: 12, resizeMode: "contain" }}
+                      source={el?.perfumeImage ? { uri: `${el?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
+
                 </View>
                 <Text>{el?.brand_name}</Text>
                 <Text>{el?.perfume_name}</Text>
@@ -236,9 +242,13 @@ const MyPage = () => {
           </PerfumeTitleArea>
           <PerfumeListArea>
             {recommendedPerfumeList?.map((el, index) => (
-              <PerfumeCell key={index} onPress={() => goToPerfumeDetail(el)}>
+              <PerfumeCell  style={{marginRight:index!==2?18:0}} key={index} onPress={() => goToPerfumeDetail(el)}>
                 <View style={{ width: "100%", height: 135 }}>
-                  <Image style={{ resizeMode: "contain", width: "100%", height: 110, marginTop: 0, }} source={require('../../assets/images/icon/icon-perfume-pic.png')} />
+                  {/* <Image style={{ resizeMode: "contain", width: "100%", height: 110, marginTop: 0, }} source={require('../../assets/images/icon/icon-perfume-pic.png')} /> */}
+                  <Image
+                      style={{ width: "100%", height: "100%", marginRight: 12, resizeMode: "contain" }}
+                      source={el?.perfumeImage ? { uri: `${el?.perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
+
                 </View>
                 <Text>{el?.brand_name}</Text>
                 <Text>{el?.perfume_name}</Text>
