@@ -7,7 +7,6 @@ import Home from "../screens/home";
 import FilterSearch from "../screens/filter-search";
 import Community from "../screens/community";
 import Signup from "../screens/signup";
-import { isSearchBarAvailableForCurrentPlatform } from "react-native-screens";
 
 const Tab = createBottomTabNavigator();
 

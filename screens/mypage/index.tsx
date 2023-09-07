@@ -135,7 +135,7 @@ const MyPage = () => {
   }
 
   const Logout = () => {
-    console.log('myToken', myToken)
+    // console.log('myToken', myToken)
 
       ApiService.LOGOUT(myToken)
         .then((data) => {
@@ -161,7 +161,7 @@ const MyPage = () => {
     getBookmarkedList();
   }, [myToken, isFocused])
 
-  console.log(bookmarkedPerfumeList)
+  // console.log(bookmarkedPerfumeList)
 
   return (
     <View>
