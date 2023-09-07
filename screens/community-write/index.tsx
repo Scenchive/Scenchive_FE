@@ -66,9 +66,11 @@ const CommunityWrite = () => {
     });
 
     let data = new FormData();
-    // if (imageFile.length > 0) {
+    if (imageFile!=="") {
       data.append('image', imageFile);
-    // }
+    }else if (imageFile===""){
+      data.append('image',"");
+    }
 
     const requestDto = {
       title: title,
@@ -116,7 +118,7 @@ const CommunityWrite = () => {
         }
         ).catch((res) => {
           console.log('게시글 등록 실패')
-          // console.log(res)
+          console.log(res)
           Alert.alert('게시글 등록 실패했습니다.')
         })
     // } else {
