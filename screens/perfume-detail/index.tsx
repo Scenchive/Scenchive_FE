@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { HeaderArea, BackButton, LogoNameArea, HeaderLogoImage, HeaderTitle, AlertIcon, UserReviewArea, } from './style';
+import { HeaderArea, BackButton, LogoNameArea, HeaderLogoImage, HeaderTitle, HomeButton, UserReviewArea, } from './style';
 import { useNavigation, useIsFocused, } from '@react-navigation/native';
 import PerfumeIntro from "../../components/perfume-detail/PerfumeIntro/index"
 import DetailTab from '../../components/perfume-detail/DetailTab/index'
@@ -65,8 +65,8 @@ const PerfumeDetail = (route: any,) => {
   const perfumeName1 = route?.route?.params?.perfumeName;
   const brandName = route?.route?.params?.brandName;
   const perfumeId = route?.route?.params?.perfumeId;
-  const perfumeImage=route?.route?.params?.perfumeImage;
-  const brandNameKorean=route?.route?.params?.brandNameKorean;
+  const perfumeImage = route?.route?.params?.perfumeImage;
+  const brandNameKorean = route?.route?.params?.brandNameKorean;
 
   console.log('dddd', brandNameKorean)
 
@@ -77,12 +77,12 @@ const PerfumeDetail = (route: any,) => {
   const [bookmarkYesNo, setBookmarkYesNo] = useState('');
   const [reviewList, setReviewList] = useState<REVIEWDATA[]>([])
   const [shoppingInformation, setShoppingInformation] = useState<SHOPPINGDATA[]>([]);
-  const isFocused=useIsFocused();
+  const isFocused = useIsFocused();
 
   const navigation = useNavigation();
   const goToHome = () => {
     //@ts-ignore
-    navigation.navigate("홈")
+    navigation.navigate("Tabs", { screen: "홈" })
   }
 
   const getToken = async () => {
@@ -98,9 +98,9 @@ const PerfumeDetail = (route: any,) => {
   const getCheckBookmark = () => {
     ApiService.GETCHECKBOOKMARK(perfumeId, myToken)
       .then((data) => {
-        if (data?.data==="이미 북마크한 향수입니다."){
+        if (data?.data === "이미 북마크한 향수입니다.") {
           setBookmarkYesNo('Y')
-        }else{
+        } else {
           setBookmarkYesNo('N')
         }
       }
@@ -218,12 +218,13 @@ const PerfumeDetail = (route: any,) => {
                   <HeaderTitle>센카이브</HeaderTitle >
                 </LogoNameArea>
               </TouchableOpacity> */}
-        <BackButton onPress={() => navigation.goBack()}>
-              <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
-            </BackButton>
-            <HeaderTitle>향수 상세페이지</HeaderTitle >
-
-              {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
+              <BackButton onPress={() => navigation.goBack()}>
+                <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
+              </BackButton>
+              <HeaderTitle>향수 상세페이지</HeaderTitle >
+              <TouchableOpacity style={{position:"absolute", right:20, top:32}} onPress={goToHome}>
+                <HomeButton source={require('../../assets/images/icon/icon-btn-home-purple.png')} />
+              </TouchableOpacity>
             </HeaderArea>
             <PerfumeIntro
               perfumeName={perfumeName1}
@@ -241,15 +242,15 @@ const PerfumeDetail = (route: any,) => {
               sillageAvg={perfumeRatingInformation?.sillageAvg || 0}
             />
             <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
-            <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName1} brandName={brandName} brandNameKorean={brandNameKorean} perfumeId={perfumeId} perfumeImage={perfumeImage}/>
+            <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName1} brandName={brandName} brandNameKorean={brandNameKorean} perfumeId={perfumeId} perfumeImage={perfumeImage} />
           </View>
           <UserReviewArea>
-            {reviewList?.map((el)=>(
-               <UserReview key={el?.created_at} content={el?.content} created_at={el?.created_at} name={el?.name} />
+            {reviewList?.map((el) => (
+              <UserReview key={el?.created_at} content={el?.content} created_at={el?.created_at} name={el?.name} />
 
             ))}
 
-     
+
           </UserReviewArea>
 
         </ScrollView>
@@ -259,8 +260,8 @@ const PerfumeDetail = (route: any,) => {
 
           <HeaderArea>
             {/* <LogoNameArea> */}
-              {/* <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} /> */}
-              {/* <HeaderTitle>센카이브</HeaderTitle > */}
+            {/* <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} /> */}
+            {/* <HeaderTitle>센카이브</HeaderTitle > */}
             {/* </LogoNameArea> */}
             <BackButton onPress={() => navigation.goBack()}>
               <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
@@ -278,9 +279,9 @@ const PerfumeDetail = (route: any,) => {
             ratingAvg={perfumeRatingInformation?.ratingAvg || 0}
             longetivityAvg={perfumeRatingInformation?.longevityAvg || 0}
             springAvg={perfumeRatingInformation?.seasonAvg?.spring || 0}
-            summerAvg={perfumeRatingInformation?.seasonAvg?.summer||0}
-            fallAvg={perfumeRatingInformation?.seasonAvg?.fall||0}
-            winterAvg={perfumeRatingInformation?.seasonAvg?.winter||0}
+            summerAvg={perfumeRatingInformation?.seasonAvg?.summer || 0}
+            fallAvg={perfumeRatingInformation?.seasonAvg?.fall || 0}
+            winterAvg={perfumeRatingInformation?.seasonAvg?.winter || 0}
             sillageAvg={perfumeRatingInformation?.sillageAvg || 0} />
           <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
           <ShoppingInformation />

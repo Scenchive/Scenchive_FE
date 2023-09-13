@@ -44,7 +44,7 @@ const FilterSearchResult: React.FC = (route: any) => {
                 </KeywordArea>
                 <ResultPerfumeListArea>
 
-                    {resultArray.map((item: { perfumeName: string; brandName: string; id: Number, perfumeImage:string, brandName_kr:string}, index:number) =>
+                    {resultArray?.map((item: { perfumeName: string; brandName: string; id: Number, perfumeImage:string, brandName_kr:string}, index:number) =>
                         <ResultPerfumeCell
                             perfumeName={item?.perfumeName}
                             brandName={item?.brandName}
