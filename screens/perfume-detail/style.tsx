@@ -20,32 +20,36 @@ const BackButton = styled.TouchableOpacity`
     
 `
 
-const LogoNameArea=styled.View`
+const LogoNameArea = styled.View`
     display:flex;
     flex-direction:row;
     height:45px;
 `
 
 
-const HeaderLogoImage=styled.Image`
+const HeaderLogoImage = styled.Image`
     width:20.69%;
     height:45px;
     resize-mode:contain;
 `
 
 const HeaderTitle = styled.Text`
-        font-size:18px;
+    font-size:18px;
     color:#616161;
 `;
 
-const AlertIcon=styled.Image`
-    margin-left:auto;
+const HomeButton = styled.Image`
+    height:30px;
+    width:30px;
+    resize-mode:contain;
+
+
 `
 
-const UserReviewArea=styled.View`
+const UserReviewArea = styled.View`
     margin-bottom:30px
 `
 
 
 
-export { HeaderArea, BackButton, LogoNameArea, HeaderLogoImage, HeaderTitle,AlertIcon, UserReviewArea,};
+export { HeaderArea, BackButton, LogoNameArea, HeaderLogoImage, HeaderTitle, HomeButton, UserReviewArea, };
