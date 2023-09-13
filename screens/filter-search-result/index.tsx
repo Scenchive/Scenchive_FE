@@ -17,17 +17,12 @@ const FilterSearchResult: React.FC = (route: any) => {
     const selectedKeywordsArray = route?.route?.params?.keywordList;
     const resultArray = route?.route?.params?.resultList.perfumes;
 
-    console.log('resuuuuuuuuuuu', resultArray)
-
-
+    console.log('reseult', resultArray)
     const navigation = useNavigation();
     const goSeasonPage = () => {
         //@ts-ignores
         navigation.navigate("Stack", { screen: "SeasonPage" })
     }
-
-
-
 
     return (
         <View >
@@ -49,13 +44,15 @@ const FilterSearchResult: React.FC = (route: any) => {
                 </KeywordArea>
                 <ResultPerfumeListArea>
 
-                    {resultArray.map((item: { perfumeName: string; brandName: string; id: Number }, index:number) =>
+                    {resultArray.map((item: { perfumeName: string; brandName: string; id: Number, perfumeImage:string, brandName_kr:string}, index:number) =>
                         <ResultPerfumeCell
                             perfumeName={item?.perfumeName}
                             brandName={item?.brandName}
                             brandNameEnglish={item?.brandName}
                             perfumeId={item?.id}
                             key={index}
+                            perfumeImage={item?.perfumeImage}
+                            brandNameKorean={item?.brandName_kr}
                         />
                     )}
 

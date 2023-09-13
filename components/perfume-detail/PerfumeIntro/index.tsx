@@ -11,7 +11,7 @@ import StarRating from 'react-native-star-rating';
 
 
 
-import { PerfumeIntroArea, PerfumeNameBookmarkRow, PerfumeName, BookmarkIcon, PerfumeIntroductionArea, PerfumeImage, PerfumeIntroductionTexts, PerfumeNameKorean, PerfumeNameEnglish } from './style';
+import { PerfumeIntroArea, PerfumeNameBookmarkRow, PerfumeName, BookmarkIcon, PerfumeIntroductionArea, PerfumeImage, PerfumeIntroductionTexts, PerfumeNameKorean, PerfumeNameEnglish,  RateCell,SeasonCell, } from './style';
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -30,22 +30,22 @@ const styles = StyleSheet.create({
 
 type PERFUMEDATA = {
   brandName: string;
-  brandNameKorean:string;
+  brandNameKorean: string;
   perfumeName: string;
-  perfumeImage:string|null;
+  perfumeImage: string | null;
   bookmarkYesNo: string;
   setBookmarkYesNo: Function;
   ratingAvg: number;
   longetivityAvg: number;
-  springAvg:number|undefined, 
-  summerAvg:number|undefined,
-   fallAvg:number|undefined,
-    winterAvg:number|undefined,
+  springAvg: number | undefined,
+  summerAvg: number | undefined,
+  fallAvg: number | undefined,
+  winterAvg: number | undefined,
   sillageAvg: number;
 };
 
 
-const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, brandNameKorean,perfumeName,perfumeImage, bookmarkYesNo, setBookmarkYesNo, ratingAvg, longetivityAvg, springAvg, summerAvg, fallAvg, winterAvg, sillageAvg }) => {
+const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, brandNameKorean, perfumeName, perfumeImage, bookmarkYesNo, setBookmarkYesNo, ratingAvg, longetivityAvg, springAvg, summerAvg, fallAvg, winterAvg, sillageAvg }) => {
 
   const navigation = useNavigation();
   const goToHome = () => {
@@ -64,30 +64,46 @@ const PerfumeIntro: React.FC<PERFUMEDATA> = ({ brandName, brandNameKorean,perfum
         }
       </PerfumeNameBookmarkRow>
       <PerfumeIntroductionArea>
-        {/* <View style={{ width: "32%", height: 167, marginRight: 10, backgroundColor: "#B592FF" }}>
-          <Text>이미지 준비중입니다.</Text>
-        </View> */}
-        <View style={{ width: "32%", height: 167, marginRight: 10 }}> 
+        <View style={{ width: "32%", height: 167, marginRight: 10 }}>
           <PerfumeImage source={perfumeImage ? { uri: `${perfumeImage}` } : require('../../../assets/images/icon/icon-perfume-pic.png')} />
         </View>
         <PerfumeIntroductionTexts>
+          <PerfumeNameKorean>{brandNameKorean}({brandName})</PerfumeNameKorean>
+          <View style={{ display: "flex", flexDirection: "row", width: "100%", marginBottom:15, marginTop:12}}>
+            <RateCell >
+              <Text style={{fontSize:15}}>평점</Text>
+              <Text> {ratingAvg}/5</Text>
+            </RateCell>
+            <RateCell>
+              <Text style={{fontSize:15}}>지속력</Text>
+              <Text>{longetivityAvg}/5</Text>
 
-          <PerfumeNameKorean>{brandNameKorean}</PerfumeNameKorean>
-          <PerfumeNameEnglish>{brandName}</PerfumeNameEnglish>
-          <View style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
-            <View style={{ display: "flex", flexDirection: "column", width: "30%" }}>
-              <Text>평균 평점: {ratingAvg}</Text>
-              <Text>지속력: {longetivityAvg}</Text>
-              <Text>확산력: {sillageAvg}</Text>
-            </View>
-            <View style={{ display: "flex", flexDirection: "column", width: "30%" }}>
+            </RateCell>
+            <RateCell>
+              <Text style={{fontSize:15}}>확산력</Text>
 
-              <Text>봄: {springAvg || 0}</Text>
-              <Text>여름: {summerAvg || 0}</Text>
-              <Text>가을: {fallAvg || 0}</Text>
-              <Text>겨울: {winterAvg || 0}</Text>
-            </View>
+              <Text>{sillageAvg}/5</Text>
+            </RateCell>
           </View>
+          <View style={{ display: "flex", flexDirection: "row" ,}}>
+            <SeasonCell>
+              <Image style={{ width: 35, height: 35, resizeMode: "cover"}} source={require('../../../assets/images/icon/icon-spring.png')} />
+              <Text style={{ fontSize: 13 , color:"#616161"}}>봄 {springAvg || 0}%</Text>
+            </SeasonCell>
+            <SeasonCell>
+              <Image style={{ width: 35, height: 35, resizeMode: "cover" }} source={require('../../../assets/images/icon/icon-summer.png')} />
+              <Text style={{ fontSize: 13, color:"#616161" }}>여름 {summerAvg || 0}%</Text>
+            </SeasonCell>
+            <SeasonCell>
+              <Image style={{ width: 35, height: 35, resizeMode: "cover" }} source={require('../../../assets/images/icon/icon-fall.png')} />
+              <Text style={{ fontSize: 13, color:"#616161" }}>가을 {fallAvg || 0}%</Text>
+            </SeasonCell>
+            <SeasonCell>
+              <Image style={{ width: 35, height: 35, resizeMode: "cover" }} source={require('../../../assets/images/icon/icon-winter.png')} />
+              <Text style={{ fontSize: 13, color:"#616161" }}>겨울 {winterAvg || 0}%</Text>
+            </SeasonCell>
+          </View>
+          {/* </View> */}
           {/* <StarRating disabled={true} maxStars={5} rating={3.5} /> */}
         </PerfumeIntroductionTexts>
 

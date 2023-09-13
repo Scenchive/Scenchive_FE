@@ -68,11 +68,15 @@ const PerfumeDetail = (route: any,) => {
   const perfumeImage=route?.route?.params?.perfumeImage;
   const brandNameKorean=route?.route?.params?.brandNameKorean;
 
-  console.log('있다고', route?.route?.params)
-
+  console.log('dddd', brandNameKorean)
 
   const [myToken, setMyToken] = useState<string>('');
-
+  const [clickedTab, setClickedTab] = useState<string>('기본정보');
+  const [perfumeBasicInformation, setPerfumeBasicInformation] = useState<PERFUMEDATA>();
+  const [perfumeRatingInformation, setPerfumeRatingInformation] = useState<PERFUMERATINGS>();
+  const [bookmarkYesNo, setBookmarkYesNo] = useState('');
+  const [reviewList, setReviewList] = useState<REVIEWDATA[]>([])
+  const [shoppingInformation, setShoppingInformation] = useState<SHOPPINGDATA[]>([]);
   const isFocused=useIsFocused();
 
   const navigation = useNavigation();
@@ -80,13 +84,6 @@ const PerfumeDetail = (route: any,) => {
     //@ts-ignore
     navigation.navigate("홈")
   }
-  const [clickedTab, setClickedTab] = useState<string>('기본정보');
-  const [perfumeBasicInformation, setPerfumeBasicInformation] = useState<PERFUMEDATA>();
-  const [perfumeRatingInformation, setPerfumeRatingInformation] = useState<PERFUMERATINGS>();
-  const [bookmarkYesNo, setBookmarkYesNo] = useState('');
-  const [reviewList, setReviewList] = useState<REVIEWDATA[]>([])
-  const [shoppingInformation, setShoppingInformation] = useState<SHOPPINGDATA[]>([]);
-
 
   const getToken = async () => {
     await AsyncStorage.getItem('my-token', (err, result) => {
@@ -117,7 +114,6 @@ const PerfumeDetail = (route: any,) => {
   const getPerfumeBasicInformation = () => {
     ApiService.GETPERFUMEBASICINFORMATION(perfumeId, myToken)
       .then((data) => {
-        
         setPerfumeBasicInformation(data?.data)
       }
       ).catch((res) => {
@@ -128,12 +124,10 @@ const PerfumeDetail = (route: any,) => {
 
 
   const getPerfumeRatingInformation = () => {
-
     ApiService.GETPERFUMERATING(perfumeId, myToken)
       .then((data) => {
         setPerfumeRatingInformation(data?.data)
         console.log('향수 평점 정보 받아오기 성공')
-
       }
       ).catch((res) => {
         console.log('향수 평점 정보 받아오기 실패')
@@ -180,8 +174,6 @@ const PerfumeDetail = (route: any,) => {
     getShoppingInformation();
   }, [myToken, isFocused])
 
-
-
   const setBookmark = () => {
     if (bookmarkYesNo === 'Y') {
       ApiService.SETBOOKMARKYES(perfumeId, myToken)
@@ -213,15 +205,10 @@ const PerfumeDetail = (route: any,) => {
     setBookmark();
   }, [bookmarkYesNo])
 
-  // console.log('peeeeeeeeeee', perfumeRatingInformation)
-
-
 
   return (
     <View style={{ height: "100%" }}>
-
       {clickedTab === "기본정보" ?
-
         <ScrollView>
           <View>
             <HeaderArea>

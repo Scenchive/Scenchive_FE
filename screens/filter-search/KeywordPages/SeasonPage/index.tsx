@@ -18,7 +18,6 @@ const SeasonPage: React.FC = () => {
 
   const navigation = useNavigation();
   const goToResults = (keywordList: { id: number; ptag: string; ptag_kr: string; ptagtype_id: number; }[], resultList: { id: number; ptag: string; ptag_kr: string; ptagtype_id: number; }[]) => {
-
     //@ts-ignore
     navigation.navigate("FilterSearchResult", { keywordList: keywordList, resultList: resultList })
 
@@ -131,7 +130,6 @@ const SeasonPage: React.FC = () => {
       if (params) {
         ApiService.GETSEARCHKEYWORDRESULT(params, myToken)
           .then((data) => {
-
             goToResults(keywordTagsArray, data.data)
 
           }).catch((res) => {
