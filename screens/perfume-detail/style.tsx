@@ -2,15 +2,23 @@ import React from 'react';
 import styled from 'styled-components/native';
 
 const HeaderArea = styled.View`
-    width:100%;
     display:flex;
     flex-direction:row;
-    // justify-content:center;
+    align-items:center;
+    justify-content:center;
     padding-left:20px;
     padding-right:20px;
     padding-top:32px;
+    padding-bottom:19px;
 
 `;
+
+const BackButton = styled.TouchableOpacity`
+    position:absolute;
+    left:20px;
+    top:33px;
+    
+`
 
 const LogoNameArea=styled.View`
     display:flex;
@@ -26,11 +34,8 @@ const HeaderLogoImage=styled.Image`
 `
 
 const HeaderTitle = styled.Text`
-    font-size:30px;
-    height:45px;
-    color:#BF8DFF;
-    font-weight:600;
-    margin-left:8px;
+        font-size:18px;
+    color:#616161;
 `;
 
 const AlertIcon=styled.Image`
@@ -43,4 +48,4 @@ const UserReviewArea=styled.View`
 
 
 
-export { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle,AlertIcon, UserReviewArea,};
+export { HeaderArea, BackButton, LogoNameArea, HeaderLogoImage, HeaderTitle,AlertIcon, UserReviewArea,};

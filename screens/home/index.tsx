@@ -18,7 +18,7 @@ import {
   ModalSearchRowArea, BackButton,
 
 } from './style';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, useNavigation, useIsFocused } from '@react-navigation/native';
 import SeasonDropDown from '../../components/home/SeasonDropDown';
 import CarouselSlider from '../../components/home/CarouselSlider';
 import Tabs from '../../navigation/Tabs';
@@ -26,8 +26,6 @@ import TabsNavigation from '../../navigation/Tabs';
 import ApiService from '../../ApiService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from 'react-native-splash-screen';
-
-
 
 
 type PERFUMEDATA = {
@@ -64,6 +62,8 @@ const Home: React.FC = ({ }) => {
 
   let list = []
 
+  const isFocused=useIsFocused();
+
   const navigation = useNavigation();
   const goToSignupORLogin = () => {
     //@ts-ignore
@@ -91,41 +91,61 @@ const Home: React.FC = ({ }) => {
   const getSeasonRecommendation = async () => {
     await AsyncStorage.getItem('my-token', (err, result) => {
       if (result) {
-        setMyToken(result)
+        // setMyToken(result)
+        ApiService.GETSEASONRECOMMENDATION(seasonId, result)
+        .then((data) => {
+          list = data?.data;
+          setResultList(list);
+  
+        }
+        ).catch((res) => {
+          console.log('향수 기본 정보 받아오기 실패')
+          console.log(res)
+        })
       } else {
         console.log('토큰을 가져올 수 없습니다.')
       }
     });
 
-    ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
-      .then((data) => {
-        list = data?.data;
-        setResultList(list);
+    // ApiService.GETSEASONRECOMMENDATION(seasonId, myToken)
+    //   .then((data) => {
+    //     list = data?.data;
+    //     setResultList(list);
 
-      }
-      ).catch((res) => {
-        console.log('향수 기본 정보 받아오기 실패')
-        console.log(res)
-      })
+    //   }
+    //   ).catch((res) => {
+    //     console.log('향수 기본 정보 받아오기 실패')
+    //     console.log(res)
+    //   })
   }
 
   const getUserName = async () => {
     await AsyncStorage.getItem('my-token', (err, result) => {
       if (result) {
-        setMyToken(result)
-      } else {
-        console.log('토큰을 가져올 수 없습니다.')
-      }
-    });
-    ApiService.GETUSERNAME(myToken)
+        ApiService.GETUSERNAME(result)
       .then((data) => {
         setUserName(data?.data);
+        console.log('닉네임', data?.data)
 
       }
       ).catch((res) => {
         console.log('닉네임 받아오기 실패')
         console.log(res)
       })
+      } else {
+        console.log('토큰을 가져올 수 없습니다.')
+      }
+    });
+    // ApiService.GETUSERNAME(myToken)
+    //   .then((data) => {
+    //     setUserName(data?.data);
+    //     console.log('닉네임', data?.data)
+
+    //   }
+    //   ).catch((res) => {
+    //     console.log('닉네임 받아오기 실패')
+    //     console.log(res)
+    //   })
   }
 
   useEffect(() => {
@@ -134,9 +154,34 @@ const Home: React.FC = ({ }) => {
 
 
   useEffect(() => {
+    if (isFocused===true){
+
+      AsyncStorage.getItem('my-token', (err, result) => {
+        // 토큰 유효성 검사
+        if (result) {
+          ApiService.TOKENVALIDATION(result)
+            .then((data) => {
+              if (data?.data) {
+                setIsValidToken(true);
+              } else {
+                console.log('유효하지 않은 토큰입니다.1')
+                goToSignupORLogin();
+
+              }
+            }
+            ).catch((res) => {
+              console.log('유효하지 않은 토큰입니다.2')
+              console.log(res)
+              goToSignupORLogin();
+            })
+        } else {
+          goToSignupORLogin();
+        }
+      });
     getUserName();
     getSeasonRecommendation();
-  }, [myToken])
+    }
+  }, [isFocused===true])
 
   // useEffect(() => {
   //   getUserName();
@@ -211,6 +256,8 @@ const Home: React.FC = ({ }) => {
     setPerfumeResultList([]);
     setIsModalOpen(!isModalOpen);
   }
+
+
 
   return (
     <View>

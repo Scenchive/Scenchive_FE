@@ -12,15 +12,17 @@ import {
 
 import { HeaderArea, HeaderTitle, AlertIcon, MenuButtonArea, MenuButton, MenuButtonText, ListArea, ListTitleArea, ListTitleNumber, ListTitleMenu, ListTitleContent, WriteButton, WriteButtonText, ListRowArea, ListRowContent, ListRowMenu, ListRowNumber } from './style';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused, } from '@react-navigation/native';
 import ApiService from '../../ApiService';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FlatList } from "react-native";
 
 
 
 const Community = () => {
 
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   // <<<<<<< HEAD
   const goToWrite = () => {
     //@ts-ignore
@@ -29,7 +31,7 @@ const Community = () => {
 
   const goToCommunityDetail = (boardId: number) => {
     //@ts-ignore
-    navigation.navigate("Stack",{screen:"CommunityDetail", params:{communityId:boardId,}})
+    navigation.navigate("Stack", { screen: "CommunityDetail", params: { communityId: boardId, } })
   }
 
 
@@ -38,45 +40,54 @@ const Community = () => {
     id: number,
     title: string,
   }
+
   const [selectedMenu, setSelectedMenu] = useState("전체");
   const [myToken, setMyToken] = useState<string>('');
-  const [boardsList, setBoardsList] = useState<BOARDTYPE[]>();
+  const [boardsList, setBoardsList] = useState<BOARDTYPE[]>([]);
+  const [totalBoard, setTotalBoard] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [isUpdateList, setIsUpdateList] = useState(true);
 
   const getBoardsList = async () => {
-
     await AsyncStorage.getItem('my-token', (err, result) => {
       if (result) {
-        setMyToken(result)
+        ApiService.GETBOARDSLIST(result)
+          .then((data) => {
+            setBoardsList(data?.data?.boards)
+            setTotalBoard(data?.data?.totalBoardCount)
+          }
+          ).catch((res) => {
+            console.log('게시글 목록 가져오기 실패')
+            console.log(res)
+          })
       } else {
         console.log('토큰을 가져올 수 없습니다.')
       }
-    });
-
-
-    ApiService.GETBOARDSLIST(myToken)
-      .then((data) => {
-        setBoardsList(data?.data)
-
-      }
-      ).catch((res) => {
-        console.log('게시글 목록 가져오기 실패')
-        console.log(res)
-      })
+    })
   }
 
 
-  const getMenuBoardsList = (boardType: number) => {
-    ApiService.GETMENUBOARDSLIST(boardType, myToken)
-      .then((data) => {
-        setBoardsList(data?.data)
+  const getMenuBoardsList = async (boardType: number) => {
+    await AsyncStorage.getItem('my-token', (err, result) => {
+      if (result) {
+        ApiService.GETMENUBOARDSLIST(boardType, pageNumber, result)
+          .then((data) => {
+            setBoardsList(data?.data.boards)
+          }
+          ).catch((res) => {
+            console.log('선택된 메뉴의 게시글 목록 가져오기 실패')
+            console.log(res)
+          })
+      } else {
+        console.log('토큰을 가져올 수 없습니다.')
       }
-      ).catch((res) => {
-        console.log('선택된 메뉴의 게시글 목록 가져오기 실패')
-        console.log(res)
-      })
+    })
   }
 
   useEffect(() => {
+    setTotalBoard(0);
+    setBoardsList([]);
+    setPageNumber(0);
     if (selectedMenu === "전체") {
       getBoardsList();
     }
@@ -89,9 +100,83 @@ const Community = () => {
         getMenuBoardsList(3)
       }
     }
-  }, [selectedMenu])
+    
+  }, [selectedMenu, isFocused])
+
+  // useEffect(() => {
+  //   getBoardsList();
+
+  // }, [isFocused])
 
 
+
+
+  const onScrollList = async (e: { nativeEvent: { contentOffset: { y: any; }; layoutMeasurement: { height: any; }; contentSize: { height: any; }; }; }) => {
+    let pageParams = pageNumber;
+    if (!isUpdateList) { return }
+    // 현재 스크롤 값
+    let updateScroll = e.nativeEvent.contentOffset.y;
+    if (updateScroll == 0) { return }
+
+    // 현재 보여지는 화면 높이
+    let screenHeight = e.nativeEvent.layoutMeasurement.height;
+    // 전체 문서의 높이
+    let documentHeight = e.nativeEvent.contentSize.height;
+
+    // 원하는 로직을 시작하는 시점
+    let endPoint = 20;
+
+    if (screenHeight + updateScroll + endPoint >= documentHeight) {
+      if (!isUpdateList) { return };
+      setIsUpdateList(false);
+      // 로직처리
+      if ((pageParams) * 10 < totalBoard) {
+        pageParams += 1;
+      }
+      setPageNumber(pageParams);
+      await AsyncStorage.getItem('my-token', (err, result) => {
+        if (result) {
+          if (selectedMenu === '전체') {
+            if ((pageParams) * 10 < totalBoard) {
+              ApiService.GETBOARDSLIST(result, pageParams)
+                .then((data) => {
+                  setBoardsList([...boardsList, ...data?.data.boards])
+                }
+                ).catch(function (err) {
+                  console.log(`Error Message: ${err}`);
+                })
+            } else {
+              return
+            }
+          } else {
+            if ((pageParams) * 10 < totalBoard) {
+              let boardType = 0;
+              if (selectedMenu === "정/가품") {
+                boardType = 2;
+              } else if (selectedMenu === "Q&A") {
+                boardType = 1;
+              } else if (selectedMenu === "자유") {
+                boardType = 3;
+              }
+              ApiService.GETMENUBOARDSLIST(boardType, pageNumber, result)
+                .then((data) => {
+                  setBoardsList(data?.data.boards)
+                }
+                ).catch((res) => {
+                  console.log('선택된 메뉴의 게시글 목록 가져오기 실패')
+                  console.log(res)
+                })
+            } else {
+              return
+            }
+          }
+        }
+      }
+      )
+      setIsUpdateList(true);
+
+    }
+  };
 
 
   return (
@@ -145,20 +230,50 @@ const Community = () => {
         </ListTitleArea>
 
         <ListRowArea>
-          {boardsList?.map((el) =>
-            <TouchableOpacity key={el?.id} onPress={()=>goToCommunityDetail(el?.id)}
-            style={{flexDirection:"row", borderWidth:1, borderTopColor:"#D5D5D5",borderBottomColor:"#D5D5D5", borderLeftColor:"transparent", borderRightColor:"transparent",}}>
+          {/* {boardsList?.map((el) =>
+            <TouchableOpacity key={el?.id} onPress={() => goToCommunityDetail(el?.id)}
+              style={{ flexDirection: "row", borderWidth: 1, borderTopColor: "#D5D5D5", borderBottomColor: "#D5D5D5", borderLeftColor: "transparent", borderRightColor: "transparent", }}>
               <View style={{ width: "17%", alignItems: "center", }}>
                 <ListRowNumber><Text> {el?.id} </Text></ListRowNumber>
               </View>
-              <View style={{ width: "24%", alignItems: "center",  }}>
-                <ListRowMenu><Text> {el?.boardtype_name==="fake"?"정/가품":el?.boardtype_name==="qna"?"Q&A":"자유"}  </Text></ListRowMenu>
+              <View style={{ width: "24%", alignItems: "center", }}>
+                <ListRowMenu><Text> {el?.boardtype_name === "fake" ? "정/가품" : el?.boardtype_name === "qna" ? "Q&A" : "자유"}  </Text></ListRowMenu>
               </View>
-              <View style={{ width: "59%", alignItems: "center",  }}>
+              <View style={{ width: "59%", alignItems: "center", }}>
                 <ListRowContent><Text>  {el?.title} </Text></ListRowContent>
               </View>
             </TouchableOpacity>
-          )}
+          )} */}
+
+
+
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 100 }}
+            onScroll={onScrollList}
+            data={boardsList}
+            onContentSizeChange={() => setIsUpdateList(true)}
+            // numColumns={2}
+            // ItemSeparatorComponent={() => <View style={{ height: 15 }} />}
+
+            renderItem={({ item }) => {
+              return <>
+                <TouchableOpacity onPress={() => goToCommunityDetail(item?.id)}
+                  style={{ flexDirection: "row", borderWidth: 1, borderTopColor: "#D5D5D5", borderBottomColor: "#D5D5D5", borderLeftColor: "transparent", borderRightColor: "transparent", }}>
+                  <View style={{ width: "17%", alignItems: "center", }}>
+                    <ListRowNumber><Text> {item?.id} </Text></ListRowNumber>
+                  </View>
+                  <View style={{ width: "24%", alignItems: "center", }}>
+                    <ListRowMenu><Text> {item?.boardtype_name === "fake" ? "정/가품" : item?.boardtype_name === "qna" ? "Q&A" : "자유"}  </Text></ListRowMenu>
+                  </View>
+                  <View style={{ width: "59%", alignItems: "center", }}>
+                    <ListRowContent><Text>  {item?.title} </Text></ListRowContent>
+                  </View>
+                </TouchableOpacity>
+              </>
+            }}
+            keyExtractor={(item, index) => index.toString()}
+          />
+
 
 
         </ListRowArea>

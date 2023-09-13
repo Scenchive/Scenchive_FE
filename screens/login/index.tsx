@@ -105,13 +105,13 @@ const Login = () => {
 
       <InputRow>
         <InputTitle>이메일</InputTitle>
-        <InputArea style={{ marginBottom: 39 }} onChangeText={(text) => setEmail(text)} />
+        <InputArea style={{ marginBottom: 39 }} onChangeText={(text: string) => setEmail(text)} />
       </InputRow>
 
 
       <InputRow >
         <InputTitle>비밀번호</InputTitle>
-        <InputArea style={{ marginBottom: 182 }} onChangeText={(text) => setPassword(text)} />
+        <InputArea style={{ marginBottom: 182 }} onChangeText={(text: string) => setPassword(text)} />
       </InputRow>
 
 

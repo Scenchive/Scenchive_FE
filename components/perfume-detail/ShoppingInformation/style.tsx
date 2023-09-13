@@ -20,7 +20,7 @@ const ShoppingInformationTitle = styled.Text`
 const NoticeBox=styled.View`
     border-width:1px;
     border-color:#B592FF;
-    border-radius:10;
+    border-radius:10px;
     padding-top:11px;
     padding-bottom : 17px;
     padding-right:4px;

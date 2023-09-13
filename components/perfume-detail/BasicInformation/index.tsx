@@ -20,20 +20,24 @@ type NOTESDATA = {
   baseNotes: any;
   perfumeName: string;
   brandName: string;
+  brandNameKorean:string;
   perfumeId: Number;
+  perfumeImage:string;
 };
 
 
-const BasicInformation: React.FC<NOTESDATA> = ({ topNotes, middleNotes, baseNotes, perfumeName, brandName, perfumeId, }) => {
+const BasicInformation: React.FC<NOTESDATA> = ({ topNotes, middleNotes, baseNotes, perfumeName, brandName, brandNameKorean, perfumeId, perfumeImage }) => {
 
   const navigation = useNavigation();
   const goToWriteReview = () => {
 
     //@ts-ignore
-    navigation.navigate("WriteReview", { perfumeName: perfumeName, brandName: brandName, perfumeId: perfumeId })
+    navigation.navigate("WriteReview", { perfumeName: perfumeName, brandName: brandName, brandNameKorean:brandNameKorean,perfumeId: perfumeId, perfumeImage:perfumeImage })
     // navigation.navigate("Stack",{screen:"PerfumeDetail", params:{perfumeId:id, perfumeName:perfumeName, brandName:brandName}})
   }
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+
 
   useEffect(() => {
     if (topNotes !== undefined && middleNotes !== undefined && baseNotes !== undefined) {
@@ -42,6 +46,8 @@ const BasicInformation: React.FC<NOTESDATA> = ({ topNotes, middleNotes, baseNote
 
   }, [topNotes, middleNotes, baseNotes])
 
+
+  console.log('dldldld', brandNameKorean)
   return (
 
     <View style={{ flexGrow: 1 }}>

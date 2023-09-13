@@ -17,6 +17,8 @@ import TPOPage from '../screens/filter-search/KeywordPages/TPOPage/index';
 import FilterSearchResult from '../screens/filter-search-result/index';
 
 import ModifyPerfumeCellPage from "../screens/mypage/modify-perfume-cell/index"
+import MoreBookmarkedPage from "../screens/mypage/more-bookmarked-page/index"
+import MoreNewPage from "../screens/mypage/more-new-page"
 
 import CommunityWrite from "../screens/community-write/index"
 import CommunityDetail from "../screens/community-detail/index"
@@ -51,7 +53,9 @@ const Stack = () => {
             <NativeStack.Screen name="FilterSearchResult" component={FilterSearchResult}/>
 
             <NativeStack.Screen name="ModifyPerfumeCellPage" component={ModifyPerfumeCellPage}/>
-        
+            <NativeStack.Screen name="MoreBookmarkedPage" component={MoreBookmarkedPage}/>
+            <NativeStack.Screen name="MoreNewPage" component={MoreNewPage}/>
+
             <NativeStack.Screen name="CommunityWrite" component={CommunityWrite}/>
             <NativeStack.Screen name="CommunityDetail" component={CommunityDetail}/>
 

@@ -42,6 +42,7 @@ const CommunityDetail = (route: any,) => {
   type COMMUNITYDETAILTYPE = {
     boardtype_name: string,
     body: string,
+    imageUrl: string | null,
     modified_at: string,
     name: string,
     title: string
@@ -171,6 +172,7 @@ const CommunityDetail = (route: any,) => {
     getCommentsList();
   }, [myToken])
 
+
   return (
     <>
       <ScrollView>
@@ -208,6 +210,12 @@ const CommunityDetail = (route: any,) => {
 
           </BoardHeaderArea>
           <BoardContentArea>
+            {communityDetail?.imageUrl ?
+              <Image
+                style={{ width: "100%", height: 140, marginTop: 20, marginBottom: 0, resizeMode: "contain" }}
+                source={{ uri: `${communityDetail?.imageUrl}` }} /> : null
+            }
+
             <BoardContentText>
               {communityDetail?.body}
             </BoardContentText>
@@ -216,8 +224,8 @@ const CommunityDetail = (route: any,) => {
           <View>
             <CommentListArea >
               {commentList?.filter((el) => !el.parentId).map((comment) =>
-                <>
-                  <CommentRowArea key={comment?.id}>
+                <View key={comment?.id}>
+                  <CommentRowArea>
                     <CommentImage source={require("../../assets/images/icon/icon-perfume-pic.png")} />
                     <TextsArea>
                       <CommentUserName>{comment?.memberName}</CommentUserName>
@@ -234,10 +242,10 @@ const CommunityDetail = (route: any,) => {
                       </View>
                     </TextsArea>
                   </CommentRowArea>
-                  {commentList?.filter((el2) => el2?.parentId===comment?.id).map((comment) =>
-                    <>
-                      <CommentRowArea key={comment?.id+'reply'} 
-                      style={{marginLeft:60}}>
+                  {commentList?.filter((el2) => el2?.parentId === comment?.id).map((comment) =>
+                    <View key={comment?.id + 'reply'}>
+                      <CommentRowArea
+                        style={{ marginLeft: 60 }}>
                         <CommentImage source={require("../../assets/images/icon/icon-perfume-pic.png")} />
                         <TextsArea>
                           <CommentUserName>{comment?.memberName}</CommentUserName>
@@ -249,8 +257,8 @@ const CommunityDetail = (route: any,) => {
                           </View>
                         </TextsArea>
                       </CommentRowArea>
-                      </>)}
-                </>
+                    </View>)}
+                </View>
               )}
             </CommentListArea>
 
