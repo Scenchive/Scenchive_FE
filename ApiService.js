@@ -75,8 +75,8 @@ class ApiService {
     static GETUSERNAME(myHeader) {
         return axios.get(API_URL + '/username', { headers: { Authorization: `Bearer ${myHeader}` } })
     }
-    static GETBRANDPERFUMELIST(brand_name, myHeader) {
-        return axios.get(API_URL + '/brandperfume?name=' + brand_name + '&page=0', { headers: { Authorization: `Bearer ${myHeader}` } })
+    static GETBRANDPERFUMELIST(brand_name, page, myHeader) {
+        return axios.get(API_URL + '/brandperfume?name=' + brand_name + '&page='+page, { headers: { Authorization: `Bearer ${myHeader}` } })
     }
 
     // POST 요청 예시
