@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 
-import { HeaderArea, LogoNameArea, HeaderLogoImage, HeaderTitle, AlertIcon, UserReviewArea, } from './style';
+import { HeaderArea, BackButton, LogoNameArea, HeaderLogoImage, HeaderTitle, AlertIcon, UserReviewArea, } from './style';
 import { useNavigation, useIsFocused, } from '@react-navigation/native';
 import PerfumeIntro from "../../components/perfume-detail/PerfumeIntro/index"
 import DetailTab from '../../components/perfume-detail/DetailTab/index'
@@ -67,6 +67,9 @@ const PerfumeDetail = (route: any,) => {
   const perfumeId = route?.route?.params?.perfumeId;
   const perfumeImage=route?.route?.params?.perfumeImage;
   const brandNameKorean=route?.route?.params?.brandNameKorean;
+
+  console.log('있다고', route?.route?.params)
+
 
   const [myToken, setMyToken] = useState<string>('');
 
@@ -178,6 +181,7 @@ const PerfumeDetail = (route: any,) => {
   }, [myToken, isFocused])
 
 
+
   const setBookmark = () => {
     if (bookmarkYesNo === 'Y') {
       ApiService.SETBOOKMARKYES(perfumeId, myToken)
@@ -221,12 +225,16 @@ const PerfumeDetail = (route: any,) => {
         <ScrollView>
           <View>
             <HeaderArea>
-              <TouchableOpacity onPress={goToHome}>
+              {/* <TouchableOpacity onPress={goToHome}>
                 <LogoNameArea>
                   <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} />
                   <HeaderTitle>센카이브</HeaderTitle >
                 </LogoNameArea>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+        <BackButton onPress={() => navigation.goBack()}>
+              <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
+            </BackButton>
+            <HeaderTitle>향수 상세페이지</HeaderTitle >
 
               {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
             </HeaderArea>
@@ -246,7 +254,7 @@ const PerfumeDetail = (route: any,) => {
               sillageAvg={perfumeRatingInformation?.sillageAvg || 0}
             />
             <DetailTab clickedTab={clickedTab} setClickedTab={setClickedTab} />
-            <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName1} brandName={brandName} perfumeId={perfumeId} />
+            <BasicInformation topNotes={perfumeBasicInformation?.top} middleNotes={perfumeBasicInformation?.middle} baseNotes={perfumeBasicInformation?.base} perfumeName={perfumeName1} brandName={brandName} brandNameKorean={brandNameKorean} perfumeId={perfumeId} perfumeImage={perfumeImage}/>
           </View>
           <UserReviewArea>
             {reviewList?.map((el)=>(
@@ -263,10 +271,15 @@ const PerfumeDetail = (route: any,) => {
         <ScrollView>
 
           <HeaderArea>
-            <LogoNameArea>
-              <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} />
-              <HeaderTitle>센카이브</HeaderTitle >
-            </LogoNameArea>
+            {/* <LogoNameArea> */}
+              {/* <HeaderLogoImage source={require('../../assets/images/logo/logo-scenchive-purple.png')} /> */}
+              {/* <HeaderTitle>센카이브</HeaderTitle > */}
+            {/* </LogoNameArea> */}
+            <BackButton onPress={() => navigation.goBack()}>
+              <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
+            </BackButton>
+            <HeaderTitle>향수 상세페이지</HeaderTitle >
+
             {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
           </HeaderArea>
           <PerfumeIntro perfumeName={perfumeName1}

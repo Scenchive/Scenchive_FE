@@ -129,6 +129,7 @@ const BoardContentArea = styled.View`
     width:100%;
     padding-left:20px;
     padding-right:20px;
+    flex-direction:column;
     
 `
 

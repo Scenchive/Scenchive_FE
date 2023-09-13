@@ -20,11 +20,10 @@ const AddKeywordPage: React.FC = (route: any) => {
   const goToWriteReview = () => {
 
     //@ts-ignore
-    navigation.navigate("WriteReview", { keywordList: addOrDeleteKeywordArray, perfumeName: route?.route?.params?.perfumeName, brandName: route?.route?.params?.brandName, perfumeId: route?.route?.params?.perfumeId })
-
+    navigation.navigate("WriteReview", { keywordList: addOrDeleteKeywordArray, perfumeName: route?.route?.params?.perfumeName, brandName: route?.route?.params?.brandName, perfumeId: route?.route?.params?.perfumeId, perfumeImage:route?.route?.params?.perfumeImage })
 
   }
-
+  console.log("여기겠지", route?.route?.params)
   type PLACEKEYWORDSTYPE = { id: number; ptag: string; ptag_kr: string, ptagtype_id: number }
   type FRAGRANCEWHEELKEYWORDSTYPE = { id: number; ptag: string; ptag_kr: string, ptagtype_id: number }
   type MOODKEYWORDSTYPE = { id: number; ptag: string; ptag_kr: string, ptagtype_id: number }

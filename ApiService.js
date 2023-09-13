@@ -38,11 +38,12 @@ class ApiService {
     static GETSEASONRECOMMENDATION(seasonId, myHeader) {
         return axios.get(API_URL + '/recommend?season=' + seasonId, { headers: { Authorization: `Bearer ${myHeader}` } })
     }
-    static GETBOOKMARKLIST(myHeader) {
-        return axios.get(API_URL + '/bookmark?page=0', { headers: { Authorization: `Bearer ${myHeader}` } })
+    static GETBOOKMARKLIST(myHeader, page) {
+        console.log('몇개 넘어가냐', page)
+        return axios.get(API_URL + '/bookmark?page='+page, { headers: { Authorization: `Bearer ${myHeader}` } })
     }
     static GETRECOMMENDATIONBYBOOKMARK(myHeader) {
-        return axios.get(API_URL + '/bookmark/recommend?page=0', { headers: { Authorization: `Bearer ${myHeader}` } })
+        return axios.get(API_URL + '/bookmark/recommend', { headers: { Authorization: `Bearer ${myHeader}` } })
     }
     static GETREVIEWLIST(perfumeId, myHeader) {
         return axios.get(API_URL + '/review/' + perfumeId, { headers: { Authorization: `Bearer ${myHeader}` } })
@@ -59,11 +60,11 @@ class ApiService {
     static GETUSERKEYWORDLIST(myHeader) {
         return axios.get(API_URL + '/keyword', { headers: { Authorization: `Bearer ${myHeader}` } })
     }
-    static GETBOARDSLIST(myHeader) {
-        return axios.get(API_URL + '/boards', { headers: { Authorization: `Bearer ${myHeader}` } })
+    static GETBOARDSLIST(myHeader, page) {
+        return axios.get(API_URL + '/boards?page='+page, { headers: { Authorization: `Bearer ${myHeader}` } })
     }
-    static GETMENUBOARDSLIST(selectedMenu, myHeader) {
-        return axios.get(API_URL + '/boardtype/' + selectedMenu + '?page=0', { headers: { Authorization: `Bearer ${myHeader}` } })
+    static GETMENUBOARDSLIST(selectedMenu, page, myHeader) {
+        return axios.get(API_URL + '/boardtype/' + selectedMenu + '?page='+page, { headers: { Authorization: `Bearer ${myHeader}` } })
     }
     static GETBOARDDETAIL(boardId, myHeader) {
         return axios.get(API_URL + '/board/' + boardId, { headers: { Authorization: `Bearer ${myHeader}` } })

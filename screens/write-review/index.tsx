@@ -20,7 +20,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const WriteReview: React.FC = (route: any) => {
   const perfumeName = route?.route?.params?.perfumeName;
   const brandName = route?.route?.params.brandName;
+  const brandNameKorean=route?.route?.params.brandNameKorean;
   const perfumeId = route?.route?.params?.perfumeId;
+  const perfumeImage=route?.route?.params?.perfumeImage;
+
+
   // const [myToken, setMyToken] = useState<string>('');
   const [rating, setRating] = useState<Number>();
   const [longevity, setLongetivity] = useState<Number>();
@@ -35,12 +39,13 @@ const WriteReview: React.FC = (route: any) => {
   const navigation = useNavigation();
   const goToAddKeywordPage = () => {
     //@ts-ignore
-    navigation.navigate("AddKeywordPage", { perfumeName: perfumeName, brandName: brandName, perfumeId: perfumeId })
+    navigation.navigate("AddKeywordPage", { perfumeName: perfumeName, brandName: brandName,brandNameKorean:brandNameKorean, perfumeId: perfumeId, perfumeImage: perfumeImage })
   }
   const goToPerfumeDetailPage = () => {
     //@ts-ignore
-    navigation.navigate("PerfumeDetail", { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName, refresh:true})
+    navigation.navigate("PerfumeDetail", { perfumeId: perfumeId, perfumeName: perfumeName, brandName: brandName,brandNameKorean:brandNameKorean, perfumeImage:perfumeImage,refresh:true})
   }
+  console.log('아니 사진이 있다니까??', perfumeImage)
 
 
   const registerReview = async() => {
@@ -96,6 +101,8 @@ const WriteReview: React.FC = (route: any) => {
     }
   }
 
+  console.log('?',brandNameKorean)
+
 
   return (
     <View style={{ height: "100%" }}>
@@ -113,9 +120,12 @@ const WriteReview: React.FC = (route: any) => {
             <PerfumeInformationArea>
               <View style={{ width: "48%", height: 171, }}>
                 {/* <Text>이미지 준비중입니다.</Text> */}
-              
-                <Image style={{resizeMode:"contain", width:"100%", height:171, marginTop:0,  }} source={require('../../assets/images/icon/icon-perfume-pic.png')}/>
+                <Image
+                  style={{ width: "100%", height: 140, marginBottom: 10, resizeMode: "contain" }}
+                  source={perfumeImage ? { uri: `${perfumeImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />
+                {/* <Image style={{resizeMode:"contain", width:"100%", height:171, marginTop:0,  }} source={require('../../assets/images/icon/icon-perfume-pic.png')}/> */}
               </View>
+              <PerfumeBrand>{brandNameKorean}</PerfumeBrand>
               <PerfumeBrand>{brandName}</PerfumeBrand>
               <PerfumeName>{perfumeName}</PerfumeName>
             </PerfumeInformationArea>
