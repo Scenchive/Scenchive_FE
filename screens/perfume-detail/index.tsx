@@ -69,6 +69,7 @@ const PerfumeDetail = (route: any,) => {
   const brandNameKorean = route?.route?.params?.brandNameKorean;
 
   console.log('dddd', brandNameKorean)
+  console.log('perfumeImage', perfumeImage)
 
   const [myToken, setMyToken] = useState<string>('');
   const [clickedTab, setClickedTab] = useState<string>('기본정보');

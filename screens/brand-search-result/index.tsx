@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const BrandSearchResultPage: React.FC = () => {
 
     type BRANDRESULTLISTTYPE = { brandName: string, brandName_kr: string|null }
-    type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, brandId: number, brandName: string, brandName_kr: string|null }
+    type PERFUMERESULTLISTTYPE = { perfumeId: number, perfumeName: string, perfumeImage:string,  brandId: number, brandName: string, brandName_kr: string|null }
     const [searchWord, setSearchWord] = useState("");
     const [brandResultList, setBrandResultList] = useState<BRANDRESULTLISTTYPE[]>([]);
     const [perfumeResultList, setPerfumeResultList] = useState<PERFUMERESULTLISTTYPE[]>([]);

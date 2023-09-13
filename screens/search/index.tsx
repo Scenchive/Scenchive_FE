@@ -89,7 +89,7 @@ const SearchPage: React.FC = () => {
                 <ScrollView>
                     <View>
                         {brandResultList?.map((el, index) =>
-                            <TouchableOpacity key={index+'brand'} onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,el?.brandImage)}>
+                            <TouchableOpacity key={index+'brand'} onPress={() => goToBrandDetailPAGE(el?.brandName, el?.brandName_kr,el?.brandImage, )}>
                                 <BrandResultRow>
                                     {/* <BrandImage source={{ uri: `${el.brandImage}` }} /> */}
                                     <BrandImage source={el?.brandImage ? { uri: `${el?.brandImage}` } : require('../../assets/images/icon/icon-perfume-pic.png')} />

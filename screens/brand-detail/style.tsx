@@ -25,7 +25,8 @@ const BrandArea = styled.View`
 const BrandImage = styled.Image`
     width:50%;
     height:100px;
-    resize-mode:cover;
+    resize-mode:contain;
+    margin-bottom:10px;
 `
 
 const BrandName = styled.Text`
