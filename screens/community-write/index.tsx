@@ -60,70 +60,60 @@ const CommunityWrite = () => {
       if (result) {
         console.log('rrr', result)
         setMyToken(result)
+        ApiService.TOKENVALIDATION(result)
+        .then((data) => {
+          if (data?.data) {
+
+
+            let data = new FormData();
+            if (imageFile!=="") {
+              data.append('image', imageFile);
+            }else if (imageFile===""){
+              data.append('image',"");
+            }
+        
+            const requestDto = {
+              title: title,
+              body: content,
+              boardtype: {
+                id: selectedMenu === 'qna' ? 1 : selectedMenu === 'fake' ? 2 : selectedMenu === 'free' ? 3 : 0,
+                boardtype_name: selectedMenu,
+              },
+            };
+            console.log('request', requestDto)
+        
+            data.append('requestDto',
+              {"string":JSON.stringify(requestDto), type: 'application/json'});
+        
+        
+        
+              ApiService.REGISTERCOMMUNITYBOARD(data, result)
+                .then((data) => {
+                  goToCommunity();
+                }).catch((res) => {
+                  console.log('게시글 등록 실패')
+                  console.log(res)
+                  Alert.alert('게시글 등록 실패했습니다.')
+                })
+            // } else {
+            //   Alert.alert("모든 항목을 입력해주세요.")
+            // }
+
+          } else {
+            console.log('유효하지 않은 토큰입니다.1')
+          }
+        }
+        ).catch((res) => {
+          console.log('유효하지 않은 토큰입니다.2')
+          console.log(res)
+        })
+
+
       } else {
         console.log('토큰을 가져올 수 없습니다.')
       }
     });
 
-    let data = new FormData();
-    if (imageFile!=="") {
-      data.append('image', imageFile);
-    }else if (imageFile===""){
-      data.append('image',"");
-    }
-
-    const requestDto = {
-      title: title,
-      body: content,
-      boardtype: {
-        id: selectedMenu === 'qna' ? 1 : selectedMenu === 'fake' ? 2 : selectedMenu === 'free' ? 3 : 0,
-        boardtype_name: selectedMenu,
-      },
-    };
-    console.log('request', requestDto)
-
-    data.append('requestDto',
-      {"string":JSON.stringify(requestDto), type: 'application/json'});
-
-      console.log('data2', data)
-
-
-
-    // data.append('requestDto', new Blob([JSON.stringify({
-    //   title: title,
-    //   body: content,
-    //   boardtype: {
-    //     id: selectedMenu === 'qna' ? 1 : selectedMenu === 'fake' ? 2 : selectedMenu === 'free' ? 3 : 0,
-    //     boardtype_name: selectedMenu,
-    //   }
-    // })], {type: 'application/json'}));
-
-    // data.append('requestDto', {
-    //   title: title,
-    //   body: content,
-    //   boardtype: {
-    //     id: selectedMenu === 'qna' ? 1 : selectedMenu === 'fake' ? 2 : selectedMenu === 'free' ? 3 : 0,
-    //     boardtype_name: selectedMenu,
-    //   }
-    // })
-
-    // if (title.length > 0 && content.length > 0 && data?.requestDto?.boardtype?.id > 0 && data?.requestDto?.boardtype?.boardtype_name.length > 0) {
-    // if (title.length > 0 && content.length > 0 && selectedMenu.length > 0) {
-      ApiService.REGISTERCOMMUNITYBOARD(data, myToken)
-        .then((data) => {
-          console.log('------------')
-          console.log('------------')
-          console.log(data)
-          goToCommunity();
-        }
-        ).catch((res) => {
-          console.log('게시글 등록 실패')
-          console.log(res)
-          Alert.alert('게시글 등록 실패했습니다.')
-        })
-    // } else {
-    //   Alert.alert("모든 항목을 입력해주세요.")
-    // }
   }
 
 

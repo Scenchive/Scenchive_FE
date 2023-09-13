@@ -267,7 +267,9 @@ const PerfumeDetail = (route: any,) => {
               <Image style={{ position: "absolute" }} source={require('../../assets/images/icon/icon-btn-back.png')} />
             </BackButton>
             <HeaderTitle>향수 상세페이지</HeaderTitle >
-
+            <TouchableOpacity style={{position:"absolute", right:20, top:32}} onPress={goToHome}>
+                <HomeButton source={require('../../assets/images/icon/icon-btn-home-purple.png')} />
+              </TouchableOpacity>
             {/* <AlertIcon source={require('../../assets/images/icon/icon-notice-bell.png')} /> */}
           </HeaderArea>
           <PerfumeIntro perfumeName={perfumeName1}
