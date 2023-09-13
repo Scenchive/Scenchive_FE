@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const TPOPage: React.FC = () => {
 
   const navigation = useNavigation();
-  const goToResults = (keywordList: { id: number; ptag: string; ptag_kr: string; ptagtype_id: number; }[], resultList: { id: number; ptag: string; ptag_kr: string; ptagtype_id: number; }[]) => {
+  const goToResults = (keywordList: { id: number; ptag: string; ptag_kr: string; ptagtype_id: number; }[], resultList: { id: number; ptag: string; ptag_kr: string; ptagtype_id: number,}[]) => {
 
     //@ts-ignore
     navigation.navigate("FilterSearchResult", { keywordList: keywordList, resultList: resultList })
@@ -127,6 +127,8 @@ const TPOPage: React.FC = () => {
       if (params) {
         ApiService.GETSEARCHKEYWORDRESULT(params, myToken)
           .then((data) => {
+            console.log('data', data?.data)
+
             goToResults(keywordTagsArray, data.data)
 
           }).catch((res) => {

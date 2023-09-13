@@ -25,6 +25,7 @@ const PerfumeInformationArea=styled.View`
     width:100%;
     display:flex;
     flex-direction:column;
+    margin-top:5px;
 `
 const PerfumeName=styled.Text`
     font-size:14px;
